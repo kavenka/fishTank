@@ -25,12 +25,10 @@
         android:textSize="15sp"
         />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_32ffffff"
-        >
-    </RelativeLayout>
+        <com.mibo.fishtank.weight.RangeSelectionView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/color_32ffffff"/>
 
     <TextView
         android:id="@+id/wendu_fanwei"

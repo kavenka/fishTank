@@ -23,4 +23,7 @@
     <color name="color_FFD400">#FFD400</color>
     <color name="color_00ffaa">#00ffaa</color>
     <color name="color_b3b3b3">#b3b3b3</color>
+    <color name="colorBackline">#3e3e3e</color>
+    <color name="colorTipCircle">#ffdddd</color>
+    <color name="white">#ffffff</color>
 </resources>
