@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/device_connect_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.DeviceConnectActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/device_connect_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/add_device_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="接通电源，确认设备指示灯处于快速闪动状态。如果指示灯处于其他状态，请按住中间按钮直到蓝灯快闪，然后点击“下一步”。"
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <Button
+        android:id="@+id/next_step_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="@string/register_next_step"
+        android:textColor="@color/color_000000"
+        android:textSize="17sp"
+        />
+</LinearLayout>
+

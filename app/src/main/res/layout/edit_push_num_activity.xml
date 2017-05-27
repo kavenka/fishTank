@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/edit_push_num_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.EditPushNumActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/edit_push_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <EditText
+            android:id="@+id/num1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:text="13164737434"
+            android:textColor="@color/color_b4ffffff"
+            android:textSize="15sp"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <EditText
+            android:id="@+id/num2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:text="13164737434"
+            android:textColor="@color/color_b4ffffff"
+            android:textSize="15sp"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <EditText
+            android:id="@+id/num3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:hint="请输入手机号码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:textColor="@color/color_b4ffffff"
+            android:textColorHint="@color/color_b4ffffff"
+            android:textSize="15sp"
+            />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <EditText
+            android:id="@+id/num4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:hint="请输入手机号码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:textColor="@color/color_b4ffffff"
+            android:textColorHint="@color/color_b4ffffff"
+            android:textSize="15sp"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

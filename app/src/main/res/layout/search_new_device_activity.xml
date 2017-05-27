@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/search_new_device_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.SearchNewDeviceActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/search_device_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/add_device_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="搜索到的设备:"
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_device_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

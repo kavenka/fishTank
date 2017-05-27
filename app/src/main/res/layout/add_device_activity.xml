@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/add_device_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.AddDeviceActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/add_device_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/add_device_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="请输入设备密码，默认设备密码请参考设备标签:"
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <TextView
+            android:id="@+id/ssd_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="设备密码："
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            />
+
+        <EditText
+            android:id="@+id/device_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/ssd_txt"
+            android:background="@null"
+            android:gravity="end|center"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:hint="请输入设备密码"
+            android:textColorHint="@color/color_ffffff"
+            android:textColor="@color/color_b4ffffff"
+            android:textSize="15sp"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/next_step_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:enabled="false"
+        android:text="@string/register_next_step"
+        android:textColor="@color/color_000000"
+        android:textSize="17sp"
+        />
+</LinearLayout>

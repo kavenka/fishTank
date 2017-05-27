@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/user_center_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mibo.fishtank.activity.UserCenterActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/user_center_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:id="@+id/user_head_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/user_center_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/head_img"
+        />
+
+    <LinearLayout
+        android:id="@+id/user_name_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_head_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="昵称："
+            android:textColor="@color/color_b4ffffff"
+            />
+
+        <TextView
+            android:id="@+id/user_name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小明"
+            android:textColor="@color/color_b4ffffff"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/user_num_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_name_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电话："
+            android:textColor="@color/color_b4ffffff"
+            />
+
+        <TextView
+            android:id="@+id/user_num_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13164737434"
+            android:textColor="@color/color_b4ffffff"
+            />
+    </LinearLayout>
+</RelativeLayout>

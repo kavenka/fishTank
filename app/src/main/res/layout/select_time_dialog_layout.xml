@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_3c000000"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="18dp"
+        android:paddingLeft="133dp"
+        android:paddingRight="133dp"
+        android:paddingTop="18dp"
+        android:text="开始时间"
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_b4ffffff"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <com.mibo.fishtank.weight.PickerView
+                android:id="@+id/minute_pv"
+                android:layout_width="80dp"
+                android:layout_height="160dp"
+                android:layout_alignRight="@+id/minute_tv"
+                />
+
+            <TextView
+                android:id="@+id/minute_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="时"
+                android:textColor="@color/color_ffffff"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+            <com.mibo.fishtank.weight.PickerView
+                android:id="@+id/second_pv"
+                android:layout_width="80dp"
+                android:layout_height="160dp"
+                />
+
+            <TextView
+                android:id="@+id/second_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/second_pv"
+                android:text="分"
+                android:textColor="@color/color_ffffff"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_b4ffffff"
+        />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="确定"
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+</LinearLayout>

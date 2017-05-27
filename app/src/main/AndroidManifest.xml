@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.mibo.fishtank"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+
+    <uses-feature android:name="android.permission.CHANGE_WIFI_STATE "/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".FishTankApp"
+        android:allowBackup="true"
+        android:icon="@drawable/fish_tank_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        >
+        <activity
+            android:name=".activity.LaunchActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.ConfirmPasswordActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.DocActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.ForgetActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SceneSettingActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SceneManagerActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.UserCenterActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.EditUserInfoActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SetUserPwdActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.AddNewDeviceActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SearchNewDeviceActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.DeviceInNetActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.AddDeviceActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.DeviceConnectActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SetParamsActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.DeviceDetailActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.EditPushNumActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.SetTimerActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
+            android:name=".activity.AddSceneActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity android:name=".activity.AddingDeviceToNetActivity"
+                  android:theme="@style/TranslucentTheme">
+        </activity>
+    </application>
+
+</manifest>

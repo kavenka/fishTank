@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="fishtank"/>
+
+    <version value="1"/>
+
+    <list>
+        <mapping class="com.mibo.fishtank.entity.Device"></mapping>
+        <mapping class="com.mibo.fishtank.entity.Scene"></mapping>
+        <mapping class="com.mibo.fishtank.entity.User"></mapping>
+    </list>
+</litepal>

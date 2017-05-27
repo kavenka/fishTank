@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/set_timer_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.SetTimerActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/set_timer_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <RelativeLayout
+        android:id="@+id/timer1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:id="@+id/timer1_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="1."
+            android:textColor="@color/color_ffffff"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/timer1_txt"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/start_time1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6:00开启"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/end_time1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/start_time1"
+                android:text="6:00关闭"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/timer1_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_time1"
+                android:layout_marginTop="5dp"
+                android:text="周一周三周六"
+                android:textColor="@color/color_000000"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+        <ToggleButton
+            android:id="@+id/start_close1"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timer2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/timer2_txt"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/start_time2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6:00开启"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/end_time2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/start_time2"
+                android:text="6:00关闭"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/timer2_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_time2"
+                android:layout_marginTop="5dp"
+                android:text="周一周三周六"
+                android:textColor="@color/color_000000"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+        <ToggleButton
+            android:id="@+id/start_close2"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+
+        <TextView
+            android:id="@+id/timer2_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/start_close2"
+            android:layout_alignBottom="@+id/start_close2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:text="2."
+            android:textColor="@color/color_ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timer3_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:id="@+id/timer3_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="3."
+            android:textColor="@color/color_ffffff"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/timer3_txt"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/start_time3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6:00开启"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/end_time3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/start_time3"
+                android:text="6:00关闭"
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/time3_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_time3"
+                android:layout_marginTop="5dp"
+                android:text="周一周三周六"
+                android:textColor="@color/color_000000"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+        <ToggleButton
+            android:id="@+id/start_close3"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/timer4_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+
+        <TextView
+            android:id="@+id/timer4_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="4."
+            android:textColor="@color/color_ffffff"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/timer4_txt"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/start_time4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6:00开启"
+                android:textColor="@color/color_b4ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/end_time4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/start_time4"
+                android:text="6:00关闭"
+                android:textColor="@color/color_b4ffffff"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:id="@+id/timer_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/start_time4"
+                android:layout_marginTop="5dp"
+                android:text="周一周三周六"
+                android:textColor="@color/color_96000000"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+        <ToggleButton
+            android:id="@+id/start_close4"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="false"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_32ffffff"
+            />
+    </RelativeLayout>
+</LinearLayout>

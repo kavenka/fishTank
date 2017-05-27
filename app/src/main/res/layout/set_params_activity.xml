@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/set_params_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.SetParamsActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/set_params_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/ph_fanwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="ph值范围："
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/wendu_fanwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="温度范围："
+        android:textColor="@color/color_ffffff"
+        android:textSize="15sp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_b4ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dengguang1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="灯光1定时器："
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            />
+
+        <ToggleButton
+            android:id="@+id/dengguang1"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_b4ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dengguang2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="灯光2定时器："
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            />
+
+        <ToggleButton
+            android:id="@+id/dengguang2"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="false"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_b4ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dengguang3_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="自定义1定时器："
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            />
+
+        <ToggleButton
+            android:id="@+id/dengguang3"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="false"
+            android:textOff=""
+            android:textOn=""
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_b4ffffff"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dengguang4_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_32ffffff"
+        >
+
+        <TextView
+            android:id="@+id/ssd_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="自定义2定时器："
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            />
+
+        <ToggleButton
+            android:id="@+id/dengguang4"
+            android:layout_width="51dp"
+            android:layout_height="31dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/tooggle_selector"
+            android:checked="true"
+            android:textOff=""
+            android:textOn=""
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/edit_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="修改推送手机号码"
+        android:textColor="@color/color_000000"
+        android:textSize="17sp"
+        />
+
+    <Button
+        android:id="@+id/edit_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="修改设备密码"
+        android:textColor="@color/color_000000"
+        android:textSize="17sp"
+        />
+</LinearLayout>
