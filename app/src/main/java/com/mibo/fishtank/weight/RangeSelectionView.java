@@ -248,7 +248,7 @@ public class RangeSelectionView extends View {
         Rect rect = new Rect();
         paintText.getTextBounds(numStart + "", 0, (numStart + "").length(), rect);
         textWidth = rect.width();
-        float textX = pointStart - textWidth / 2;
+        float textX = pointStart - textWidth/2 - circleRadius/2;
         //起点数值
         canvas.drawText(format(numStart), textX, textY, paintText);
         paintText.getTextBounds(numEnd + "", 0, (numEnd + "").length(), rect);

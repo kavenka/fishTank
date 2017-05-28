@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,23 +67,22 @@ public class DeviceDetailActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case CloudApi.MSG_WHAT_CLOUDAPI:
-                    switch (msg.arg1) {
+                    Log.d("monty", "arg2:" + msg.arg2);
+                    switch (msg.arg1) { // 判断操作类型
                         case CloudApi.GETDEVCFG:
-                            if (IFishTankError.SUCCESS == msg.arg2) {
-                                Toast.makeText(context, "huoqu chenggong", Toast.LENGTH_SHORT).show();  
-
+                            if (IFishTankError.SUCCESS == msg.arg2) { // 判断操作结果
+                                Toast.makeText(context, "huoqu chenggong", Toast.LENGTH_SHORT).show();
                             } else {
-                                loadingDialog.close();
-                                Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_SHORT).show();
                             }
                             break;
                         case CloudApi.ERROR:
-                            loadingDialog.close();
                             Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
                             break;
                     }
                     break;
             }
+            loadingDialog.close();
         }
     };
 }
