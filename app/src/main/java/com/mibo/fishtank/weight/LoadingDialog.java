@@ -17,8 +17,10 @@ import com.mibo.fishtank.R;
 public class LoadingDialog {
     LoadingView mLoadingView;
     Dialog mLoadingDialog;
+    private String mMsg ;
 
     public LoadingDialog(Context context, String msg) {
+        mMsg = msg;
         // 首先得到整个View
         View view = LayoutInflater.from(context).inflate(
                 R.layout.loading_dialog_view, null);
@@ -26,10 +28,6 @@ public class LoadingDialog {
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.dialog_view);
         // 页面中的LoadingView
         mLoadingView = (LoadingView) view.findViewById(R.id.lv_circularring);
-        // 页面中显示文本
-        TextView loadingText = (TextView) view.findViewById(R.id.loading_text);
-        // 显示文本
-        loadingText.setText(msg);
         // 创建自定义样式的Dialog
         mLoadingDialog = new Dialog(context, R.style.loading_dialog);
         mLoadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
@@ -37,9 +35,19 @@ public class LoadingDialog {
                 LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
-    public void show() {
+    private void baseShow(){
         mLoadingDialog.show();
         mLoadingView.startAnim();
+    }
+    public void show() {
+        ((TextView)mLoadingView.findViewById(R.id.loading_text)).setText(mMsg);
+        mLoadingDialog.setTitle("");
+        baseShow();
+    }
+    public void show(String msg){
+        ((TextView)mLoadingView.findViewById(R.id.loading_text)).setText(msg);
+        mLoadingDialog.setTitle(msg);
+        baseShow();
     }
 
     public void close() {

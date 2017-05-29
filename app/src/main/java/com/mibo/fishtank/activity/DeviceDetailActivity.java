@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.landstek.iFishTank.CloudApi;
+import com.landstek.iFishTank.IFishTankApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.LoadingDialog;
@@ -17,7 +19,9 @@ import com.mibo.fishtank.weight.TitleBar;
 public class DeviceDetailActivity extends BaseActivity {
 
     private CloudApi mCloudApi;
+    private IFishTankApi mFishTankApi;
     private LoadingDialog loadingDialog;
+    private String mUId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,23 @@ public class DeviceDetailActivity extends BaseActivity {
         initView();
         loadingDialog.show();
         mCloudApi.GetDevCfg();
+
+//        loginDevice(mFishTankApi.GetMyUid(), );
+    }
+
+    /**
+     * 登录设备
+     */
+    private void loginDevice(String uid, IFishTankApi.MsgLoginCmd msgLoginCmd) {
+        if (mFishTankApi == null) {
+            mFishTankApi = new IFishTankApi(this);
+        }
+        if (TextUtils.isEmpty(uid)) {
+            uid = mFishTankApi.GetMyUid();
+        }
+        Log.d("monty", "loginDevice -> GetMyUid -> uid:" + uid);
+        int loginResult = mFishTankApi.FtLogin(uid, msgLoginCmd);
+        Log.d("monty", "loginDevice -> loginResult:" + loginResult);
     }
 
     /**
