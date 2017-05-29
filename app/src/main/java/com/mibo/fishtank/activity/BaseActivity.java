@@ -18,8 +18,8 @@ public class BaseActivity extends AppCompatActivity {
     public Activity context = this;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         StatusBarCompat.compat(this, Color.RED);
     }
 

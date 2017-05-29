@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -12,16 +11,23 @@ import android.widget.Toast;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankApi;
 import com.landstek.iFishTank.IFishTankError;
+import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
+import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
+import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class DeviceDetailActivity extends BaseActivity {
 
     private CloudApi mCloudApi;
-    private IFishTankApi mFishTankApi;
     private LoadingDialog loadingDialog;
-    private String mUId;
+    private String mDstDevUid = "5CCF7F07B170";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,29 +38,52 @@ public class DeviceDetailActivity extends BaseActivity {
         loadingDialog.show();
         mCloudApi.GetDevCfg();
 
-//        loginDevice(mFishTankApi.GetMyUid(), );
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
+        loadingDialog.show();
+        FishTankApiManager.getInstance().loginDevice(mDstDevUid);
     }
 
-    /**
-     * 登录设备
-     */
-    private void loginDevice(String uid, IFishTankApi.MsgLoginCmd msgLoginCmd) {
-        if (mFishTankApi == null) {
-            mFishTankApi = new IFishTankApi(this);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
         }
-        if (TextUtils.isEmpty(uid)) {
-            uid = mFishTankApi.GetMyUid();
-        }
-        Log.d("monty", "loginDevice -> GetMyUid -> uid:" + uid);
-        int loginResult = mFishTankApi.FtLogin(uid, msgLoginCmd);
-        Log.d("monty", "loginDevice -> loginResult:" + loginResult);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginLstener(LoginEvent event){
+        if(event.loginSuccess){
+            FishTankApiManager.getInstance().getDeviceParam(mDstDevUid);
+        }else{
+            Toast.makeText(this,"登录失败",Toast.LENGTH_SHORT).show();
+            loadingDialog.close();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetParameterLstener(GetParameterEvent event){
+        IFishTankApi.MsgGetParamRsp msgGetParamRsp = event.msgGetParamRsp;
+        String uid = event.uid;
+        int result = event.result;
+        if(result==0){
+            FishTankApiManager.getInstance().getDeviceParam(mDstDevUid);
+        }else{
+            Toast.makeText(this,"获取失败",Toast.LENGTH_SHORT).show();
+        }
+        loadingDialog.close();
+    }
+
 
     /**
      * 初始化SDK
      */
     private void initSDK() {
         mCloudApi = new CloudApi();
+
         mCloudApi.SetHandler(mHandler);
     }
 

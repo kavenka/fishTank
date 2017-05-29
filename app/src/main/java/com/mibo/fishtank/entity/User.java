@@ -14,7 +14,7 @@ import java.util.List;
 public class User extends DataSupport {
     private int id;
     private String userName;
-    @Column(unique = true)
+    @Column(unique = true, defaultValue = "unknown")
     private String tel;
     private List<Scene> scenes = new ArrayList<>();
 

@@ -18,6 +18,7 @@ public class LoadingDialog {
     LoadingView mLoadingView;
     Dialog mLoadingDialog;
     private String mMsg ;
+    private TextView mTextView;
 
     public LoadingDialog(Context context, String msg) {
         mMsg = msg;
@@ -28,6 +29,7 @@ public class LoadingDialog {
         LinearLayout layout = (LinearLayout) view.findViewById(R.id.dialog_view);
         // 页面中的LoadingView
         mLoadingView = (LoadingView) view.findViewById(R.id.lv_circularring);
+        mTextView = (TextView) view.findViewById(R.id.loading_text);
         // 创建自定义样式的Dialog
         mLoadingDialog = new Dialog(context, R.style.loading_dialog);
         mLoadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
@@ -40,12 +42,12 @@ public class LoadingDialog {
         mLoadingView.startAnim();
     }
     public void show() {
-        ((TextView)mLoadingView.findViewById(R.id.loading_text)).setText(mMsg);
+        mTextView.setText(mMsg);
         mLoadingDialog.setTitle("");
         baseShow();
     }
     public void show(String msg){
-        ((TextView)mLoadingView.findViewById(R.id.loading_text)).setText(msg);
+        mTextView.setText(msg);
         mLoadingDialog.setTitle(msg);
         baseShow();
     }
