@@ -6,6 +6,7 @@ import com.landstek.iFishTank.IFishTankApi;
 import com.mibo.fishtank.FishTankApp;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,17 +46,26 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     }
 
     /**
-     * 获取设备信息
+     * 获取设备参数
      *
      * @param uid
      */
     public void getDeviceParam(String uid) {
-        Log.d("monty", "FishTankApiManager -> getDeviceParam -> uid:" + uid);
-
         int getParamResult = mFishTankApi.FtGetParam(uid);
-        Log.d("monty", "FishTankApiManager -> getParamResult:" + getParamResult);
+        Log.d("monty", "FishTankApiManager -> getDeviceParam -> getParamResult:" + getParamResult);
 
     }
+
+    /**
+     * 设置设备参数
+     * @param uid
+     * @param msgSetParamCmd
+     */
+    public void setDeviceParam(String uid,IFishTankApi.MsgSetParamCmd msgSetParamCmd){
+        int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
+        Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
+    }
+
 
     @Override
     public void Event(int i, Object o) {
@@ -74,7 +84,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     @Override
     public void ScanDevRsp(IFishTankApi.MsgScanDevRsp msgScanDevRsp) {
-        Log.d("monty", "IFishTankApiInterface -> ScanDevRsp -> thread=" + Thread.currentThread().getName());
         Log.d("monty", "IFishTankApiInterface -> ScanDevRsp ->"
                 + " msgScanDevRsp.Uid=" + msgScanDevRsp.Uid
                 + " , msgScanDevRsp.Ip=" + msgScanDevRsp.Ip
@@ -89,15 +98,18 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         LoginEvent loginEvent = new LoginEvent();
         loginEvent.loginSuccess = true;
         EventBus.getDefault().post(loginEvent);
-        Log.d("monty", "IFishTankApiInterface -> FtLoginRsp -> thread=" + Thread.currentThread().getName());
         Log.d("monty", "IFishTankApiInterface -> FtLoginRsp -> uid=" + uid + " , result=" + result);
 
     }
 
     @Override
     public void FtSetParamRsp(String uid, int result) {
-        Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> thread=" + Thread.currentThread().getName());
         Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> uid=" + uid + " , result=" + result);
+
+        SetParamsEvent setParamsEvent = new SetParamsEvent();
+        setParamsEvent.uid = uid;
+        setParamsEvent.result = result;
+        EventBus.getDefault().post(setParamsEvent);
     }
 
     @Override
@@ -108,7 +120,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         getParameterEvent.msgGetParamRsp = msgGetParamRsp;
         EventBus.getDefault().post(getParameterEvent);
 
-        Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> thread=" + Thread.currentThread().getName());
         Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> uid=" + uid + " , result=" + result);
         Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> MsgGetParamRsp{" +
                 "Pump=" + msgGetParamRsp.Pump +

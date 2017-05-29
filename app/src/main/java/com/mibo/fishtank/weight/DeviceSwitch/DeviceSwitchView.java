@@ -1,6 +1,7 @@
 package com.mibo.fishtank.weight.DeviceSwitch;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,25 +38,40 @@ public class DeviceSwitchView extends LinearLayout {
         mSwitchTitle = (TextView) rootView.findViewById(R.id.switch_title);
         mSwitchParameter = (TextView) rootView.findViewById(R.id.switch_parameter);
 
-        rootView.setOnClickListener(new OnClickListener() {
+        this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnSwitchClickListener.onSwitch(isOpen);
+                mOnSwitchClickListener.onSwitch(v, !isOpen);
             }
         });
 
+        addView(rootView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+    }
+
+    public void setSwitchIcon(@DrawableRes int res) {
+        mSwitchIcon.setImageResource(res);
+        invalidate();
+    }
+
+
+    public void setSwitchTitle(String title) {
+        mSwitchTitle.setText(title);
+        invalidate();
     }
 
     public void openSwitch() {
         isOpen = true;
         mSwitchParameter.setText("已开启");
-        mSwitchParameter.setAlpha(0.2f);
+        mSwitchParameter.setAlpha(1f);
+        invalidate();
     }
 
     public void closeSwitch() {
         isOpen = false;
         mSwitchParameter.setText("已关闭");
-        mSwitchParameter.setAlpha(1f);
+        mSwitchParameter.setAlpha(0.2f);
+        invalidate();
     }
 
     public void setSwitch(boolean s) {
@@ -66,15 +82,23 @@ public class DeviceSwitchView extends LinearLayout {
         }
     }
 
+    public void setSwitch(){
+        if(isOpen){
+            closeSwitch();
+        }else{
+            openSwitch();
+        }
+    }
+
 
     public void setOnSwitchClickListener(OnSwitchClickListener onSwitchClickListener) {
         this.mOnSwitchClickListener = onSwitchClickListener;
     }
 
 
-    interface OnSwitchClickListener {
+    public interface OnSwitchClickListener {
 
-        void onSwitch(boolean isOpen);
+        void onSwitch(View v, boolean isOpen);
     }
 
 

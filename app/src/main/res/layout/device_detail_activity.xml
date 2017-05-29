@@ -61,6 +61,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_Temp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="23.0"
@@ -68,6 +69,7 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/tv_Temp_level"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -110,6 +112,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_Ph"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4.7"
@@ -117,6 +120,7 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/tv_ph_level"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -126,317 +130,77 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <GridView
-                android:id="@+id/gv_device_switch"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="2"
-                android:listSelector="@color/color_00ffffff"/>
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Light1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Light2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Heater1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Heater2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Pump"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_OxygenPump"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal">
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Rfu1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView
+                    android:id="@+id/dsv_Rfu2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/zhaom" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="照明灯1"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/zhaom" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="照明灯2"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/jiarb_white" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="水泵"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/jiarb_white" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="加热棒2"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="关闭"-->
-                            <!--android:textColor="@color/color_b3b3b3"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/shuib" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="照明灯1"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/zidy_white" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="自定义1"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/zidy_white" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="自定义2"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="100dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/add_device_bg_selector"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="40dp"-->
-                        <!--android:src="@drawable/zidy_white" />-->
-
-                    <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="自定义3"-->
-                            <!--android:textColor="@color/color_000000"-->
-                            <!--android:textSize="12sp" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginTop="10dp"-->
-                            <!--android:text="已开启"-->
-                            <!--android:textColor="@color/color_ffffff"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</LinearLayout>-->
-                <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

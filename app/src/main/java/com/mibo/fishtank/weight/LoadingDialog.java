@@ -37,6 +37,9 @@ public class LoadingDialog {
                 LinearLayout.LayoutParams.MATCH_PARENT));
     }
 
+
+
+
     private void baseShow(){
         mLoadingDialog.show();
         mLoadingView.startAnim();
@@ -47,6 +50,7 @@ public class LoadingDialog {
         baseShow();
     }
     public void show(String msg){
+
         mTextView.setText(msg);
         mLoadingDialog.setTitle(msg);
         baseShow();
