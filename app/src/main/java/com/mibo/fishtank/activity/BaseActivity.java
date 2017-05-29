@@ -2,12 +2,8 @@ package com.mibo.fishtank.activity;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-
-import com.mibo.fishtank.utils.StatusBarCompat;
 
 /**
  * Created by Administrator
@@ -20,7 +16,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.compat(this, Color.RED);
+//        StatusBarCompat.compat(this, Color.RED);
     }
 
     /**

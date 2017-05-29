@@ -17,9 +17,15 @@ import android.widget.Toast;
 
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
+import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity {
     private Context context = this;
@@ -31,6 +37,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         initView();
         initSDK();
     }
@@ -68,6 +77,16 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserLoginEvent(UserLoginOutEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            Toast.makeText(context, R.string.log_out_success, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, LaunchActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private class OnClickLeftBtnListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -102,7 +121,7 @@ public class MainActivity extends BaseActivity {
     private class OnClickLoginOutListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            mCloudApi.SignOut();
+            FishTankUserApiManager.getInstance().toSignOut();
         }
     }
 
@@ -173,4 +192,11 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

@@ -26,7 +26,7 @@ public class DataBaseManager {
         User user = new User();
         user.setUserName(name);
         user.setTel(tel);
-        user.save();
+        user.saveOrUpdate();
     }
 
     /**

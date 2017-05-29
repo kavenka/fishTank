@@ -56,7 +56,6 @@ public class LoadingDialog {
         if (mLoadingDialog != null) {
             mLoadingView.stopAnim();
             mLoadingDialog.dismiss();
-            mLoadingDialog = null;
         }
     }
 

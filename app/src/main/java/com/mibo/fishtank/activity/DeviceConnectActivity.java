@@ -8,6 +8,9 @@ import android.widget.Button;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.TitleBar;
 
+/**
+ * 设备入网标识语
+ */
 public class DeviceConnectActivity extends BaseActivity {
 
     @Override
@@ -37,7 +40,7 @@ public class DeviceConnectActivity extends BaseActivity {
     private class OnClickNextStepListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, SearchNewDeviceActivity.class);
+            Intent intent = new Intent(context, DeviceInNetActivity.class);
             startActivity(intent);
         }
     }

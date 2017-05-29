@@ -11,6 +11,9 @@ import android.widget.EditText;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.TitleBar;
 
+/**
+ * 配置设备密码
+ */
 public class AddDeviceActivity extends BaseActivity {
 
     private EditText deviceEdit;
@@ -45,8 +48,7 @@ public class AddDeviceActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             String devicePwd = deviceEdit.getText().toString();
-            Intent intent = new Intent(context,AddingDeviceToNetActivity.class);
-            intent.putExtra("devicePwd", devicePwd);
+            Intent intent = new Intent(context,DeviceInNetActivity.class);
             startActivity(intent);
         }
     }

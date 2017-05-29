@@ -29,7 +29,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     public void init() {
         mFishTankApi = new IFishTankApi(FishTankApp.getInstance());
-
         mFishTankApi.SetIFishTankApiInterface(this);
     }
 

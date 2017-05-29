@@ -3,11 +3,14 @@ package com.mibo.fishtank.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.landstek.iFishTank.CloudApi;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.AddingLoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
 public class AddingDeviceToNetActivity extends BaseActivity {
+
+    private CloudApi mCloudApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +18,7 @@ public class AddingDeviceToNetActivity extends BaseActivity {
         setContentView(R.layout.adding_device_to_net_activity);
         initView();
     }
+
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.adding_device_title);
@@ -32,4 +36,5 @@ public class AddingDeviceToNetActivity extends BaseActivity {
             finish();
         }
     }
+
 }

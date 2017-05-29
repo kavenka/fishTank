@@ -3,6 +3,7 @@ package com.mibo.fishtank;
 import android.app.Application;
 
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
+import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 
 import org.litepal.LitePal;
 
@@ -24,5 +25,6 @@ public class FishTankApp extends Application {
         mFishTankApp = this;
         LitePal.initialize(this);
         FishTankApiManager.getInstance().init();
+        FishTankUserApiManager.getInstance().init();
     }
 }

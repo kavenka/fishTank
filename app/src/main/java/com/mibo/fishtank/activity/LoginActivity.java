@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
+import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.FishTankmManage.event.UserLoginEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
@@ -22,6 +24,10 @@ import com.mibo.fishtank.utils.NetWorkUtils;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class LoginActivity extends BaseActivity {
     private boolean isExit = false;
@@ -38,6 +44,9 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         initSDK();
         getIntentData();
         initView();
@@ -111,11 +120,32 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(context, R.string.please_enter_the_correct_username_and_password, Toast.LENGTH_SHORT).show();
                 } else {
                     loadingDialog.show();
-                    mCloudApi.SignIn(name, pwd);
+                    FishTankUserApiManager.getInstance().toSignIn(name, pwd);
                 }
             } else {
                 Toast.makeText(context, "当前网络不可用", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserLoginEvent(UserLoginEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            PreferencesManager pm = PreferencesManager.getInstance(context);
+            pm.setBooleanValue("isLoginSuccess", true);
+            String name = nameEditTxt.getText().toString();
+            Constans.CURRENT_TEL = name;
+            pm.setStringValue("name", name);
+            pm.setStringValue("pwd", pwdEditTxt.getText().toString());
+            DataBaseManager.saveUser(name, name);
+            Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
+            loadingDialog.close();
+            finish();
+        } else {
+            loadingDialog.close();
+            Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -191,37 +221,18 @@ public class LoginActivity extends BaseActivity {
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case CloudApi.MSG_WHAT_CLOUDAPI:
-                    switch (msg.arg1) {
-                        case CloudApi.SIGNIN:
-                            if (IFishTankError.SUCCESS == msg.arg2) {
-                                PreferencesManager pm = PreferencesManager.getInstance(context);
-                                pm.setBooleanValue("isLoginSuccess", true);
-                                String name = nameEditTxt.getText().toString();
-                                Constans.CURRENT_TEL = name;
-                                pm.setStringValue("name", name);
-                                pm.setStringValue("pwd", pwdEditTxt.getText().toString());
-                                DataBaseManager.saveUser(name, name);
-                                Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(context, MainActivity.class);
-                                startActivity(intent);
-                                loadingDialog.close();
-                                finish();
-                            } else {
-                                loadingDialog.close();
-                                Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case CloudApi.ERROR:
-                            loadingDialog.close();
-                            Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    break;
                 case 0:
                     isExit = false;
                     break;
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }
