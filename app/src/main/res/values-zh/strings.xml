@@ -62,5 +62,16 @@
     <string name="edit_push_num">修改推送手机号码</string>
     <string name="timer_setting">灯光1定时器设置</string>
     <string name="add_scene">新增场景</string>
+    <string name="custom_days">自定义天数</string>
 
+    <string-array name="week">
+        <item>星期天</item>
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+    </string-array>
+    
 </resources>

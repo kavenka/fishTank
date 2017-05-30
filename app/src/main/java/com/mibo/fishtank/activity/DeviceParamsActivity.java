@@ -12,12 +12,12 @@ import android.widget.Toast;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.TitleBar;
 
-public class SetParamsActivity extends BaseActivity {
+public class DeviceParamsActivity extends BaseActivity {
 
     private String uid;
 
     public static Intent BuildIntent(Context context,String uid){
-        Intent intent = new Intent(context,SetParamsActivity.class);
+        Intent intent = new Intent(context,DeviceParamsActivity.class);
         intent.putExtra("uid",uid);
         return intent;
     }

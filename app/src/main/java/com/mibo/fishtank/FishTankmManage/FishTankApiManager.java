@@ -10,6 +10,8 @@ import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
+
 /**
  * Created by Monty on 2017/5/29.
  */
@@ -33,6 +35,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     /**
      * 设备登录
+     *
      * @param uid
      */
     public void loginDevice(String uid) {
@@ -74,14 +77,19 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
      */
     public void setTelParam(String uid, String... telParams) {
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
-        if (telParams.length > 4) {
+        if (telParams.length > 5) {
             new IllegalArgumentException("手机号码最多只能设置4个");
         }
-        msgSetParamCmd.Tel = telParams;
+        String[] p = telParams;
+        msgSetParamCmd.Tel = p;
 
         int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
         Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
     }
+//
+//    public void setTimerParams(int switchNumber,){
+//
+//    }
 
 
     @Override
@@ -150,16 +158,43 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
                 ", Ph=" + msgGetParamRsp.Ph +
                 ", PhMax=" + msgGetParamRsp.PhMax +
                 ", PhMin=" + msgGetParamRsp.PhMin +
-                ", PhCal=" + msgGetParamRsp.PhCal +
+                ", PhCal=" + Arrays.toString(msgGetParamRsp.PhCal) +
                 ", Temp=" + msgGetParamRsp.Temp +
                 ", TempMax=" + msgGetParamRsp.TempMax +
                 ", TempMin=" + msgGetParamRsp.TempMin +
                 ", ViewMode=" + msgGetParamRsp.ViewMode +
-                ", Alarms=" + msgGetParamRsp.Alarms +
-                ", Tel=" + msgGetParamRsp.Tel +
+                ", Alarms=" + formatAlarms(msgGetParamRsp.Alarms) +
+                ", Tel=" + Arrays.toString(msgGetParamRsp.Tel) +
                 '}');
+
 
     }
 
+
+    public String formatAlarms(IFishTankApi.Alarm[] alarms) {
+
+        if (alarms == null || alarms.length == 0) {
+            return "{}";
+        }
+        StringBuffer sb = new StringBuffer();
+        sb.append("{");
+        for (IFishTankApi.Alarm alarm : alarms) {
+            byte[] bytes = alarm.toBytes();
+            sb.append("{");
+            // 此处将weekmacks转换成二进制
+            byte weekMaks = bytes[0];
+            String s = Integer.toBinaryString((weekMaks & 0xFF) + 0x100).substring(1);
+            sb.append("week:");
+            sb.append(s + ",");
+
+            for (int i = 1; i < bytes.length; i++) {
+                sb.append((int) bytes[i] + ",");
+            }
+
+            sb.append("}");
+        }
+        sb.append("}");
+        return sb.toString();
+    }
 
 }

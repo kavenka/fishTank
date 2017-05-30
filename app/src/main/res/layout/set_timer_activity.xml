@@ -32,7 +32,7 @@
             android:layout_marginStart="15dp"
             android:text="1."
             android:textColor="@color/color_ffffff"
-            />
+            android:layout_marginLeft="15dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -87,7 +87,8 @@
             android:checked="true"
             android:textOff=""
             android:textOn=""
-            />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
 
         <View
             android:layout_width="match_parent"
@@ -159,7 +160,8 @@
             android:checked="true"
             android:textOff=""
             android:textOn=""
-            />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
 
         <View
             android:layout_width="match_parent"
@@ -178,7 +180,8 @@
             android:layout_marginStart="15dp"
             android:text="2."
             android:textColor="@color/color_ffffff"
-            />
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -198,7 +201,7 @@
             android:layout_marginStart="15dp"
             android:text="3."
             android:textColor="@color/color_ffffff"
-            />
+            android:layout_marginLeft="15dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -253,7 +256,8 @@
             android:checked="true"
             android:textOff=""
             android:textOn=""
-            />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
 
         <View
             android:layout_width="match_parent"
@@ -280,7 +284,7 @@
             android:layout_marginStart="15dp"
             android:text="4."
             android:textColor="@color/color_ffffff"
-            />
+            android:layout_marginLeft="15dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -335,7 +339,8 @@
             android:checked="false"
             android:textOff=""
             android:textOn=""
-            />
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp" />
 
         <View
             android:layout_width="match_parent"

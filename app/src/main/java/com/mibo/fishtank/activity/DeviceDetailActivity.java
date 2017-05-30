@@ -26,6 +26,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private LoadingDialog loadingDialog;
     private String uid = "5CCF7F07B170";
+//    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
     private TextView mTvPhLevel = null;
@@ -90,7 +91,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            Log.d("monty", "参数获取成功，更新到界面上");
+            Log.d("monty", "设备参数获取成功，更新到界面上");
             setDeviceParams(msgGetParamRsp);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
@@ -276,7 +277,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private class OnClickEditListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = SetParamsActivity.BuildIntent(context, uid);
+            Intent intent = DeviceParamsActivity.BuildIntent(context, uid);
             startActivity(intent);
         }
     }

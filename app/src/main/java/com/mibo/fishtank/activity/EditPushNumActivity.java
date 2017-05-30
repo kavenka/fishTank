@@ -21,6 +21,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Arrays;
+
 public class EditPushNumActivity extends BaseActivity {
 
     private LoadingDialog mLoadingDialog;
@@ -30,6 +32,7 @@ public class EditPushNumActivity extends BaseActivity {
     private EditText etNum3;
     private EditText etNum4;
 
+    private String uid;
 
     public static Intent BuildIntent(Context context, String uid) {
         Intent intent = new Intent(context, EditPushNumActivity.class);
@@ -50,6 +53,7 @@ public class EditPushNumActivity extends BaseActivity {
         if (TextUtils.isEmpty(uid)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
         } else {
+            this.uid = uid;
             FishTankApiManager.getInstance().getDeviceParam(uid);
         }
     }
@@ -84,7 +88,7 @@ public class EditPushNumActivity extends BaseActivity {
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            Log.d("monty", "手机号码获取成功，更新到界面上");
+            Log.d("monty", "手机号码获取成功，更新到界面上,telephont:" + Arrays.toString(msgGetParamRsp.Tel));
             setTelePhoneParams(msgGetParamRsp);
         } else {
             Toast.makeText(this, "手机号码获取失败", Toast.LENGTH_SHORT).show();
@@ -127,7 +131,7 @@ public class EditPushNumActivity extends BaseActivity {
         public void onClick(View v) {
             mLoadingDialog.show();
 
-            FishTankApiManager.getInstance().setTelParam(
+            FishTankApiManager.getInstance().setTelParam(uid,
                     checkPhoneNumber(etNum1.getText().toString())
                     , checkPhoneNumber(etNum2.getText().toString())
                     , checkPhoneNumber(etNum3.getText().toString())

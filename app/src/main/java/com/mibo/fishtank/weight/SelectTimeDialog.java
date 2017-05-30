@@ -3,12 +3,21 @@ package com.mibo.fishtank.weight;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.mibo.fishtank.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import static com.mibo.fishtank.R.style.dialog;
+import static java.lang.Integer.parseInt;
 
 /**
  * Created by Administrator
@@ -17,14 +26,19 @@ import java.util.List;
 
 public class SelectTimeDialog extends Dialog {
 
-    public SelectTimeDialog(Context context) {
-        super(context);
+    private TextView btnConfirm;
+    private PickerView pvHour;
+    private PickerView pvMinute;
+
+    private OnTimeSelectListener mOnTimeSelectListener;
+
+    public SelectTimeDialog(Context context, OnTimeSelectListener onTimeSelectListener) {
+        super(context, dialog);
+
+        this.mOnTimeSelectListener = onTimeSelectListener;
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
     }
 
-//    public SelectTimeDialog(Context context) {
-//        this(context);
-//
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,34 +48,67 @@ public class SelectTimeDialog extends Dialog {
         initView();
     }
 
+
     private void initView() {
-        PickerView minute_pv = (PickerView) findViewById(R.id.minute_pv);
-        PickerView second_pv = (PickerView) findViewById(R.id.second_pv);
-        List<String> data = new ArrayList<String>();
-        List<String> seconds = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            data.add("0" + i);
+        pvHour = (PickerView) findViewById(R.id.minute_pv);
+        pvMinute = (PickerView) findViewById(R.id.second_pv);
+        final List<String> hours = new ArrayList<String>();
+        List<String> minutes = new ArrayList<String>();
+        for (int i = 0; i < 24; i++) {
+            hours.add(i < 10 ? "0" + i : "" + i);
         }
         for (int i = 0; i < 60; i++) {
-            seconds.add(i < 10 ? "0" + i : "" + i);
+            minutes.add(i < 10 ? "0" + i : "" + i);
         }
-        minute_pv.setData(data);
-        minute_pv.setOnSelectListener(new PickerView.onSelectListener() {
+        pvHour.setData(hours);
 
+        pvMinute.setData(minutes);
+
+        btnConfirm = (TextView) findViewById(R.id.btn_confirm);
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelect(String text) {
-                Toast.makeText(getContext(), "选择了 " + text + " 分",
-                        Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                int hour = -1;
+                int minute = -1;
+
+                try {
+                    hour = parseInt(pvHour.getCurrentSelect());
+                    minute = Integer.parseInt(pvMinute.getCurrentSelect());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                mOnTimeSelectListener.onSelect(hour, minute);
+                dismiss();
             }
         });
-        second_pv.setData(seconds);
-        second_pv.setOnSelectListener(new PickerView.onSelectListener() {
+    }
 
-            @Override
-            public void onSelect(String text) {
-                Toast.makeText(getContext(), "选择了 " + text + " 秒",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+    public interface OnTimeSelectListener {
+        void onSelect(int hour, int minute);
+    }
+
+    public void show(@NonNull int hour, @NonNull int minute) {
+        super.show();
+        if (hour > 24 || hour < 0 || minute > 60 || minute < 0) {
+            new IllegalArgumentException("参数错误");
+        }
+        this.pvHour.setSelected(hour);
+        this.pvMinute.setSelected(minute);
+
+        Window window = this.getWindow();
+        window.setGravity(Gravity.CENTER); //可设置dialog的位置
+        window.getDecorView().setPadding(0, 0, 0, 0); //消除边距
+
+        WindowManager.LayoutParams lp = window.getAttributes();
+        int width = window.getWindowManager().getDefaultDisplay().getWidth();
+        lp.width = width - (int)(width*0.3);  // 宽度等于屏幕宽度减去屏幕宽度的30%
+        window.setAttributes(lp);
+    }
+
+    @Override
+    public void show() {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        show(hour, minute);
     }
 }

@@ -2,6 +2,7 @@ package com.mibo.fishtank.weight;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.FontMetricsInt;
@@ -45,7 +46,7 @@ public class PickerView extends View {
     private float mMaxTextAlpha = 255;
     private float mMinTextAlpha = 120;
 
-    private int mColorText = 0x333333;
+    private int mColorText = Color.WHITE;
 
     private int mViewHeight;
     private int mViewWidth;
@@ -98,6 +99,10 @@ public class PickerView extends View {
             mSelectListener.onSelect(mDataList.get(mCurrentSelected));
     }
 
+    public String getCurrentSelect(){
+        return mDataList.get(mCurrentSelected);
+    }
+
     public void setData(List<String> datas) {
         mDataList = datas;
         mCurrentSelected = datas.size() / 2;
@@ -134,7 +139,7 @@ public class PickerView extends View {
 
     private void init() {
         timer = new Timer();
-        mDataList = new ArrayList<String>();
+        mDataList = new ArrayList<>();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Style.FILL);
         mPaint.setTextAlign(Align.CENTER);
