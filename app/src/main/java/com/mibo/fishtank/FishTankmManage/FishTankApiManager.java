@@ -10,8 +10,6 @@ import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Arrays;
-
 /**
  * Created by Monty on 2017/5/29.
  */
@@ -34,7 +32,8 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     }
 
     /**
-     * 登录设备
+     * 设备登录
+     * @param uid
      */
     public void loginDevice(String uid) {
         Log.d("monty", "FishTankApiManager -> loginDevice -> uid:" + uid);
@@ -58,10 +57,28 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     /**
      * 设置设备参数
+     *
      * @param uid
      * @param msgSetParamCmd
      */
-    public void setDeviceParam(String uid,IFishTankApi.MsgSetParamCmd msgSetParamCmd){
+    public void setDeviceParam(String uid, IFishTankApi.MsgSetParamCmd msgSetParamCmd) {
+        int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
+        Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
+    }
+
+    /**
+     * 设置推送手机
+     *
+     * @param uid
+     * @param telParams 手机号
+     */
+    public void setTelParam(String uid, String... telParams) {
+        IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
+        if (telParams.length > 4) {
+            new IllegalArgumentException("手机号码最多只能设置4个");
+        }
+        msgSetParamCmd.Tel = telParams;
+
         int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
         Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
     }
@@ -138,7 +155,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
                 ", TempMax=" + msgGetParamRsp.TempMax +
                 ", TempMin=" + msgGetParamRsp.TempMin +
                 ", ViewMode=" + msgGetParamRsp.ViewMode +
-                ", Alarms=" + Arrays.toString(msgGetParamRsp.Alarms) +
+                ", Alarms=" + msgGetParamRsp.Alarms +
                 ", Tel=" + msgGetParamRsp.Tel +
                 '}');
 

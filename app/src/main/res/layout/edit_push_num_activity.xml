@@ -35,7 +35,7 @@
             android:text="13164737434"
             android:textColor="@color/color_b4ffffff"
             android:textSize="15sp"
-            />
+            android:layout_marginLeft="15dp" />
 
 
         <View
@@ -66,7 +66,7 @@
             android:text="13164737434"
             android:textColor="@color/color_b4ffffff"
             android:textSize="15sp"
-            />
+            android:layout_marginLeft="15dp" />
 
 
         <View
@@ -98,7 +98,7 @@
             android:textColor="@color/color_b4ffffff"
             android:textColorHint="@color/color_b4ffffff"
             android:textSize="15sp"
-            />
+            android:layout_marginLeft="15dp" />
 
 
         <View
@@ -130,7 +130,7 @@
             android:textColor="@color/color_b4ffffff"
             android:textColorHint="@color/color_b4ffffff"
             android:textSize="15sp"
-            />
+            android:layout_marginLeft="15dp" />
 
     </RelativeLayout>
 </LinearLayout>

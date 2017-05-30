@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity {
     private class OnClickPaiChaListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, DeviceDetailActivity.class);
+            Intent intent = DeviceDetailActivity.BuildIntent(context, "");
             startActivity(intent);
         }
     }
