@@ -97,7 +97,29 @@ public class LoginActivity extends BaseActivity {
         pwd = intent.getStringExtra("pwd");
     }
 
-
+    /**
+     * 用户登录回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserLoginEvent(UserLoginEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            PreferencesManager pm = PreferencesManager.getInstance(context);
+            pm.setBooleanValue("isLoginSuccess", true);
+            String name = nameEditTxt.getText().toString();
+            Constans.CURRENT_TEL = name;
+            pm.setStringValue("name", name);
+            pm.setStringValue("pwd", pwdEditTxt.getText().toString());
+            DataBaseManager.saveUser(name, name);
+            Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
+            loadingDialog.close();
+            finish();
+        } else {
+            loadingDialog.close();
+            Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
+        }
+    }
     private class OnClickLeftListener implements View.OnClickListener {
 
         @Override
@@ -105,6 +127,7 @@ public class LoginActivity extends BaseActivity {
             finish();
         }
     }
+
 
     /**
      * 登陆的点击事件
@@ -128,26 +151,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUserLoginEvent(UserLoginEvent event) {
-        if (IFishTankError.SUCCESS == event.msg.arg2) {
-            PreferencesManager pm = PreferencesManager.getInstance(context);
-            pm.setBooleanValue("isLoginSuccess", true);
-            String name = nameEditTxt.getText().toString();
-            Constans.CURRENT_TEL = name;
-            pm.setStringValue("name", name);
-            pm.setStringValue("pwd", pwdEditTxt.getText().toString());
-            DataBaseManager.saveUser(name, name);
-            Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            loadingDialog.close();
-            finish();
-        } else {
-            loadingDialog.close();
-            Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     /**
      * checkBox的点击事件

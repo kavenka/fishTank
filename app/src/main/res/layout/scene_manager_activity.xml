@@ -80,7 +80,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="智能排查"
                 android:textColor="@color/color_ffffff"
                 android:textSize="15sp"
                 />
@@ -88,6 +87,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/delete_scene"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="40dp"

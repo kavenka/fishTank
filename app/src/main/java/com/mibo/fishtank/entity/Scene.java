@@ -1,10 +1,9 @@
 package com.mibo.fishtank.entity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator
@@ -13,23 +12,41 @@ import java.util.List;
 
 public class Scene extends DataSupport {
     @Column(unique = true)
-    private String sceneName;
+    private String sceneID;//场景
+    private String name;//场景名字
+    private String user;//用户的手机号
 
-    private List<Device> devices = new ArrayList<>();
 
-    public String getSceneName() {
-        return sceneName;
+    public void parserEntity(JSONObject object) {
+        try {
+            sceneID = object.getString("sceneID");
+            name = object.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setSceneName(String sceneName) {
-        this.sceneName = sceneName;
+    public String getName() {
+        return name;
     }
 
-    public List<Device> getDevices() {
-        return devices;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDevices(List<Device> devices) {
-        this.devices = devices;
+    public String getSceneID() {
+        return sceneID;
+    }
+
+    public void setSceneID(String sceneID) {
+        this.sceneID = sceneID;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

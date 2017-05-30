@@ -5,6 +5,8 @@ import android.os.Message;
 
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.LSmartLink;
+import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
+import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 
@@ -76,6 +78,13 @@ public class FishTankUserApiManager {
     }
 
     /**
+     * 获取当前用户下的设备参数
+     */
+    public void toGetDevCfg() {
+        cloudApi.GetDevCfg();
+    }
+
+    /**
      * 添加或更新与本用户关联的设备
      */
     public void toAddOrUpdateDev(CloudApi.DevCfg cfg) {
@@ -93,6 +102,9 @@ public class FishTankUserApiManager {
                         case CloudApi.SIGNOUT://登出
                             EventBus.getDefault().postSticky(new UserLoginOutEvent(msg));
                             break;
+                        case CloudApi.GETDEVCFG://获取当前用户下的设备参数
+                            EventBus.getDefault().post(new DevCfgEvent(msg));
+                            break;
                         case CloudApi.SMSGETVERIFYCODE://发送验证码
                             break;
                         case CloudApi.MODIFY://修改密码
@@ -102,6 +114,7 @@ public class FishTankUserApiManager {
                         case CloudApi.REGISTER://注冊
                             break;
                         case CloudApi.ADDORUPDATEDEVCFG://添加或更新与本用户关联的设备
+                            EventBus.getDefault().postSticky(new AddOrUpSceneEvent(msg));
                             break;
                         case CloudApi.ERROR://错误
                             break;

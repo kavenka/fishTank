@@ -1,10 +1,11 @@
 package com.mibo.fishtank.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mibo.fishtank.R;
@@ -14,47 +15,86 @@ import java.util.List;
 
 /**
  * Created by Administrator
- * on 2017/5/26 0026.
+ * on 2017/5/31 0031.
  */
 
-public class SceneAdapter extends RecyclerView.Adapter<SceneAdapter.SceneHolder> {
-    private List<Scene> scenes;
+public class SceneAdapter extends BaseAdapter {
     private Context context;
-    private View.OnClickListener onClickListener;
+    private List<Scene> scenes;
 
-    public SceneAdapter(Context context, List<Scene> scenes, View.OnClickListener onClickListener) {
+    public SceneAdapter(Context context, List<Scene> scenes) {
         this.context = context;
         this.scenes = scenes;
-        this.onClickListener = onClickListener;
     }
 
     @Override
-    public SceneHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.scene_item_layout, parent, false);
-        return new SceneHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(SceneHolder holder, int position) {
-        holder.tv.setText(scenes.get(position).getSceneName());
-        holder.tv.setTag(position);
-        holder.tv.setOnClickListener(onClickListener);
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return scenes.size();
     }
 
+    @Override
+    public Object getItem(int position) {
+        return scenes.get(position);
+    }
 
-    class SceneHolder extends RecyclerView.ViewHolder {
-        TextView tv;
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        public SceneHolder(View view) {
-            super(view);
-            tv = (TextView) view.findViewById(R.id.scene_name);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        int type = getItemViewType(position);
+        SceneViewHolder sceneViewHolder = null;
+        AddBtnViewHolder addBtnViewHolder = null;
+        if (convertView == null) {
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
+            switch (type) {
+                case 0:
+                    convertView = layoutInflater.inflate(R.layout.scene_item_layout, null);
+                    sceneViewHolder = new SceneViewHolder();
+                    sceneViewHolder.sceneBtn = (TextView) convertView.findViewById(R.id.scene_name);
+                    sceneViewHolder.sceneBtn.setText(scenes.get(position).getName());
+                    convertView.setTag(sceneViewHolder);
+                    break;
+                case 1:
+                    convertView = layoutInflater.inflate(R.layout.scene_add_layout, null);
+                    addBtnViewHolder = new AddBtnViewHolder();
+                    addBtnViewHolder.addBtn = (LinearLayout) convertView.findViewById(R.id.add_new_scene_layout);
+                    convertView.setTag(addBtnViewHolder);
+                    break;
+            }
+        } else {
+            switch (type) {
+                case 0:
+                    sceneViewHolder = (SceneViewHolder) convertView.getTag();
+                    sceneViewHolder.sceneBtn.setText(scenes.get(position).getName());
+                    break;
+            }
+
+        }
+        return convertView;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == scenes.size() - 1) {
+            return 1;
+        } else {
+            return 0;
         }
     }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    private class SceneViewHolder {
+        TextView sceneBtn;
+    }
+
+    private class AddBtnViewHolder {
+        LinearLayout addBtn;
+    }
 }
-
-

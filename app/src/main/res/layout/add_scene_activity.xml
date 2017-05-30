@@ -90,26 +90,19 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <Button
         android:id="@+id/add_scene_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_terms_and_privacy_layout"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/white_btn_background_selector"
-        android:clickable="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="新增场景"
-            android:textColor="@color/color_000000"
-            android:textSize="17sp"
-            />
-    </LinearLayout>
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="新增场景"
+        android:textColor="@color/color_000000"
+        android:textSize="17sp"
+        />
 </LinearLayout>

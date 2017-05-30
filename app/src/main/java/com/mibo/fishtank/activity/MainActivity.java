@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,20 +19,31 @@ import android.widget.Toast;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.adapter.SceneFragmentAdapter;
+import com.mibo.fishtank.entity.DevCfgEntity;
+import com.mibo.fishtank.entity.Device;
+import com.mibo.fishtank.entity.Scene;
+import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.utils.PreferencesManager;
+import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+
 public class MainActivity extends BaseActivity {
     private Context context = this;
     private boolean isExit = false;
     private DrawerLayout drawerLayout;
-    private CloudApi mCloudApi;
+    private LoadingDialog loadingDialog;
+    private SceneFragmentAdapter adapter;
+    private ArrayList<Scene> scenes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +53,9 @@ public class MainActivity extends BaseActivity {
             EventBus.getDefault().register(this);
         }
         initView();
-        initSDK();
+        getSceneAndDeviceData();
     }
 
-    private void initSDK() {
-        mCloudApi = new CloudApi();
-        mCloudApi.SetHandler(mHandler);
-    }
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.main_title);
@@ -55,8 +63,15 @@ public class MainActivity extends BaseActivity {
         titleBar.setLeftImgRes(R.drawable.gengd);
         titleBar.setOnClickLeftListener(new OnClickLeftBtnListener());
 
+        loadingDialog = new LoadingDialog(context, "正在获取设备信息...");
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        scenes = new ArrayList<>();
+        adapter = new SceneFragmentAdapter(getSupportFragmentManager(), scenes);
+        viewPager.setAdapter(adapter);
 
         PreferencesManager pm = PreferencesManager.getInstance(context);
         String nikeName = pm.getStringValue("user_nikeName");
@@ -70,13 +85,39 @@ public class MainActivity extends BaseActivity {
         editPwdLinear.setOnClickListener(new OnClickSetPswListener());
         TextView loginOutTxt = (TextView) findViewById(R.id.main_login_out);
         loginOutTxt.setOnClickListener(new OnClickLoginOutListener());
-        LinearLayout paiChaLinear = (LinearLayout) findViewById(R.id.pai_cha_layout);
-        paiChaLinear.setOnClickListener(new OnClickPaiChaListener());
-        LinearLayout addNewDeviceLayout = (LinearLayout) findViewById(R.id.add_new_device_layout);
-        addNewDeviceLayout.setOnClickListener(new OnClickNewDeviceListener());
 
     }
 
+    private void getSceneAndDeviceData() {
+        loadingDialog.show();
+        FishTankUserApiManager.getInstance().toGetDevCfg();//获取设备信息和场景信息
+    }
+
+    /**
+     * 当前用户下的设备信息
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetDevCfgEvent(DevCfgEvent event) {
+        loadingDialog.close();
+        Message msg = event.msg;
+        if (IFishTankError.SUCCESS == msg.arg2) {
+            String resultJson = msg.obj.toString();
+            DevCfgEntity devCfgEntity = new DevCfgEntity();
+            devCfgEntity.parserEntity(resultJson);
+            scenes.clear();
+            scenes.addAll(devCfgEntity.scenes);//解析好的场景实体集合添加到viewPager中
+            adapter.notifyDataSetChanged();
+            DataBaseManager.saveScene(scenes);//存储场景数据库
+
+            ArrayList<Device> devices = devCfgEntity.devices;//解析好的设备实体集合
+        } else {
+            Toast.makeText(context, "获取场景和设备信息失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 当用户登录的回调
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserLoginEvent(UserLoginOutEvent event) {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
@@ -192,6 +233,7 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

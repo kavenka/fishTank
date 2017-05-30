@@ -35,7 +35,7 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
     }
 
     private void toGetDevices() {
-        mIFishTankApi.ScanDev("nil");
+        mIFishTankApi.ScanDev("");
     }
 
     /**
@@ -77,7 +77,7 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
     @Override
     public void ScanDevRsp(IFishTankApi.MsgScanDevRsp msgScanDevRsp) {
         Log.i("xiao", "ScanDevRsp: ");
-        loadingDialog.close();
+//        loadingDialog.close();
     }
 
     @Override

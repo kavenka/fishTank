@@ -15,40 +15,14 @@
         android:layout_height="wrap_content"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/scene_recycle"
+    <ListView
+        android:id="@+id/scene_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-
-    <LinearLayout
-        android:id="@+id/add_new_scene_layout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="30dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/white_btn_background_selector"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
+        android:listSelector="@android:color/transparent"
+        android:divider="@null"
+        />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            android:src="@drawable/add_icon"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="添加新场景"
-            android:textColor="@color/color_000000"
-            android:textSize="17sp"
-            />
-    </LinearLayout>
 </LinearLayout>
