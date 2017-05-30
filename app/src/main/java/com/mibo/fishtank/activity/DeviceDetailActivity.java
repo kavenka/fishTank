@@ -112,28 +112,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
 
         mDsvLight1.setSwitch(msgGetParamRsp.Light1);
-        mDsvLight1.setOnSwitchClickListener(this);
-
         mDsvLight2.setSwitch(msgGetParamRsp.Light2);
-        mDsvLight2.setOnSwitchClickListener(this);
-
         mDsvHeater1.setSwitch(msgGetParamRsp.Heater1);
-        mDsvHeater1.setOnSwitchClickListener(this);
-
         mDsvHeater2.setSwitch(msgGetParamRsp.Heater2);
-        mDsvHeater2.setOnSwitchClickListener(this);
-
         mDsvPump.setSwitch(msgGetParamRsp.Pump);
-        mDsvPump.setOnSwitchClickListener(this);
-
         mDsvOxygenPump.setSwitch(msgGetParamRsp.OxygenPump);
-        mDsvOxygenPump.setOnSwitchClickListener(this);
-
         mDsvRfu1.setSwitch(msgGetParamRsp.Rfu1);
-        mDsvRfu1.setOnSwitchClickListener(this);
-
         mDsvRfu2.setSwitch(msgGetParamRsp.Rfu2);
-        mDsvRfu2.setOnSwitchClickListener(this);
+
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);
 
@@ -190,6 +176,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvOxygenPump.setSwitchTitle("氧气泵");
         mDsvRfu1.setSwitchTitle("自定义1");
         mDsvRfu2.setSwitchTitle("自定义2");
+
         mDsvLight1.setSwitchIcon(R.drawable.zhaom);
         mDsvLight2.setSwitchIcon(R.drawable.zhaom);
         mDsvHeater1.setSwitchIcon(R.drawable.jiarb_white);
@@ -198,6 +185,15 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvOxygenPump.setSwitchIcon(R.drawable.shuib);
         mDsvRfu1.setSwitchIcon(R.drawable.zidy_white);
         mDsvRfu2.setSwitchIcon(R.drawable.zidy_white);
+
+        mDsvLight1.setOnSwitchClickListener(this);
+        mDsvLight2.setOnSwitchClickListener(this);
+        mDsvHeater1.setOnSwitchClickListener(this);
+        mDsvHeater2.setOnSwitchClickListener(this);
+        mDsvPump.setOnSwitchClickListener(this);
+        mDsvOxygenPump.setOnSwitchClickListener(this);
+        mDsvRfu1.setOnSwitchClickListener(this);
+        mDsvRfu2.setOnSwitchClickListener(this);
 
 
 //        mSwitchGrid = (GridView) findViewById(R.id.gv_device_switch);
