@@ -70,7 +70,7 @@ public class DeviceSwitchView extends LinearLayout {
     public void closeSwitch() {
         isOpen = false;
         mSwitchParameter.setText("已关闭");
-        mSwitchParameter.setAlpha(0.2f);
+        mSwitchParameter.setAlpha(0.3f);
         invalidate();
     }
 

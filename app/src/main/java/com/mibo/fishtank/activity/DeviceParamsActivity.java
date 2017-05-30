@@ -1,21 +1,41 @@
 package com.mibo.fishtank.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.TitleBar;
 
-public class SetParamsActivity extends BaseActivity {
+public class DeviceParamsActivity extends BaseActivity {
 
+    private String uid;
+
+    public static Intent BuildIntent(Context context,String uid){
+        Intent intent = new Intent(context,DeviceParamsActivity.class);
+        intent.putExtra("uid",uid);
+        return intent;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_params_activity);
         initView();
+
+        String uid = getIntent().getStringExtra("uid");
+        if(TextUtils.isEmpty(uid)){
+            Toast.makeText(this,"设备异常",Toast.LENGTH_SHORT).show();
+        }else{
+            this.uid = uid;
+            // TODO: 2017/5/30 do something
+
+
+        }
     }
 
     private void initView() {
@@ -57,7 +77,7 @@ public class SetParamsActivity extends BaseActivity {
     private class OnClickEditNumListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, EditPushNumActivity.class);
+            Intent intent = EditPushNumActivity.BuildIntent(context, uid);
             startActivity(intent);
         }
     }

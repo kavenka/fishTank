@@ -1,5 +1,6 @@
 package com.mibo.fishtank.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-    private String mDstDevUid = "5CCF7F07B170";
+    private String uid = "5CCF7F07B170";
+//    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
     private TextView mTvPhLevel = null;
@@ -44,6 +46,12 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private DeviceSwitchView mCurrentSwitchView;
 
+    public static Intent BuildIntent(Context context,String uid){
+        Intent intent = new Intent(context,DeviceDetailActivity.class);
+        intent.putExtra("uid",uid);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +64,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         }
 
         loadingDialog.show();
-        FishTankApiManager.getInstance().loginDevice(mDstDevUid);
+        FishTankApiManager.getInstance().loginDevice(uid);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginLstener(LoginEvent event) {
         if (event.loginSuccess) {
-            FishTankApiManager.getInstance().getDeviceParam(mDstDevUid);
+            FishTankApiManager.getInstance().getDeviceParam(uid);
         } else {
             Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
             loadingDialog.close();
@@ -83,7 +91,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            Log.d("monty", "参数获取成功，更新到界面上");
+            Log.d("monty", "设备参数获取成功，更新到界面上");
             setDeviceParams(msgGetParamRsp);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
@@ -92,12 +100,12 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onSetParamsListener(SetParamsEvent event){
-        if(event.result == 0){
-            if(mCurrentSwitchView!=null){
+    public void onSetParamsListener(SetParamsEvent event) {
+        if (event.result == 0) {
+            if (mCurrentSwitchView != null) {
                 mCurrentSwitchView.setSwitch();
             }
-        }else{
+        } else {
             Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
         }
         loadingDialog.close();
@@ -112,28 +120,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
 
         mDsvLight1.setSwitch(msgGetParamRsp.Light1);
-        mDsvLight1.setOnSwitchClickListener(this);
-
         mDsvLight2.setSwitch(msgGetParamRsp.Light2);
-        mDsvLight2.setOnSwitchClickListener(this);
-
         mDsvHeater1.setSwitch(msgGetParamRsp.Heater1);
-        mDsvHeater1.setOnSwitchClickListener(this);
-
         mDsvHeater2.setSwitch(msgGetParamRsp.Heater2);
-        mDsvHeater2.setOnSwitchClickListener(this);
-
         mDsvPump.setSwitch(msgGetParamRsp.Pump);
-        mDsvPump.setOnSwitchClickListener(this);
-
         mDsvOxygenPump.setSwitch(msgGetParamRsp.OxygenPump);
-        mDsvOxygenPump.setOnSwitchClickListener(this);
-
         mDsvRfu1.setSwitch(msgGetParamRsp.Rfu1);
-        mDsvRfu1.setOnSwitchClickListener(this);
-
         mDsvRfu2.setSwitch(msgGetParamRsp.Rfu2);
-        mDsvRfu2.setOnSwitchClickListener(this);
+
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);
 
@@ -153,7 +147,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         } else {
             return "正常";
         }
-
     }
 
 
@@ -190,6 +183,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvOxygenPump.setSwitchTitle("氧气泵");
         mDsvRfu1.setSwitchTitle("自定义1");
         mDsvRfu2.setSwitchTitle("自定义2");
+
         mDsvLight1.setSwitchIcon(R.drawable.zhaom);
         mDsvLight2.setSwitchIcon(R.drawable.zhaom);
         mDsvHeater1.setSwitchIcon(R.drawable.jiarb_white);
@@ -198,6 +192,15 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvOxygenPump.setSwitchIcon(R.drawable.shuib);
         mDsvRfu1.setSwitchIcon(R.drawable.zidy_white);
         mDsvRfu2.setSwitchIcon(R.drawable.zidy_white);
+
+        mDsvLight1.setOnSwitchClickListener(this);
+        mDsvLight2.setOnSwitchClickListener(this);
+        mDsvHeater1.setOnSwitchClickListener(this);
+        mDsvHeater2.setOnSwitchClickListener(this);
+        mDsvPump.setOnSwitchClickListener(this);
+        mDsvOxygenPump.setOnSwitchClickListener(this);
+        mDsvRfu1.setOnSwitchClickListener(this);
+        mDsvRfu2.setOnSwitchClickListener(this);
 
 
 //        mSwitchGrid = (GridView) findViewById(R.id.gv_device_switch);
@@ -247,7 +250,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 msgSetParamCmd.Rfu1 = isOpen;
                 break;
         }
-        FishTankApiManager.getInstance().setDeviceParam(mDstDevUid, msgSetParamCmd);
+        FishTankApiManager.getInstance().setDeviceParam(uid, msgSetParamCmd);
     }
 
 //    private List<DeviceSwitch> generateSwitchParameter(boolean Light1, boolean Light2, boolean Heater1, boolean Heater2, boolean Pump, boolean OxygenPump, boolean Rfu1, boolean Rfu2) {
@@ -274,7 +277,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private class OnClickEditListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, SetParamsActivity.class);
+            Intent intent = DeviceParamsActivity.BuildIntent(context, uid);
             startActivity(intent);
         }
     }

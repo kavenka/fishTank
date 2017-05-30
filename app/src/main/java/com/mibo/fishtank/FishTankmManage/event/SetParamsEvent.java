@@ -1,8 +1,7 @@
 package com.mibo.fishtank.FishTankmManage.event;
 
 /**
- * Created by Administrator
- * on 2017/5/30 0030.
+ * Created by Monty on 2017/5/30.
  */
 
 public class SetParamsEvent {

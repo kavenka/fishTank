@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/color_3c000000"
     android:orientation="vertical"
@@ -15,7 +15,7 @@
         android:paddingLeft="133dp"
         android:paddingRight="133dp"
         android:paddingTop="18dp"
-        android:text="开始时间"
+        android:text="自定义天数"
         android:textColor="@color/color_ffffff"
         android:textSize="15sp"
         />
@@ -42,7 +42,7 @@
             <com.mibo.fishtank.weight.PickerView
                 android:id="@+id/minute_pv"
                 android:layout_width="80dp"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 android:layout_alignRight="@+id/minute_tv"
                 />
 
@@ -68,7 +68,7 @@
             <com.mibo.fishtank.weight.PickerView
                 android:id="@+id/second_pv"
                 android:layout_width="80dp"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 />
 
             <TextView
@@ -93,7 +93,7 @@
         />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
