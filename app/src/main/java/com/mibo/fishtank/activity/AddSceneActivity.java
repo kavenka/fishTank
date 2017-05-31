@@ -25,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddSceneActivity extends BaseActivity {
 
@@ -121,7 +122,8 @@ public class AddSceneActivity extends BaseActivity {
             scene.setSceneID(str);
             Gson gson = new Gson();
             ArrayList<Scene> scenes = new ArrayList<>();
-            scenes.addAll(DataBaseManager.queryAllScene());
+            List<Scene> dataScenes = DataBaseManager.queryAllScene();
+            scenes.addAll(dataScenes);
             scenes.add(scene);
             String scenesArrayStr = gson.toJson(scenes);
             devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);

@@ -70,7 +70,6 @@ public class SceneSettingActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetDevCfgEvent(DevCfgEvent event) {
-        loadingDialog.close();
         Message msg = event.msg;
         if (IFishTankError.SUCCESS == msg.arg2) {
             String resultJson = msg.obj.toString();
@@ -80,9 +79,7 @@ public class SceneSettingActivity extends BaseActivity {
             scenes.addAll(devCfgEntity.scenes);
             scenes.add(new Scene());
             adapter.notifyDataSetChanged();
-
-            DataBaseManager.saveScene(scenes);//存储场景数据库
-
+            loadingDialog.close();
         } else {
             Toast.makeText(context, "获取场景和设备信息失败", Toast.LENGTH_SHORT).show();
         }
@@ -106,6 +103,7 @@ public class SceneSettingActivity extends BaseActivity {
                 Intent intent = new Intent(context, SceneManagerActivity.class);
                 intent.putExtra("sceneName", scenes.get(position).getName());
                 intent.putExtra("sceneID", scenes.get(position).getSceneID());
+                intent.putExtra("isLastOne", scenes.size() <= 2);
                 startActivity(intent);
             }
         }

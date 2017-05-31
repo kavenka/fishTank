@@ -14,7 +14,6 @@ public class Scene extends DataSupport {
     @Column(unique = true)
     private String sceneID;//场景
     private String name;//场景名字
-    private String user;//用户的手机号
 
 
     public void parserEntity(JSONObject object) {
@@ -42,11 +41,4 @@ public class Scene extends DataSupport {
         this.sceneID = sceneID;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 }

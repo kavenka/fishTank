@@ -37,7 +37,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
 
     @Override
     public void onBindViewHolder(DeviceListAdapter.DeviceHolder holder, int position) {
-        holder.tv.setText(devices.get(position).getDeviceName());
+        holder.tv.setText(devices.get(position).getUid());
         holder.layout.setTag(position);
         holder.layout.setOnClickListener(onClickListener);
     }
