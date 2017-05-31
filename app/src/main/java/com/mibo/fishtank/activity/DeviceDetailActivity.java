@@ -22,10 +22,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+/**
+ * Created by Monty on 2017/5/29.
+ */
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-    private String uid = "5CCF7F07B170";
+        private String uid = "5CCF7F07B170";
 //    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
@@ -46,9 +49,9 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private DeviceSwitchView mCurrentSwitchView;
 
-    public static Intent BuildIntent(Context context,String uid){
-        Intent intent = new Intent(context,DeviceDetailActivity.class);
-        intent.putExtra("uid",uid);
+    public static Intent BuildIntent(Context context, String uid) {
+        Intent intent = new Intent(context, DeviceDetailActivity.class);
+        intent.putExtra("uid", uid);
         return intent;
     }
 

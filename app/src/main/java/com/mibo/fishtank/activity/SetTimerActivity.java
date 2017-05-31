@@ -15,6 +15,10 @@ import com.mibo.fishtank.weight.TitleBar;
 
 import java.util.Arrays;
 
+/**
+ * 开关定时设置
+ * Created by Monty on 2017/5/30.
+ */
 public class SetTimerActivity extends BaseActivity implements View.OnClickListener {
 
     private int mHour = -1;
@@ -78,7 +82,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
                 mHour = hour;
                 mMinute = minute;
                 v.setTime(hour, minute);
-                showWeekDialog(v, new boolean[]{false, false, false, false, false, false, false});
+                showWeekDialog(v, v.getWeek());
             }
         });
         if (mHour == -1 || mMinute == -1) {  // 未设置过默认显示当前时间
@@ -91,7 +95,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     private void showWeekDialog(final TimerView v, boolean[] weeksBool) {
         new SelectWeekDialog(context, weeksBool, new SelectWeekDialog.OnWeekSelectListener() {
             @Override
-            public void onCheck(SelectWeekDialog dialog,boolean[] value) {
+            public void onCheck(SelectWeekDialog dialog, boolean[] value) {
 
                 Log.d("monty", "oncheck:" + Arrays.toString(value));
                 boolean result = v.setWeek(value);

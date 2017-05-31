@@ -10,8 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="18dp"
-        android:paddingLeft="133dp"
-        android:paddingRight="133dp"
         android:paddingTop="18dp"
         android:text="自定义天数"
         android:textColor="@color/color_ffffff"

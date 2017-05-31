@@ -115,8 +115,14 @@ public class TimerView extends RelativeLayout {
     }
 
     public boolean[] getWeek() {
-        String Week = this.tvWeek.getText().toString();
-        String[] week = Week.split(",");
+        String text = this.tvWeek.getText().toString();
+
+        String[] week = new String[7];
+        try {
+            week = text.split(",");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         boolean[] weeksBool = new boolean[7];
         for (int i = 0; i < weeks.length; i++) {
             for (int j = 0; j < week.length; j++) {
