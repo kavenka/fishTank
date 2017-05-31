@@ -8,11 +8,16 @@ import android.util.Log;
 import android.view.View;
 
 import com.landstek.iFishTank.IFishTankApi;
+import com.mibo.fishtank.FishTankmManage.event.ScanDevEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.adapter.DeviceListAdapter;
 import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -24,10 +29,14 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
     private ArrayList<Device> devices;
     private IFishTankApi mIFishTankApi;
     private LoadingDialog loadingDialog;
+    private DeviceListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         setContentView(R.layout.search_new_device_activity);
         initSDK();
         initView();
@@ -59,14 +68,28 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // TODO: 2017/5/26 0026 获取到的设备列表
         devices = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Device device = new Device();
-            device.setDeviceName("value" + i);
-            devices.add(device);
-        }
-        DeviceListAdapter adapter = new DeviceListAdapter(context, devices, new OnClickDeviceItemListener());
+        adapter = new DeviceListAdapter(context, devices, new OnClickDeviceItemListener());
         recyclerView.setAdapter(adapter);
 
+    }
+
+    /**
+     * 扫描设备回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onScanDevEvent(ScanDevEvent event) {
+        IFishTankApi.MsgScanDevRsp msgScanDevRsp = event.msgScanDevRsp;
+        loadingDialog.close();
+        Device device = new Device();
+        device.setHWVer(msgScanDevRsp.HWVer);
+        device.setIp(msgScanDevRsp.Ip);
+        device.setModel(msgScanDevRsp.Model);
+        device.setPort(msgScanDevRsp.Port);
+        device.setSWVer(msgScanDevRsp.SWVer);
+        device.setUid(msgScanDevRsp.Uid);
+        devices.clear();
+        devices.add(device);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -77,7 +100,7 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
     @Override
     public void ScanDevRsp(IFishTankApi.MsgScanDevRsp msgScanDevRsp) {
         Log.i("xiao", "ScanDevRsp: ");
-//        loadingDialog.close();
+        EventBus.getDefault().post(new ScanDevEvent(msgScanDevRsp));
     }
 
     @Override
@@ -107,9 +130,16 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
         @Override
         public void onClick(View v) {
             int pos = (int) v.getTag();
-            Intent intent = new Intent(context, DeviceInNetActivity.class);
-            intent.putExtra("sceneName", devices.get(pos).getDeviceName());
+            Intent intent = new Intent(context, AddDeviceActivity.class);
+            intent.putExtra("Uid", devices.get(pos).getUid());
             startActivity(intent);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
 }

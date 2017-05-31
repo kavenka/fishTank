@@ -56,6 +56,10 @@ public class TitleBar extends RelativeLayout {
         centerStr.setText(str);
     }
 
+    public void setCenterStr(String str) {
+        centerStr.setText(str);
+    }
+
     public void setRightStr(String str) {
         rightTxt.setText(str);
     }

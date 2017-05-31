@@ -24,7 +24,7 @@ public class SceneFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new SceneFragment();
+        return  SceneFragment.newInstance();
     }
 
     @Override

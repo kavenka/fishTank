@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private LoadingDialog loadingDialog;
     private SceneFragmentAdapter adapter;
     private ArrayList<Scene> scenes;
+    private TitleBar titleBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void initView() {
-        TitleBar titleBar = (TitleBar) findViewById(R.id.main_title);
-        titleBar.setCenterStr(R.string.main_title_txt);
+        titleBar = (TitleBar) findViewById(R.id.main_title);
         titleBar.setLeftImgRes(R.drawable.gengd);
         titleBar.setOnClickLeftListener(new OnClickLeftBtnListener());
 
@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
         scenes = new ArrayList<>();
         adapter = new SceneFragmentAdapter(getSupportFragmentManager(), scenes);
+        viewPager.addOnPageChangeListener(new OnPagerChange());
         viewPager.setAdapter(adapter);
 
         PreferencesManager pm = PreferencesManager.getInstance(context);
@@ -107,6 +108,7 @@ public class MainActivity extends BaseActivity {
             scenes.clear();
             scenes.addAll(devCfgEntity.scenes);//解析好的场景实体集合添加到viewPager中
             adapter.notifyDataSetChanged();
+            titleBar.setCenterStr(scenes.get(0).getName());
             DataBaseManager.saveScene(scenes);//存储场景数据库
 
             ArrayList<Device> devices = devCfgEntity.devices;//解析好的设备实体集合
@@ -166,21 +168,24 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private class OnClickPaiChaListener implements View.OnClickListener {
+
+    private class OnPagerChange implements ViewPager.OnPageChangeListener {
         @Override
-        public void onClick(View v) {
-            Intent intent = DeviceDetailActivity.BuildIntent(context, "");
-            startActivity(intent);
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            titleBar.setCenterStr(scenes.get(position).getName());
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 
-    private class OnClickNewDeviceListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, AddNewDeviceActivity.class);
-            startActivity(intent);
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

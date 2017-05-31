@@ -37,6 +37,7 @@ public class DataBaseManager {
         DataSupport.saveAll(scenes);
     }
 
+
     /**
      * 插入新的场景
      */

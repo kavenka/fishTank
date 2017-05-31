@@ -31,6 +31,7 @@ public class SceneManagerActivity extends BaseActivity {
     private String sceneName;
     private LoadingDialog loadingDialog;
     private String sceneID;
+    private boolean isLastOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,14 @@ public class SceneManagerActivity extends BaseActivity {
         Intent intent = getIntent();
         sceneName = intent.getStringExtra("sceneName");
         sceneID = intent.getStringExtra("sceneID");
+        isLastOne = intent.getBooleanExtra("isLastOne", false);
     }
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.scene_manager_title);
         titleBar.setCenterStr(R.string.scene_manager);
         titleBar.setOnClickLeftListener(new OnClickLeftListener());
-        loadingDialog = new LoadingDialog(context,"正在删除场景...");
+        loadingDialog = new LoadingDialog(context, "正在删除场景...");
 
         TextView sceneNameTxt = (TextView) findViewById(R.id.scene_name);
         sceneNameTxt.setText(sceneName);
@@ -87,6 +89,10 @@ public class SceneManagerActivity extends BaseActivity {
     private class OnClickDeleteSceneListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if (isLastOne) {
+                Toast.makeText(context, "至少保留一个场景!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             loadingDialog.show();
             CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
             devCfg.Type = 0;
@@ -110,6 +116,7 @@ public class SceneManagerActivity extends BaseActivity {
             FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
