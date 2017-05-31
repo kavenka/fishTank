@@ -63,14 +63,13 @@ public class SelectWeekDialog extends Dialog {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnWeekSelectListener.onCheck(checkBoxValue);
-                dismiss();
+                mOnWeekSelectListener.onCheck(SelectWeekDialog.this,checkBoxValue);
             }
         });
     }
 
     public interface OnWeekSelectListener {
-        void onCheck(boolean[] value);
+        void onCheck(SelectWeekDialog dialog,boolean[] value);
     }
 
     public void show(@NonNull int hour, @NonNull int minute) {
