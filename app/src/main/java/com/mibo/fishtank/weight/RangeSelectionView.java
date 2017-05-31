@@ -191,6 +191,16 @@ public class RangeSelectionView extends View {
     float beginNum = 0;
     float endNum = 1000;
 
+    public void setRange(float min,float max){
+        if(min<=max){
+            throw new IllegalArgumentException("mix的值 必须小于 max的值");
+        }
+        beginNum = min;
+        endNum = max;
+
+        invalidate();
+    }
+
     //计算进度数值
     private float getProgressNum(float progress) {
 

@@ -2,6 +2,7 @@ package com.mibo.fishtank.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.landstek.iFishTank.IFishTankApi;
+import com.mibo.fishtank.FishTankmManage.DeviceParams;
+import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
@@ -59,14 +62,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail_activity);
-        initView();
-        loadingDialog.show();
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
+        initView();
         loadingDialog.show();
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this,uid));
         FishTankApiManager.getInstance().loginDevice(uid);
     }
 
@@ -95,11 +98,21 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         int result = event.result;
         if (result == 0) {
             Log.d("monty", "设备参数获取成功，更新到界面上");
-            setDeviceParams(msgGetParamRsp);
+            setDeviceParams(DeviceParamsUtil.parseDeviceParams(msgGetParamRsp));
+            boolean b = DeviceParamsUtil.saveDeviceParams(this, uid, msgGetParamRsp);
+            if(b){
+                Log.d("monty", "参数保存成功");
+            }else{
+                Log.d("monty", "参数保存失败");
+            }
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
         }
         loadingDialog.close();
+    }
+
+    private void saveDeviceParams(DeviceParams deviceParams){
+        SharedPreferences sp = getSharedPreferences("",Context.MODE_PRIVATE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -114,22 +127,24 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
-    public void setDeviceParams(IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
-        mTvPh.setText(msgGetParamRsp.Ph + "");
-        mTvTemp.setText(msgGetParamRsp.Temp + "");
+    public void setDeviceParams(DeviceParams deviceParams) {
+        if(deviceParams==null){
+            return;
+        }
+        mTvPh.setText(deviceParams.Ph + "");
+        mTvTemp.setText(deviceParams.Temp + "");
 
-        mTvPhLevel.setText(sumLevel(msgGetParamRsp.Ph, msgGetParamRsp.PhMax, msgGetParamRsp.PhMin));
-        mTvTempLevel.setText(sumLevel(msgGetParamRsp.Temp, msgGetParamRsp.TempMax, msgGetParamRsp.TempMin));
+        mTvPhLevel.setText(sumLevel(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin));
+        mTvTempLevel.setText(sumLevel(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin));
 
-
-        mDsvLight1.setSwitch(msgGetParamRsp.Light1);
-        mDsvLight2.setSwitch(msgGetParamRsp.Light2);
-        mDsvHeater1.setSwitch(msgGetParamRsp.Heater1);
-        mDsvHeater2.setSwitch(msgGetParamRsp.Heater2);
-        mDsvPump.setSwitch(msgGetParamRsp.Pump);
-        mDsvOxygenPump.setSwitch(msgGetParamRsp.OxygenPump);
-        mDsvRfu1.setSwitch(msgGetParamRsp.Rfu1);
-        mDsvRfu2.setSwitch(msgGetParamRsp.Rfu2);
+        mDsvLight1.setSwitch(deviceParams.Light1);
+        mDsvLight2.setSwitch(deviceParams.Light2);
+        mDsvHeater1.setSwitch(deviceParams.Heater1);
+        mDsvHeater2.setSwitch(deviceParams.Heater2);
+        mDsvPump.setSwitch(deviceParams.Pump);
+        mDsvOxygenPump.setSwitch(deviceParams.OxygenPump);
+        mDsvRfu1.setSwitch(deviceParams.Rfu1);
+        mDsvRfu2.setSwitch(deviceParams.Rfu2);
 
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);

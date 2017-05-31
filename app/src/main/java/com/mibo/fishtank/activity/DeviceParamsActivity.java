@@ -10,11 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.weight.RangeSelectionView;
 import com.mibo.fishtank.weight.TitleBar;
 
 public class DeviceParamsActivity extends BaseActivity {
 
     private String uid;
+
+    private RangeSelectionView rangePh;
+    private RangeSelectionView rangeTemp;
+
 
     public static Intent BuildIntent(Context context,String uid){
         Intent intent = new Intent(context,DeviceParamsActivity.class);
@@ -33,8 +38,6 @@ public class DeviceParamsActivity extends BaseActivity {
         }else{
             this.uid = uid;
             // TODO: 2017/5/30 do something
-
-
         }
     }
 
@@ -58,6 +61,9 @@ public class DeviceParamsActivity extends BaseActivity {
         deng2Layout.setOnClickListener(new OnClickDengListener());
         deng3Layout.setOnClickListener(new OnClickDengListener());
         deng4Layout.setOnClickListener(new OnClickDengListener());
+
+        rangePh = (RangeSelectionView) findViewById(R.id.range_ph);
+        rangeTemp = (RangeSelectionView) findViewById(R.id.range_temp);
     }
 
     private class OnClickLeftListener implements View.OnClickListener {

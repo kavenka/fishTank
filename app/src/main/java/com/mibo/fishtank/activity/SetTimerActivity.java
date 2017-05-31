@@ -45,6 +45,11 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         this.timerView3 = (TimerView) findViewById(R.id.timerView3);
         this.timerView4 = (TimerView) findViewById(R.id.timerView4);
 
+        this.timerView1.setIndexText(1);
+        this.timerView2.setIndexText(2);
+        this.timerView3.setIndexText(3);
+        this.timerView4.setIndexText(4);
+
         this.timerView1.setOnClickListener(this);
         this.timerView2.setOnClickListener(this);
         this.timerView3.setOnClickListener(this);
