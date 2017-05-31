@@ -13,7 +13,7 @@
         android:paddingLeft="133dp"
         android:paddingRight="133dp"
         android:paddingTop="18dp"
-        android:text="开始时间"
+        android:text="自定义天数"
         android:textColor="@color/color_ffffff"
         android:textSize="15sp" />
 
