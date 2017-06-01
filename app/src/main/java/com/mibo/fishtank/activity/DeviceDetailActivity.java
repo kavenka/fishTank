@@ -31,8 +31,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-        private String uid = "5CCF7F07B170";
-//    private String uid = "5CCF7F07AB24";
+//        private String uid = "5CCF7F07B170";
+    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
     private TextView mTvPhLevel = null;
@@ -70,6 +70,13 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         initView();
         loadingDialog.show();
         setDeviceParams(DeviceParamsUtil.getDeviceParams(this,uid));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadingDialog.show();
         FishTankApiManager.getInstance().loginDevice(uid);
     }
 

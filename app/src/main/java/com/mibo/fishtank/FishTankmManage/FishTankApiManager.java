@@ -59,6 +59,24 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     }
 
     /**
+     * 设置温度和ph值
+     * @param uid
+     * @param phMin
+     * @param phMax
+     * @param tempMin
+     * @param tempMax
+     */
+    public void setPhAndTempParam(String uid, float phMin, float phMax, float tempMin, float tempMax) {
+        IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
+        msgSetParamCmd.PhMin = phMin;
+        msgSetParamCmd.PhMax = phMax;
+        msgSetParamCmd.TempMin = tempMin;
+        msgSetParamCmd.TempMax = tempMax;
+
+        setDeviceParam(uid, msgSetParamCmd);
+    }
+
+    /**
      * 设置设备参数
      *
      * @param uid

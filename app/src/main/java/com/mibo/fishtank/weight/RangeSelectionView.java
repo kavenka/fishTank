@@ -189,11 +189,12 @@ public class RangeSelectionView extends View {
 
     //进度范围
     float beginNum = 0;
-    float endNum = 1000;
+    float endNum = 10;
 
-    public void setRange(float min,float max){
-        if(min<=max){
-            throw new IllegalArgumentException("mix的值 必须小于 max的值");
+    public void setRange(float min, float max) {
+        if (min >= max) {
+            Log.e("monty", "min : " + min+ " , max : " + max);
+            throw new IllegalArgumentException("min的值 必须小于 max的值");
         }
         beginNum = min;
         endNum = max;
@@ -203,9 +204,7 @@ public class RangeSelectionView extends View {
 
     //计算进度数值
     private float getProgressNum(float progress) {
-
         return (int) progress / (width - 2 * marginhorizontal) * (endNum - beginNum);
-
     }
 
     //初始化画笔
@@ -256,9 +255,9 @@ public class RangeSelectionView extends View {
         //起始点连接线
         canvas.drawLine(pointStart + circleRadius, lineY, pointEnd - circleRadius, lineY, paintConnectLine);
         Rect rect = new Rect();
-        paintText.getTextBounds(numStart + "", 0, (numStart + "").length(), rect);
+        paintText.getTextBounds(numStart + "", 0, (numStart + "").length() - 1, rect);
         textWidth = rect.width();
-        float textX = pointStart - textWidth/2 - circleRadius/2;
+        float textX = pointStart + circleRadius / 2 - textWidth / 2;
         //起点数值
         canvas.drawText(format(numStart), textX, textY, paintText);
         paintText.getTextBounds(numEnd + "", 0, (numEnd + "").length(), rect);
@@ -269,9 +268,9 @@ public class RangeSelectionView extends View {
 
     }
 
-    String format(float f){
+    String format(float f) {
         BigDecimal b = new BigDecimal(f);
-        return  b.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue()+"";
+        return b.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue() + "";
 
     }
 
