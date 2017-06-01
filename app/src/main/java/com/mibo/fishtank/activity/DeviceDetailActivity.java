@@ -31,8 +31,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-//        private String uid = "5CCF7F07B170";
-    private String uid = "5CCF7F07AB24";
+    private String uid = "5CCF7F07B170";
+//    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
     private TextView mTvPhLevel = null;
@@ -69,7 +69,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
         initView();
         loadingDialog.show();
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this,uid));
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, uid));
 
     }
 
@@ -105,11 +105,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         int result = event.result;
         if (result == 0) {
             Log.d("monty", "设备参数获取成功，更新到界面上");
-            setDeviceParams(DeviceParamsUtil.parseDeviceParams(msgGetParamRsp));
+            setDeviceParams(DeviceParamsUtil.parseMsgGetParamRep2DeviceParams(msgGetParamRsp));
             boolean b = DeviceParamsUtil.saveDeviceParams(this, uid, msgGetParamRsp);
-            if(b){
+            if (b) {
                 Log.d("monty", "参数保存成功");
-            }else{
+            } else {
                 Log.d("monty", "参数保存失败");
             }
         } else {
@@ -118,8 +118,8 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
-    private void saveDeviceParams(DeviceParams deviceParams){
-        SharedPreferences sp = getSharedPreferences("",Context.MODE_PRIVATE);
+    private void saveDeviceParams(DeviceParams deviceParams) {
+        SharedPreferences sp = getSharedPreferences("", Context.MODE_PRIVATE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -135,7 +135,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
     public void setDeviceParams(DeviceParams deviceParams) {
-        if(deviceParams==null){
+        if (deviceParams == null) {
             return;
         }
         mTvPh.setText(deviceParams.Ph + "");

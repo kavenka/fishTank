@@ -60,20 +60,41 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     /**
      * 设置温度和ph值
+     *
      * @param uid
-     * @param phMin
-     * @param phMax
-     * @param tempMin
-     * @param tempMax
+     * @param deviceParams
      */
-    public void setPhAndTempParam(String uid, float phMin, float phMax, float tempMin, float tempMax) {
+    public void setPhAndTempParams(String uid, DeviceParams deviceParams) {
+
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
-        msgSetParamCmd.PhMin = phMin;
-        msgSetParamCmd.PhMax = phMax;
-        msgSetParamCmd.TempMin = tempMin;
-        msgSetParamCmd.TempMax = tempMax;
+        msgSetParamCmd.PhMin = deviceParams.PhMin;
+        msgSetParamCmd.PhMax = deviceParams.PhMax;
+        msgSetParamCmd.TempMin = deviceParams.TempMin;
+        msgSetParamCmd.TempMax = deviceParams.TempMax;
 
         setDeviceParam(uid, msgSetParamCmd);
+
+    }
+
+    /**
+     * 设置定时器
+     *
+     * @param uid
+     * @param alarm
+     */
+    public void setTimerParams(String uid, DeviceParams.Alarm[] alarm) {
+
+        IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
+        if (msgSetParamCmd.Alarms == null) {
+            msgSetParamCmd.Alarms = new IFishTankApi.Alarm[alarm.length];
+        }
+        for (int i = 0; i < alarm.length; i++) {
+            IFishTankApi.Alarm iAlarm = new IFishTankApi.Alarm();
+            iAlarm.fromBytes(alarm[i].toBytes());
+            msgSetParamCmd.Alarms[i] = iAlarm;
+        }
+        setDeviceParam(uid, msgSetParamCmd);
+
     }
 
     /**
@@ -149,10 +170,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     public void FtSetParamRsp(String uid, int result) {
         Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> uid=" + uid + " , result=" + result);
 
-        SetParamsEvent setParamsEvent = new SetParamsEvent();
-        setParamsEvent.uid = uid;
-        setParamsEvent.result = result;
-        EventBus.getDefault().post(setParamsEvent);
+        EventBus.getDefault().post(new SetParamsEvent(uid, result));
     }
 
     @Override
@@ -199,13 +217,13 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         for (IFishTankApi.Alarm alarm : alarms) {
             byte[] bytes = alarm.toBytes();
             sb.append("{");
-            // 此处将weekmacks转换成二进制
-            byte weekMaks = bytes[0];
-            String s = Integer.toBinaryString((weekMaks & 0xFF) + 0x100).substring(1);
-            sb.append("week:");
-            sb.append(s + ",");
+//            // 此处将weekmacks转换成二进制
+//            byte weekMaks = bytes[0];
+//            String s = Integer.toBinaryString((weekMaks & 0xFF) + 0x100).substring(1);
+//            sb.append("week:");
+//            sb.append(s + ",");
 
-            for (int i = 1; i < bytes.length; i++) {
+            for (int i = 0; i < bytes.length; i++) {
                 sb.append((int) bytes[i] + ",");
             }
 

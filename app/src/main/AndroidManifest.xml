@@ -112,14 +112,16 @@
             >
         </activity>
         <activity
-            android:name=".activity.SetParamsActivity"
+            android:name=".activity.DeviceParamsActivity"
             android:theme="@style/TranslucentTheme"
             >
+
         </activity>
         <activity
             android:name=".activity.DeviceDetailActivity"
             android:theme="@style/TranslucentTheme"
             >
+
         </activity>
         <activity
             android:name=".activity.EditPushNumActivity"
@@ -130,6 +132,7 @@
             android:name=".activity.SetTimerActivity"
             android:theme="@style/TranslucentTheme"
             >
+
         </activity>
         <activity
             android:name=".activity.AddSceneActivity"

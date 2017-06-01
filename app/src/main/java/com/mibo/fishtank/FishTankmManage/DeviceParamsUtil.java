@@ -32,7 +32,7 @@ public class DeviceParamsUtil {
      * @param msgGetParamRsp
      */
     public static boolean saveDeviceParams(Context context, String uid, IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
-        DeviceParams deviceParams = DeviceParamsUtil.parseDeviceParams(msgGetParamRsp);
+        DeviceParams deviceParams = DeviceParamsUtil.parseMsgGetParamRep2DeviceParams(msgGetParamRsp);
         return DeviceParamsUtil.saveDeviceParams(context,uid, deviceParams);
     }
 
@@ -55,13 +55,14 @@ public class DeviceParamsUtil {
         return deviceParams;
     }
 
+
     /**
      * 封装DeviceParams
      *
      * @param msgGetParamRsp
      * @return
      */
-    public static DeviceParams parseDeviceParams(IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
+    public static DeviceParams parseMsgGetParamRep2DeviceParams(IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
         DeviceParams deviceParams = new DeviceParams();
 
         deviceParams.Pump = msgGetParamRsp.Pump;

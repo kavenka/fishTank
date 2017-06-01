@@ -141,13 +141,12 @@ public class TimerView extends RelativeLayout {
         this.tvIndex.setText(index + "");
     }
 
-    public void setSwitch(boolean isOpen) {
-        this.tvSwitch.setText(isOpen ? "开启" : "关闭");
+    public void setSwitch(boolean onOff) {
+        this.toggleButton.setChecked(onOff);
     }
 
-    public boolean getSwitch() {
-        String text = this.tvSwitch.getText().toString();
-        return "开启".equals(text);
+    public void setOnOff(boolean isOpen){
+        this.tvSwitch.setText(isOpen ? "开启" : "关闭");
     }
 
     public void setOnToggleChangeListener(final OnToggleChangeListener onToggleChangeListener) {

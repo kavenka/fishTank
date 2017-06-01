@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/set_params_activity"
     android:layout_width="match_parent"
@@ -21,11 +22,21 @@
         android:textColor="@color/color_ffffff"
         android:textSize="15sp" />
 
-    <com.mibo.fishtank.weight.RangeSelectionView
-        android:id="@+id/range_ph"
+    <LinearLayout
+        android:id="@+id/range_ph_container"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/color_32ffffff" />
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.mibo.fishtank.weight.RangeSeekBar
+            android:id="@+id/range_ph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:absoluteMaxValue="40"
+            app:absoluteMinValue="0" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/wendu_fanwei"
@@ -35,16 +46,30 @@
         android:text="温度范围："
         android:textColor="@color/color_ffffff"
         android:textSize="15sp" />
-    <com.mibo.fishtank.weight.RangeSelectionView
-        android:id="@+id/range_temp"
+
+    <LinearLayout
+        android:id="@+id/range_temp_container"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/color_32ffffff" />
+        android:layout_height="60dp"
+        android:background="@color/color_32ffffff"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.mibo.fishtank.weight.RangeSeekBar
+            android:id="@+id/range_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:absoluteMaxValue="40"
+            app:absoluteMinValue="0" />
+    </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_b4ffffff" />
+
     <RelativeLayout
         android:id="@+id/dengguang1_layout"
         android:layout_width="match_parent"
