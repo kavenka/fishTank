@@ -272,7 +272,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 break;
             case R.id.dsv_Rfu2:
                 msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
-                msgSetParamCmd.Rfu1 = isOpen;
+                msgSetParamCmd.Rfu2 = isOpen;
                 break;
         }
         FishTankApiManager.getInstance().setDeviceParam(uid, msgSetParamCmd);

@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.landstek.iFishTank.IFishTankApi;
+import com.mibo.fishtank.FishTankmManage.DeviceParams;
+import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
-import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.LoadingDialog;
@@ -20,8 +19,6 @@ import com.mibo.fishtank.weight.TitleBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Arrays;
 
 public class EditPushNumActivity extends BaseActivity {
 
@@ -33,6 +30,7 @@ public class EditPushNumActivity extends BaseActivity {
     private EditText etNum4;
 
     private String uid;
+    private DeviceParams deviceParams;
 
     public static Intent BuildIntent(Context context, String uid) {
         Intent intent = new Intent(context, EditPushNumActivity.class);
@@ -56,6 +54,8 @@ public class EditPushNumActivity extends BaseActivity {
             this.uid = uid;
             FishTankApiManager.getInstance().getDeviceParam(uid);
         }
+
+        setTelePhoneParams();
     }
 
     @Override
@@ -64,7 +64,6 @@ public class EditPushNumActivity extends BaseActivity {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-
     }
 
     private void initView() {
@@ -83,20 +82,6 @@ public class EditPushNumActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetParameterLstener(GetParameterEvent event) {
-        IFishTankApi.MsgGetParamRsp msgGetParamRsp = event.msgGetParamRsp;
-        String uid = event.uid;
-        int result = event.result;
-        if (result == 0) {
-            Log.d("monty", "手机号码获取成功，更新到界面上,telephont:" + Arrays.toString(msgGetParamRsp.Tel));
-            setTelePhoneParams(msgGetParamRsp);
-        } else {
-            Toast.makeText(this, "手机号码获取失败", Toast.LENGTH_SHORT).show();
-        }
-        mLoadingDialog.close();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     void onSetTellPhoneListener(SetParamsEvent event) {
         if (event.result == 0) {
             finish();
@@ -106,8 +91,10 @@ public class EditPushNumActivity extends BaseActivity {
         mLoadingDialog.close();
     }
 
-    public void setTelePhoneParams(IFishTankApi.MsgGetParamRsp tellPhoneParams) {
-        String[] tel = tellPhoneParams.Tel;
+    public void setTelePhoneParams() {
+        // 获取本地缓存数据
+        deviceParams = DeviceParamsUtil.getDeviceParams(this, uid);
+        String[] tel = deviceParams.Tel;
         if (tel == null || tel.length == 0) {
             return;
         }

@@ -32,7 +32,7 @@
             android:background="@null"
             android:inputType="phone"
             android:maxLines="1"
-            android:text="13164737434"
+            android:hint="@string/hint_push_phonenumber"
             android:textColor="@color/color_b4ffffff"
             android:textSize="15sp"
             android:layout_marginLeft="15dp" />
@@ -63,7 +63,7 @@
             android:background="@null"
             android:inputType="phone"
             android:maxLines="1"
-            android:text="13164737434"
+            android:hint="@string/hint_push_phonenumber"
             android:textColor="@color/color_b4ffffff"
             android:textSize="15sp"
             android:layout_marginLeft="15dp" />
@@ -92,11 +92,10 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
             android:background="@null"
-            android:hint="请输入手机号码"
+            android:hint="@string/hint_push_phonenumber"
             android:inputType="phone"
             android:maxLines="1"
             android:textColor="@color/color_b4ffffff"
-            android:textColorHint="@color/color_b4ffffff"
             android:textSize="15sp"
             android:layout_marginLeft="15dp" />
 
@@ -124,11 +123,10 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
             android:background="@null"
-            android:hint="请输入手机号码"
+            android:hint="@string/hint_push_phonenumber"
             android:inputType="phone"
             android:maxLines="1"
             android:textColor="@color/color_b4ffffff"
-            android:textColorHint="@color/color_b4ffffff"
             android:textSize="15sp"
             android:layout_marginLeft="15dp" />
 
