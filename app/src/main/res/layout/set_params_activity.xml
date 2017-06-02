@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="自定义1定时器："
+                    android:text="备用1定时器："
                     android:textColor="@color/color_ffffff"
                     android:textSize="15sp" />
 
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="自定义2定时器："
+                    android:text="备用2定时器："
                     android:textColor="@color/color_ffffff"
                     android:textSize="15sp" />
 
