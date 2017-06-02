@@ -38,6 +38,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     private TimerView timerView1, timerView2, timerView3, timerView4;
     private DeviceParams deviceParams;
     private DeviceParams.Alarm[] alarms;
+    private int[] indexes = new int[4];
 
     public static Intent BuildIntent(Context context, String uid, int switchNo) {
         Intent intent = new Intent(context, SetTimerActivity.class);
@@ -62,6 +63,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
         } else {
             this.switchNo = switchNo;
+
             // TODO: 2017/5/30 do something
         }
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -118,11 +120,27 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         if (deviceParams != null) {
             alarms = deviceParams.Alarms;
         }
-        setTimerData(timerView1, alarms[0]);
-        setTimerData(timerView2, alarms[1]);
-        setTimerData(timerView3, alarms[2]);
-        setTimerData(timerView4, alarms[3]);
+
+        indexes = DeviceParamsUtil.getTimerParamsIndexFromSwitchNo(switchNo, alarms);
+
+//        indexes = new int[]{28,29,30,31};
+        Log.d("monty", "SetTimerActivity -> setLoacalData -> switchNo : " + switchNo);
+        Log.d("monty", "SetTimerActivity -> setLoacalData -> indexes : " + Arrays.toString(indexes));
+
+        setSwitchNo();
+
+        setTimerData(timerView1, alarms[indexes[0]]);
+        setTimerData(timerView2, alarms[indexes[1]]);
+        setTimerData(timerView3, alarms[indexes[2]]);
+        setTimerData(timerView4, alarms[indexes[3]]);
         Log.d("monty", "SetTimerActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
+    }
+
+    private void setSwitchNo() {
+        alarms[indexes[0]].SwNo = (byte) switchNo;
+        alarms[indexes[1]].SwNo = (byte) switchNo;
+        alarms[indexes[2]].SwNo = (byte) switchNo;
+        alarms[indexes[3]].SwNo = (byte) switchNo;
     }
 
     public void setTimerData(TimerView v, DeviceParams.Alarm alarm) {
@@ -136,16 +154,16 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.timerView1:
-                v.setTag(alarms[0]);
+                v.setTag(alarms[indexes[0]]);
                 break;
             case R.id.timerView2:
-                v.setTag(alarms[1]);
+                v.setTag(alarms[indexes[1]]);
                 break;
             case R.id.timerView3:
-                v.setTag(alarms[2]);
+                v.setTag(alarms[indexes[2]]);
                 break;
             case R.id.timerView4:
-                v.setTag(alarms[3]);
+                v.setTag(alarms[indexes[3]]);
                 break;
         }
         showTimeDialog((TimerView) v);
@@ -155,16 +173,16 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     public void onToggleChanged(TimerView v, boolean isChecked) {
         switch (v.getId()) {
             case R.id.timerView1:
-                alarms[0].setAlarmSwitch(isChecked);
+                alarms[indexes[0]].setAlarmSwitch(isChecked);
                 break;
             case R.id.timerView2:
-                alarms[1].setAlarmSwitch(isChecked);
+                alarms[indexes[1]].setAlarmSwitch(isChecked);
                 break;
             case R.id.timerView3:
-                alarms[2].setAlarmSwitch(isChecked);
+                alarms[indexes[2]].setAlarmSwitch(isChecked);
                 break;
             case R.id.timerView4:
-                alarms[3].setAlarmSwitch(isChecked);
+                alarms[indexes[3]].setAlarmSwitch(isChecked);
                 break;
         }
     }
@@ -179,6 +197,10 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     private class OnClickSaveListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            Log.d("monty", "SetTimerActivity -> setTimerParams -> switchNo : " + switchNo);
+            Log.d("monty", "SetTimerActivity -> setTimerParams -> indexes : " + Arrays.toString(indexes));
+
+            Log.d("monty", "SetTimerActivity -> setTimerParams -> alarms : " + Arrays.toString(alarms));
             FishTankApiManager.getInstance().setTimerParams(uid, alarms);
         }
     }

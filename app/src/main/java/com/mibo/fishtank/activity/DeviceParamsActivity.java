@@ -115,10 +115,11 @@ public class DeviceParamsActivity extends BaseActivity {
         RelativeLayout light2Layout = (RelativeLayout) findViewById(R.id.dengguang2_layout);
         RelativeLayout rfu1Layout = (RelativeLayout) findViewById(R.id.dengguang3_layout);
         RelativeLayout rfu2Layout = (RelativeLayout) findViewById(R.id.dengguang4_layout);
+
         light1Layout.setOnClickListener(new OnClickListener());
         light1Layout.setTag(SwitchNumber.SWitchLight1);
         light2Layout.setOnClickListener(new OnClickListener());
-        light2Layout.setTag(SwitchNumber.SWitchHeater2);
+        light2Layout.setTag(SwitchNumber.SWitchLight2);
         rfu1Layout.setOnClickListener(new OnClickListener());
         rfu1Layout.setTag(SwitchNumber.SWitchRfu1);
         rfu2Layout.setOnClickListener(new OnClickListener());

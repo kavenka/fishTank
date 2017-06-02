@@ -13,172 +13,186 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/ph_fanwei"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="ph值范围："
-        android:textColor="@color/color_ffffff"
-        android:textSize="15sp" />
-
-    <LinearLayout
-        android:id="@+id/range_ph_container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/color_32ffffff"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <com.mibo.fishtank.weight.RangeSeekBar
-            android:id="@+id/range_ph"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:absoluteMaxValue="40"
-            app:absoluteMinValue="0" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@+id/wendu_fanwei"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="温度范围："
-        android:textColor="@color/color_ffffff"
-        android:textSize="15sp" />
+            <TextView
+                android:id="@+id/ph_fanwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="ph值范围："
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp" />
 
-    <LinearLayout
-        android:id="@+id/range_temp_container"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/color_32ffffff"
-        android:gravity="center"
-        android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/range_ph_container"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/color_32ffffff"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <com.mibo.fishtank.weight.RangeSeekBar
-            android:id="@+id/range_temp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:absoluteMaxValue="40"
-            app:absoluteMinValue="0" />
-    </LinearLayout>
+                <com.mibo.fishtank.weight.RangeSeekBar
+                    android:id="@+id/range_ph"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:absoluteMaxValue="40"
+                    app:absoluteMinValue="0" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/wendu_fanwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="温度范围："
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/range_temp_container"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/color_32ffffff"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.mibo.fishtank.weight.RangeSeekBar
+                    android:id="@+id/range_temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:absoluteMaxValue="40"
+                    app:absoluteMinValue="0" />
+            </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_b4ffffff" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_b4ffffff" />
 
-    <RelativeLayout
-        android:id="@+id/dengguang1_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_32ffffff">
+            <RelativeLayout
+                android:id="@+id/dengguang1_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_32ffffff">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="灯光1定时器："
-            android:textColor="@color/color_ffffff"
-            android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="灯光1定时器："
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="15sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_b4ffffff" />
-    </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_b4ffffff" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/dengguang2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_32ffffff">
+            <RelativeLayout
+                android:id="@+id/dengguang2_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_32ffffff">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="灯光2定时器："
-            android:textColor="@color/color_ffffff"
-            android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="灯光2定时器："
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="15sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_b4ffffff" />
-    </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_b4ffffff" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/dengguang3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_32ffffff">
+            <RelativeLayout
+                android:id="@+id/dengguang3_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_32ffffff">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="自定义1定时器："
-            android:textColor="@color/color_ffffff"
-            android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="自定义1定时器："
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="15sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_b4ffffff" />
-    </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_b4ffffff" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/dengguang4_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/color_32ffffff">
+            <RelativeLayout
+                android:id="@+id/dengguang4_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_32ffffff">
 
-        <TextView
-            android:id="@+id/ssd_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="自定义2定时器："
-            android:textColor="@color/color_ffffff"
-            android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/ssd_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="自定义2定时器："
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="15sp" />
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <Button
-        android:id="@+id/edit_num"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="27dp"
-        android:layout_marginRight="27dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/white_btn_background_selector"
-        android:paddingBottom="17dp"
-        android:paddingTop="17dp"
-        android:text="修改推送手机号码"
-        android:textColor="@color/color_000000"
-        android:textSize="17sp" />
+            <Button
+                android:id="@+id/edit_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginRight="27dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/white_btn_background_selector"
+                android:paddingBottom="17dp"
+                android:paddingTop="17dp"
+                android:text="修改推送手机号码"
+                android:textColor="@color/color_000000"
+                android:textSize="17sp" />
 
-    <Button
-        android:id="@+id/edit_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="27dp"
-        android:layout_marginRight="27dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/white_btn_background_selector"
-        android:paddingBottom="17dp"
-        android:paddingTop="17dp"
-        android:text="修改设备密码"
-        android:textColor="@color/color_000000"
-        android:textSize="17sp" />
+            <Button
+                android:id="@+id/edit_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginRight="27dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_btn_background_selector"
+                android:paddingBottom="17dp"
+                android:paddingTop="17dp"
+                android:text="修改设备密码"
+                android:textColor="@color/color_000000"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

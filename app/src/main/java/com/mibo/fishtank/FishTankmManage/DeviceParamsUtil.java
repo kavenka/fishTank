@@ -27,7 +27,7 @@ public class DeviceParamsUtil {
         return DeviceParamsUtil.parseJson2DeviceParams(json);
     }
     /**
-     * 保存设备参数到SharedPreferences
+     * 缓存设备参数
      * @param uid
      * @param msgGetParamRsp
      */
@@ -36,11 +36,23 @@ public class DeviceParamsUtil {
         return DeviceParamsUtil.saveDeviceParams(context,uid, deviceParams);
     }
 
+    /**
+     * 缓存设备参数
+     * @param context
+     * @param uid
+     * @param deviceParams
+     * @return
+     */
     public static boolean saveDeviceParams(Context context, String uid, DeviceParams deviceParams) {
         String json = DeviceParamsUtil.parseDeviceParams2Json(deviceParams);
         return SharedPreferencesUtil.putString(context, uid, json);
     }
 
+    /**
+     * 转换DeviceParams对象为json字符串
+     * @param deviceParams
+     * @return
+     */
     public static String parseDeviceParams2Json(DeviceParams deviceParams) {
         Gson g = new Gson();
         String json = g.toJson(deviceParams);
@@ -48,6 +60,11 @@ public class DeviceParamsUtil {
         return json;
     }
 
+    /**
+     * 解析json转换成DeviceParams对象
+     * @param json
+     * @return
+     */
     public static DeviceParams parseJson2DeviceParams(String json) {
         Gson g = new Gson();
         DeviceParams deviceParams = g.fromJson(json, DeviceParams.class);
@@ -55,10 +72,29 @@ public class DeviceParamsUtil {
         return deviceParams;
     }
 
+    /**
+     * 根据定时器编号在32组定时数据中查找四组定时器参数，并返回四组参数位于32组数据中的下标
+     * @return
+     */
+    public static int[] getTimerParamsIndexFromSwitchNo(int switchNo, DeviceParams.Alarm[] alarms){
+        int[] indexes = new int[4]; // 目前需求只需要设置四个开关
+
+        int count=0;
+        for (int i = 0; i < alarms.length; i++) {
+            if((byte)switchNo == alarms[i].SwNo){
+                if(count == 4){ // 已经找到4组就不再找了
+                    break;
+                }
+                indexes[count] = i;
+                count++;
+            }
+        }
+        return indexes;
+    }
+
 
     /**
-     * 封装DeviceParams
-     *
+     * 将MsgGetParamRsp封装成DeviceParams对象
      * @param msgGetParamRsp
      * @return
      */
