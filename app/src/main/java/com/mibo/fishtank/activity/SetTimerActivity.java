@@ -30,7 +30,7 @@ import java.util.Arrays;
  * 开关定时设置
  * Created by Monty on 2017/5/30.
  */
-public class SetTimerActivity extends BaseActivity implements View.OnClickListener, TimerView.OnToggleChangeListener {
+public class SetTimerActivity extends BaseActivity implements View.OnClickListener, TimerView.OnToggleChangeListener, TimerView.OnToggleClickListener {
 
     private String uid;
     private int switchNo;
@@ -109,6 +109,11 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         this.timerView3.setOnToggleChangeListener(this);
         this.timerView4.setOnToggleChangeListener(this);
 
+        this.timerView1.setOnToggleClickListner(this);
+        this.timerView2.setOnToggleClickListner(this);
+        this.timerView3.setOnToggleClickListner(this);
+        this.timerView4.setOnToggleClickListner(this);
+
     }
 
     /**
@@ -133,6 +138,12 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         setTimerData(timerView2, alarms[indexes[1]]);
         setTimerData(timerView3, alarms[indexes[2]]);
         setTimerData(timerView4, alarms[indexes[3]]);
+
+        timerView1.setTag(alarms[indexes[0]]);
+        timerView2.setTag(alarms[indexes[1]]);
+        timerView3.setTag(alarms[indexes[2]]);
+        timerView4.setTag(alarms[indexes[3]]);
+//                break;
         Log.d("monty", "SetTimerActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
     }
 
@@ -152,25 +163,26 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.timerView1:
-                v.setTag(alarms[indexes[0]]);
-                break;
-            case R.id.timerView2:
-                v.setTag(alarms[indexes[1]]);
-                break;
-            case R.id.timerView3:
-                v.setTag(alarms[indexes[2]]);
-                break;
-            case R.id.timerView4:
-                v.setTag(alarms[indexes[3]]);
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.timerView1:
+//                v.setTag(alarms[indexes[0]]);
+//                break;
+//            case R.id.timerView2:
+//                v.setTag(alarms[indexes[1]]);
+//                break;
+//            case R.id.timerView3:
+//                v.setTag(alarms[indexes[2]]);
+//                break;
+//            case R.id.timerView4:
+//                v.setTag(alarms[indexes[3]]);
+//                break;
+//        }
         showTimeDialog((TimerView) v);
     }
 
     @Override
     public void onToggleChanged(TimerView v, boolean isChecked) {
+
         switch (v.getId()) {
             case R.id.timerView1:
                 alarms[indexes[0]].setAlarmSwitch(isChecked);
@@ -184,6 +196,17 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
             case R.id.timerView4:
                 alarms[indexes[3]].setAlarmSwitch(isChecked);
                 break;
+        }
+    }
+
+    @Override
+    public void onToggleClicked(TimerView v) {
+        // 如果执行打开操作，并且未设置星期，则视为此操作无效，让用户输入星期
+        if (v.getSwitch() && !DeviceParamsUtil.checkAvailability(v.getWeek())) {
+            v.setSwitch(false);
+            Toast.makeText(this, "请先选择星期", Toast.LENGTH_SHORT).show();
+            showTimeDialog(v);
+            return;
         }
     }
 
@@ -229,7 +252,6 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
             }
         });
         selectTimeDialog.show(alarm.Hour, alarm.Min);
-
     }
 
     private void showWeekDialog(final TimerView v) {
@@ -258,6 +280,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
                 dialog.dismiss();
                 alarm.setOnOff(false);
                 v.setOnOff(false);
+                v.setSwitch(true);
             }
         }).setPositiveButton("定时开启", new DialogInterface.OnClickListener() {
             @Override
@@ -265,6 +288,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
                 dialog.dismiss();
                 alarm.setOnOff(true);
                 v.setOnOff(true);
+                v.setSwitch(true);
             }
         }).show();
     }

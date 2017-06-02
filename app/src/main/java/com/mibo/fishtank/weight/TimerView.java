@@ -4,11 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.R;
 
 import static com.mibo.fishtank.R.array.week;
@@ -77,7 +79,7 @@ public class TimerView extends RelativeLayout {
     }
 
     public boolean setWeek(boolean[] weeksBool) {
-        if (checkAvailability(weeksBool)) {
+        if (DeviceParamsUtil.checkAvailability(weeksBool)) {
             this.tvWeek.setText(formatWeek(weeksBool));
             return true;
         }
@@ -85,24 +87,7 @@ public class TimerView extends RelativeLayout {
 
     }
 
-    /**
-     * 检查设置星期参数是否有效
-     * 说明：有效->最少有一天为选中的
-     *
-     * @param weeksBool
-     * @return
-     */
-    private boolean checkAvailability(boolean[] weeksBool) {
-        if (weeksBool == null || weeksBool.length == 0) {
-            return false;
-        }
-        for (boolean b : weeksBool) {
-            if (b) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private String formatWeek(boolean[] weeksBool) {
         StringBuffer sb = new StringBuffer();
@@ -145,6 +130,10 @@ public class TimerView extends RelativeLayout {
         this.toggleButton.setChecked(onOff);
     }
 
+    public boolean getSwitch() {
+        return this.toggleButton.isChecked();
+    }
+
     public void setOnOff(boolean isOpen){
         this.tvSwitch.setText(isOpen ? "开启" : "关闭");
     }
@@ -160,5 +149,19 @@ public class TimerView extends RelativeLayout {
 
     public interface OnToggleChangeListener {
         void onToggleChanged(TimerView v, boolean isChecked);
+    }
+
+    public void setOnToggleClickListner(final OnToggleClickListener onToggleClickListner){
+        this.toggleButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onToggleClickListner.onToggleClicked(TimerView.this);
+            }
+        });
+    }
+
+    public interface OnToggleClickListener{
+
+        void onToggleClicked(TimerView v);
     }
 }

@@ -92,6 +92,25 @@ public class DeviceParamsUtil {
         return indexes;
     }
 
+    /**
+     * 检查设置星期参数是否有效
+     * 说明：有效->最少有一天为选中的
+     *
+     * @param weeksBool
+     * @return
+     */
+    public static boolean checkAvailability(boolean[] weeksBool) {
+        if (weeksBool == null || weeksBool.length == 0) {
+            return false;
+        }
+        for (boolean b : weeksBool) {
+            if (b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 将MsgGetParamRsp封装成DeviceParams对象
