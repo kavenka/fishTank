@@ -2,15 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="50dp"
     android:background="@color/color_32ffffff"
     >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        >
 
         <ImageView
             android:id="@+id/title_left_img"
@@ -39,8 +34,6 @@
             android:textSize="14sp"
             android:layout_marginTop="16dp"
             android:textColor="@color/color_b4ffffff"
-            />
-    </RelativeLayout>
-
+            android:layout_alignParentRight="true" />
 
 </RelativeLayout>
