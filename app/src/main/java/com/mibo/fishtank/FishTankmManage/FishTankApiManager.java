@@ -83,7 +83,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
      * @param alarm
      */
     public void setTimerParams(String uid, DeviceParams.Alarm[] alarm) {
-
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
         if (msgSetParamCmd.Alarms == null) {
             msgSetParamCmd.Alarms = new IFishTankApi.Alarm[alarm.length];
@@ -114,26 +113,18 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
      * @param uid
      * @param telParams 手机号
      */
-    public void setTelParam(String uid, String... telParams) {
+    public void setTelParam(String uid, String[] telParams) {
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
         if (telParams.length > 5) {
             new IllegalArgumentException("手机号码最多只能设置4个");
         }
-        String[] p = telParams;
-        msgSetParamCmd.Tel = p;
+        msgSetParamCmd.Tel = telParams;
 
-        int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
-        Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
+        setDeviceParam(uid,msgSetParamCmd);
     }
-//
-//    public void setTimerParams(int switchNumber,){
-//
-//    }
-
 
     @Override
     public void Event(int i, Object o) {
-//                Log.d("monty", "IFishTankApiInterface -> Event -> i=" + i + (" , o=" + o == null ? "" : o.toString()));
         Log.d("monty", "IFishTankApiInterface -> Event -> i=" + i);
 
         switch (i) {
@@ -222,7 +213,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 //            String s = Integer.toBinaryString((weekMaks & 0xFF) + 0x100).substring(1);
 //            sb.append("week:");
 //            sb.append(s + ",");
-
             for (int i = 0; i < bytes.length; i++) {
                 sb.append((int) bytes[i] + ",");
             }

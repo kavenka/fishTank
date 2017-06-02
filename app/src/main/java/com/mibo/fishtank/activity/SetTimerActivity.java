@@ -14,6 +14,7 @@ import com.mibo.fishtank.FishTankmManage.DeviceParams;
 import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
+import com.mibo.fishtank.FishTankmManage.timer.SwitchNumber;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.SelectTimeDialog;
 import com.mibo.fishtank.weight.SelectWeekDialog;
@@ -51,27 +52,30 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_timer_activity);
-        String uid = getIntent().getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
-            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
-        } else {
-            this.uid = uid;
-            // TODO: 2017/5/30 do something
-        }
-        int switchNo = getIntent().getIntExtra("switchNo", -1);
-        if (switchNo == -1) {
-            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
-        } else {
-            this.switchNo = switchNo;
 
-            // TODO: 2017/5/30 do something
-        }
+        getIntentData();
+
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
         initView();
         setLoacalData();
+    }
+
+    private void getIntentData() {
+        String uid = getIntent().getStringExtra("uid");
+        if (TextUtils.isEmpty(uid)) {
+            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
+        } else {
+            this.uid = uid;
+        }
+        int switchNo = getIntent().getIntExtra("switchNo", -1);
+        if (switchNo == -1) {
+            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
+        } else {
+            this.switchNo = switchNo;
+        }
     }
 
     @Override
@@ -85,6 +89,8 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.set_timer_title);
         titleBar.setCenterStr(R.string.timer_setting);
+        setTitleBarCenterStr(titleBar, switchNo);
+
         titleBar.setRightStr("保存");
         titleBar.setOnClickRightListener(new OnClickSaveListener());
         titleBar.setOnClickLeftListener(new OnClickLeftListener());
@@ -116,6 +122,26 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
 
     }
 
+    private void setTitleBarCenterStr(TitleBar titleBar, int switchNo) {
+        switch (switchNo) {
+            case SwitchNumber.SWitchLight1:
+                titleBar.setCenterStr("灯光1定时器设置");
+                break;
+            case SwitchNumber.SWitchLight2:
+                titleBar.setCenterStr("灯光2定时器设置");
+                break;
+            case SwitchNumber.SWitchRfu1:
+                titleBar.setCenterStr("备用1定时器设置");
+                break;
+            case SwitchNumber.SWitchRfu2:
+                titleBar.setCenterStr("备用2定时器设置");
+                break;
+            default:
+                titleBar.setCenterStr("定时器设置");
+                break;
+        }
+    }
+
     /**
      * 获取本地缓存数据设置到界面上
      */
@@ -128,10 +154,6 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
 
         indexes = DeviceParamsUtil.getTimerParamsIndexFromSwitchNo(switchNo, alarms);
 
-//        indexes = new int[]{28,29,30,31};
-        Log.d("monty", "SetTimerActivity -> setLoacalData -> switchNo : " + switchNo);
-        Log.d("monty", "SetTimerActivity -> setLoacalData -> indexes : " + Arrays.toString(indexes));
-
         setSwitchNo();
 
         setTimerData(timerView1, alarms[indexes[0]]);
@@ -143,8 +165,8 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         timerView2.setTag(alarms[indexes[1]]);
         timerView3.setTag(alarms[indexes[2]]);
         timerView4.setTag(alarms[indexes[3]]);
-//                break;
-        Log.d("monty", "SetTimerActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
+
+//        Log.d("monty", "SetTimerActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
     }
 
     private void setSwitchNo() {

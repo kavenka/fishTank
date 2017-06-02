@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -26,15 +25,9 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceParamsActivity extends BaseActivity {
 
     private String uid;
-
     private RangeSeekBar rangePh;
     private RangeSeekBar rangeTemp;
-
     private DeviceParams deviceParams;
-
-    private float ph[] = new float[2];
-    private float temp[] = new float[2];
-
 
     public static Intent BuildIntent(Context context, String uid) {
         Intent intent = new Intent(context, DeviceParamsActivity.class);
@@ -53,13 +46,11 @@ public class DeviceParamsActivity extends BaseActivity {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
         } else {
             this.uid = uid;
-            // TODO: 2017/5/30 do something
         }
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
         setLoacalData();
-
     }
 
     @Override
@@ -87,21 +78,21 @@ public class DeviceParamsActivity extends BaseActivity {
         // 获取本地缓存数据
         deviceParams = DeviceParamsUtil.getDeviceParams(this, uid);
         if (deviceParams != null) {
-//            // 当ph最大值为0时，设置最大值为16
+//            // 当ph最大值为0时，设置最大值为14
 //            deviceParams.PhMax = deviceParams.PhMax == 0.0f ? 16 : deviceParams.PhMax;
 //            // 当temp最大值为0时，设置最大值为40
 //            deviceParams.TempMax = (int) deviceParams.TempMax == 0 ? 40 : deviceParams.TempMax;
             rangePh.setSelectedMinValue(deviceParams.PhMin);
             rangePh.setSelectedMaxValue(deviceParams.PhMax);
-            rangeTemp.setSelectedMinValue( deviceParams.TempMin);
-            rangeTemp.setSelectedMaxValue( deviceParams.TempMax);
+            rangeTemp.setSelectedMinValue(deviceParams.TempMin);
+            rangeTemp.setSelectedMaxValue(deviceParams.TempMax);
         }
-        Log.d("monty", "DeviceParamsActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
+//        Log.d("monty", "DeviceParamsActivity -> setLoacalData -> deviceParams : " + (deviceParams == null ? "null" : deviceParams.toString()));
     }
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.set_params_title);
-        titleBar.setCenterStr(R.string.device_connect);
+        titleBar.setCenterStr("设备参数设置");
         titleBar.setRightStr("保存");
         titleBar.setOnClickRightListener(new OnClickSaveListener());
         titleBar.setOnClickLeftListener(new OnClickLeftListener());
@@ -126,7 +117,7 @@ public class DeviceParamsActivity extends BaseActivity {
         rfu2Layout.setTag(SwitchNumber.SWitchRfu2);
 
         rangePh = (RangeSeekBar) findViewById(R.id.range_ph);
-        rangePh.setRangeValues(0.0f,14f);
+        rangePh.setRangeValues(0.0f, 14f);
         rangePh.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
@@ -137,18 +128,14 @@ public class DeviceParamsActivity extends BaseActivity {
             }
         });
         rangeTemp = (RangeSeekBar) findViewById(R.id.range_temp);
-        rangeTemp.setRangeValues(0.0f,40.0f);
+        rangeTemp.setRangeValues(0, 40);
         rangeTemp.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
-                deviceParams.TempMin = (float) minValue;
-                deviceParams.TempMax = (float) maxValue;
-//                temp[0] = (float) minValue;
-//                temp[1] = (float) maxValue;
+                deviceParams.TempMin = (int) minValue;
+                deviceParams.TempMax = (int) maxValue;
             }
         });
-        // Set the range
-
     }
 
     private class OnClickLeftListener implements View.OnClickListener {
@@ -161,7 +148,6 @@ public class DeviceParamsActivity extends BaseActivity {
     private class OnClickSaveListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
             FishTankApiManager.getInstance().setPhAndTempParams(uid, deviceParams);
         }
     }

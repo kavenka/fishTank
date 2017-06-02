@@ -71,7 +71,6 @@ public class DeviceParams implements Parcelable {
 
         private char[] parseWeekMask() {
             String s = Integer.toBinaryString((WeekMask & 0xFF) + 0x100).substring(1);
-            Log.d("monty", "parseWeekMask -> 原始值 -> " + WeekMask + " , 转换成二进制后 -> " + s);
             return s.toCharArray();
         }
 

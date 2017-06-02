@@ -32,6 +32,8 @@ public class EditPushNumActivity extends BaseActivity {
     private String uid;
     private DeviceParams deviceParams;
 
+    private String[] telePhone = new String[4];
+
     public static Intent BuildIntent(Context context, String uid) {
         Intent intent = new Intent(context, EditPushNumActivity.class);
         intent.putExtra("uid", uid);
@@ -84,7 +86,9 @@ public class EditPushNumActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     void onSetTellPhoneListener(SetParamsEvent event) {
         if (event.result == 0) {
-            finish();
+            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            deviceParams.Tel = telePhone;
+            DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
         } else {
             Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
         }
@@ -117,13 +121,18 @@ public class EditPushNumActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             mLoadingDialog.show();
-
-            FishTankApiManager.getInstance().setTelParam(uid,
-                    checkPhoneNumber(etNum1.getText().toString())
-                    , checkPhoneNumber(etNum2.getText().toString())
-                    , checkPhoneNumber(etNum3.getText().toString())
-                    , checkPhoneNumber(etNum4.getText().toString()));
+            telePhone = getTelePhone();
+            FishTankApiManager.getInstance().setTelParam(uid, telePhone);
         }
+    }
+
+    public String[] getTelePhone() {
+        String[] tel = new String[4];
+        tel[0] = checkPhoneNumber(etNum1.getText().toString());
+        tel[1] = checkPhoneNumber(etNum2.getText().toString());
+        tel[2] = checkPhoneNumber(etNum3.getText().toString());
+        tel[3] = checkPhoneNumber(etNum4.getText().toString());
+        return tel;
     }
 
     public String checkPhoneNumber(String phone) {

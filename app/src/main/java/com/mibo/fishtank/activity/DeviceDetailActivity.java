@@ -2,7 +2,6 @@ package com.mibo.fishtank.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,8 +37,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private TextView mTvPhLevel = null;
     private TextView mTvTemp = null;
     private TextView mTvPh = null;
-//    private GridView mSwitchGrid = null;
-//    private DeviceSwitchAdapter deviceSwitchAdapter = null;
 
     private DeviceSwitchView mDsvLight1;
     private DeviceSwitchView mDsvLight2;
@@ -118,9 +115,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
-    private void saveDeviceParams(DeviceParams deviceParams) {
-        SharedPreferences sp = getSharedPreferences("", Context.MODE_PRIVATE);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSetParamsListener(SetParamsEvent event) {
