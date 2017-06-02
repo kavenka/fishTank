@@ -32,11 +32,11 @@ public class SelectWeekDialog extends Dialog {
     private ListView mListView;
 
     private boolean[] checkBoxValue = new boolean[7];
-    private String[] itemName = {"星期日","星期一","星期二","星期三","星期四","星期五","星期六"};
+    private String[] itemName = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
 
     private OnWeekSelectListener mOnWeekSelectListener;
 
-    public SelectWeekDialog(Context context,boolean[] defaultValues,  OnWeekSelectListener onWeekSelectListener) {
+    public SelectWeekDialog(Context context, boolean[] defaultValues, OnWeekSelectListener onWeekSelectListener) {
         super(context, dialog);
         this.checkBoxValue = defaultValues;
         this.mOnWeekSelectListener = onWeekSelectListener;
@@ -63,13 +63,13 @@ public class SelectWeekDialog extends Dialog {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnWeekSelectListener.onCheck(SelectWeekDialog.this,checkBoxValue);
+                mOnWeekSelectListener.onCheck(SelectWeekDialog.this, checkBoxValue);
             }
         });
     }
 
     public interface OnWeekSelectListener {
-        void onCheck(SelectWeekDialog dialog,boolean[] value);
+        void onCheck(SelectWeekDialog dialog, boolean[] value);
     }
 
     public void show(@NonNull int hour, @NonNull int minute) {
@@ -84,7 +84,7 @@ public class SelectWeekDialog extends Dialog {
 
         WindowManager.LayoutParams lp = window.getAttributes();
         int width = window.getWindowManager().getDefaultDisplay().getWidth();
-        lp.width = width - (int)(width*0.3);  // 宽度等于屏幕宽度减去屏幕宽度的30%
+        lp.width = width - (int) (width * 0.3);  // 宽度等于屏幕宽度减去屏幕宽度的30%
         window.setAttributes(lp);
     }
 
@@ -95,7 +95,7 @@ public class SelectWeekDialog extends Dialog {
         show(hour, minute);
     }
 
-    class WeekAdapter extends BaseAdapter{
+    class WeekAdapter extends BaseAdapter {
         @Override
         public int getCount() {
             return itemName.length;

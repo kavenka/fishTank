@@ -88,7 +88,6 @@ public class TimerView extends RelativeLayout {
     }
 
 
-
     private String formatWeek(boolean[] weeksBool) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < weeksBool.length; i++) {
@@ -134,7 +133,7 @@ public class TimerView extends RelativeLayout {
         return this.toggleButton.isChecked();
     }
 
-    public void setOnOff(boolean isOpen){
+    public void setOnOff(boolean isOpen) {
         this.tvSwitch.setText(isOpen ? "开启" : "关闭");
     }
 
@@ -151,7 +150,7 @@ public class TimerView extends RelativeLayout {
         void onToggleChanged(TimerView v, boolean isChecked);
     }
 
-    public void setOnToggleClickListner(final OnToggleClickListener onToggleClickListner){
+    public void setOnToggleClickListner(final OnToggleClickListener onToggleClickListner) {
         this.toggleButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +159,7 @@ public class TimerView extends RelativeLayout {
         });
     }
 
-    public interface OnToggleClickListener{
+    public interface OnToggleClickListener {
 
         void onToggleClicked(TimerView v);
     }
