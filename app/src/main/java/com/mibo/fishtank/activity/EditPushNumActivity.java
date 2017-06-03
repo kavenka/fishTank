@@ -98,15 +98,46 @@ public class EditPushNumActivity extends BaseActivity {
     public void setTelePhoneParams() {
         // 获取本地缓存数据
         deviceParams = DeviceParamsUtil.getDeviceParams(this, uid);
-        String[] tel = deviceParams.Tel;
-        if (tel == null || tel.length == 0) {
-            return;
-        }
+        String[] tels = deviceParams.Tel;
 
-        this.etNum1.setText(tel[0] == null ? "" : tel[0]);
-        this.etNum2.setText(tel[1] == null ? "" : tel[1]);
-        this.etNum3.setText(tel[2] == null ? "" : tel[2]);
-        this.etNum4.setText(tel[3] == null ? "" : tel[3]);
+//        if (deviceParams.Tel != null) {
+//            for (int i = 0; i < deviceParams.Tel.length; i++) {
+//                tels.add(deviceParams.Tel[i]);
+//            }
+//        }
+//
+//        for (int i = 0; i < 4; i++) {
+//
+//        }
+
+        setText(tels);
+
+    }
+
+    private void setText(String[] tels) {
+        switch (tels.length) {
+            case 1:
+                this.etNum1.setText(tels[0] == null ? "" : tels[0]);
+                break;
+            case 2:
+                this.etNum1.setText(tels[0] == null ? "" : tels[0]);
+                this.etNum2.setText(tels[1] == null ? "" : tels[1]);
+                break;
+            case 3:
+                this.etNum1.setText(tels[0] == null ? "" : tels[0]);
+                this.etNum2.setText(tels[1] == null ? "" : tels[1]);
+                this.etNum3.setText(tels[2] == null ? "" : tels[2]);
+                break;
+            case 4:
+                this.etNum1.setText(tels[0] == null ? "" : tels[0]);
+                this.etNum2.setText(tels[1] == null ? "" : tels[1]);
+                this.etNum3.setText(tels[2] == null ? "" : tels[2]);
+                this.etNum4.setText(tels[3] == null ? "" : tels[3]);
+                break;
+            default:
+
+                break;
+        }
 
     }
 

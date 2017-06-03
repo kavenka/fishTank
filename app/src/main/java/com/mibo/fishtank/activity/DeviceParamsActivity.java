@@ -163,7 +163,7 @@ public class DeviceParamsActivity extends BaseActivity {
     private class OnClickEditPwdListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, SetUserPwdActivity.class);
+            Intent intent = new Intent(context, SetDevicePwdActivity.class);
             startActivity(intent);
         }
     }
