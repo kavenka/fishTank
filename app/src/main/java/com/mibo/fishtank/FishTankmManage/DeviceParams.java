@@ -71,17 +71,25 @@ public class DeviceParams implements Parcelable {
 
         private char[] parseWeekMask() {
             String s = Integer.toBinaryString((WeekMask & 0xFF) + 0x100).substring(1);
-            Log.d("monty", "parseWeekMask -> 原始值 -> " + WeekMask + " , 转换成二进制后 -> " + s);
             return s.toCharArray();
         }
 
         public boolean[] getWeekMask() {
             boolean[] weeksBool = new boolean[7];
-            char[] chars = parseWeekMask();
-            for (int i = 0; i < chars.length - 1; i++) {
-                weeksBool[i] = 1 == (int) chars[i];
+            String s = String.valueOf(parseWeekMask());
+            for (int i = 0; i < s.length() - 1; i++) {
+                String hex = s.substring(i, i + 1);
+                weeksBool[i] = 1 == Integer.parseInt(hex);
             }
             return weeksBool;
+        }
+
+        public void setOnOff(boolean onOff) {
+            this.OnOff = (byte) (onOff ? 1 : 0);
+        }
+
+        public boolean getOnOff() {
+            return this.OnOff == 1;
         }
 
         public boolean getAlarmSwitch() {
@@ -93,17 +101,23 @@ public class DeviceParams implements Parcelable {
         public void setAlarmSwitch(boolean flag) {
             char[] chars = parseWeekMask();
             chars[7] = flag ? '1' : '0';
-            WeekMask = (byte) Integer.parseInt(chars.toString(), 2);
+            String s = String.valueOf(chars);
+            WeekMask = (byte) Integer.parseInt(s, 2);
         }
 
         public void setWeek(boolean[] flags) {
             char[] chars = parseWeekMask();
-            Log.d("monty", "setWeek -> 设置前" + chars.toString());
+            Log.d("monty", "setWeek -> 设置前" + String.valueOf(chars));
             for (int i = 0; i < flags.length; i++) {
                 chars[i] = flags[i] ? '1' : '0';
             }
-            Log.d("monty", "setWeek -> 设置后" + chars.toString());
+            Log.d("monty", "setWeek -> 设置后" + String.valueOf(chars));
             WeekMask = (byte) Integer.parseInt(String.valueOf(chars), 2);
+        }
+
+        public byte[] toBytes() {
+            byte[] Alarm = new byte[]{this.WeekMask, this.Hour, this.Min, this.Sec, this.SwNo, this.OnOff};
+            return Alarm;
         }
 
         @Override
@@ -148,7 +162,8 @@ public class DeviceParams implements Parcelable {
         @Override
         public String toString() {
             return "Alarm{" +
-                    "WeekMask=" + WeekMask +
+                    "WeekMask=" + Arrays.toString(getWeekMask()) +
+                    ", Switch=" + getAlarmSwitch() +
                     ", Hour=" + Hour +
                     ", Min=" + Min +
                     ", Sec=" + Sec +

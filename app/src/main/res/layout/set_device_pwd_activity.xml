@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/set_user_pwd_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mibo.fishtank.activity.SetUserPwdActivity"
+    >
+
+    <com.mibo.fishtank.weight.TitleBar
+        android:id="@+id/set_pwd_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/old_psw_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="@string/input_old_pwd"
+            android:inputType="text"
+            android:textColor="@color/color_b4ffffff"
+            android:textColorHint="@color/color_b4ffffff"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_b4ffffff"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/new_psw_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="@string/input_new_pwd"
+            android:inputType="phone"
+            android:textColor="@color/color_b4ffffff"
+            android:textColorHint="@color/color_b4ffffff"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_b4ffffff"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/confirm_new_psw_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="@string/confirm_new_psw"
+            android:inputType="phone"
+            android:textColor="@color/color_b4ffffff"
+            android:textColorHint="@color/color_b4ffffff"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_b4ffffff"
+            />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/set_password_confirm_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:text="@string/confirm"
+        android:textColor="@color/color_000000"
+        android:textSize="20sp"
+        />
+
+</LinearLayout>

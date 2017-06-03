@@ -2,7 +2,6 @@ package com.mibo.fishtank.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,15 +30,13 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-        private String uid = "5CCF7F07B170";
+    private String uid = "5CCF7F07B170";
 //    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
     private TextView mTvPhLevel = null;
     private TextView mTvTemp = null;
     private TextView mTvPh = null;
-//    private GridView mSwitchGrid = null;
-//    private DeviceSwitchAdapter deviceSwitchAdapter = null;
 
     private DeviceSwitchView mDsvLight1;
     private DeviceSwitchView mDsvLight2;
@@ -69,7 +66,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
         initView();
         loadingDialog.show();
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this,uid));
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, uid));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadingDialog.show();
         FishTankApiManager.getInstance().loginDevice(uid);
     }
 
@@ -98,11 +102,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         int result = event.result;
         if (result == 0) {
             Log.d("monty", "设备参数获取成功，更新到界面上");
-            setDeviceParams(DeviceParamsUtil.parseDeviceParams(msgGetParamRsp));
+            setDeviceParams(DeviceParamsUtil.parseMsgGetParamRep2DeviceParams(msgGetParamRsp));
             boolean b = DeviceParamsUtil.saveDeviceParams(this, uid, msgGetParamRsp);
-            if(b){
+            if (b) {
                 Log.d("monty", "参数保存成功");
-            }else{
+            } else {
                 Log.d("monty", "参数保存失败");
             }
         } else {
@@ -111,9 +115,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
-    private void saveDeviceParams(DeviceParams deviceParams){
-        SharedPreferences sp = getSharedPreferences("",Context.MODE_PRIVATE);
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSetParamsListener(SetParamsEvent event) {
@@ -128,7 +129,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
     public void setDeviceParams(DeviceParams deviceParams) {
-        if(deviceParams==null){
+        if (deviceParams == null) {
             return;
         }
         mTvPh.setText(deviceParams.Ph + "");
@@ -265,7 +266,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 break;
             case R.id.dsv_Rfu2:
                 msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
-                msgSetParamCmd.Rfu1 = isOpen;
+                msgSetParamCmd.Rfu2 = isOpen;
                 break;
         }
         FishTankApiManager.getInstance().setDeviceParam(uid, msgSetParamCmd);

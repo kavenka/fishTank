@@ -101,7 +101,7 @@ public class SelectTimeDialog extends Dialog {
 
         WindowManager.LayoutParams lp = window.getAttributes();
         int width = window.getWindowManager().getDefaultDisplay().getWidth();
-        lp.width = width - (int)(width*0.3);  // 宽度等于屏幕宽度减去屏幕宽度的30%
+        lp.width = width - (int) (width * 0.3);  // 宽度等于屏幕宽度减去屏幕宽度的30%
         window.setAttributes(lp);
     }
 
