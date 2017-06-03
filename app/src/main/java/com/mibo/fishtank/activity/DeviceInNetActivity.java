@@ -3,8 +3,8 @@ package com.mibo.fishtank.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.landstek.iFishTank.LSmartLink;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
@@ -25,11 +26,14 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
 
     private LSmartLink mLSmartLink;
     private LoadingDialog loadingDialog;
+    private TextView wifiName;
+    private String sceneId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_in_net_activity);
+        sceneId = getIntent().getStringExtra("sceneId");
         initSDK();
         initView();
     }
@@ -44,14 +48,21 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
         TitleBar titleBar = (TitleBar) findViewById(R.id.device_in_net_title);
         titleBar.setCenterStr(R.string.device_in_net);
         titleBar.setOnClickLeftListener(new OnClickLeftListener());
+        titleBar.setRightStr("设备列表");
+        titleBar.setOnClickRightListener(new OnClickRightListener());
 
         loadingDialog = new LoadingDialog(context, "设备入网中...");
 
-        TextView wifiName = (TextView) findViewById(R.id.ssd_edit);
+        wifiName = (TextView) findViewById(R.id.ssd_edit);
         wifiName.setText(mLSmartLink.GetCurrentSsid());
 
         wifiEdit = (EditText) findViewById(R.id.wifi_pwd);
         wifiEdit.addTextChangedListener(new OnWifiPwdChangeListener());
+
+        String wifiPwd = PreferencesManager.getInstance(context).getStringValue("wifiName.getText().toString()");
+        if (!TextUtils.isEmpty(wifiPwd)) {
+            wifiEdit.setText(wifiPwd);
+        }
 
         nextSetpBtn = (Button) findViewById(R.id.device_next_step_btn);
         nextSetpBtn.setOnClickListener(new OnClickNextStepListener());
@@ -61,7 +72,9 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
     public void LSmartLinkResult(boolean isConnectDevice) {
         loadingDialog.close();
         if (isConnectDevice) {
+            PreferencesManager.getInstance(context).setStringValue(wifiName.getText().toString(), wifiEdit.getText().toString());
             Intent intent = new Intent(context, SearchNewDeviceActivity.class);
+            intent.putExtra("sceneId", sceneId);
             startActivity(intent);
         } else {
             Toast.makeText(context, "wifi密码错误，请重新输入", Toast.LENGTH_SHORT).show();
@@ -78,8 +91,21 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
     private class OnClickNextStepListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            loadingDialog.show();
-            mLSmartLink.StartLSmartLink(wifiEdit.getText().toString());
+            if (!TextUtils.isEmpty(wifiEdit.getText().toString())) {
+                loadingDialog.show();
+                mLSmartLink.StartLSmartLink(wifiEdit.getText().toString());
+            } else {
+                Toast.makeText(context, "wifi密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class OnClickRightListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, SearchNewDeviceActivity.class);
+            intent.putExtra("sceneId", sceneId);
+            startActivity(intent);
         }
     }
 

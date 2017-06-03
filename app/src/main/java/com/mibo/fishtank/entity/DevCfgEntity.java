@@ -3,6 +3,8 @@ package com.mibo.fishtank.entity;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.mibo.fishtank.utils.DataBaseManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,14 +35,19 @@ public class DevCfgEntity {
                     String devData = sceneOrDeviceObj.getString("DevData");
                     String sceneArrayStr = new String(Base64.decode(devData, Base64.DEFAULT));
                     JSONArray jsonArray = new JSONArray(sceneArrayStr);
-                    for (int j = 0; j < length; i++) {
-                        JSONObject sceneNameObj = jsonArray.getJSONObject(i);
+                    int length1 = jsonArray.length();
+                    for (int j = 0; j < length1; j++) {
+                        JSONObject sceneNameObj = jsonArray.getJSONObject(j);
                         Scene scene = new Scene();
                         scene.parserEntity(sceneNameObj);
                         scenes.add(scene);
                     }
-                } else if (TextUtils.equals(devType, "1")){//设备的解析
-
+                    DataBaseManager.saveScene(scenes);//存储场景数据库
+                } else{//设备的解析
+                    Device device = new Device();
+                    device.parserEntity(sceneOrDeviceObj);
+                    devices.add(device);
+                    device.save();
                 }
             }
 

@@ -1,11 +1,15 @@
 package com.mibo.fishtank.utils;
 
+import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.entity.Scene;
 import com.mibo.fishtank.entity.User;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.litepal.crud.DataSupport.findAll;
 
 /**
  * Created by Administrator
@@ -39,7 +43,7 @@ public class DataBaseManager {
 
 
     /**
-     * 插入新的场景
+     * 删除所有场景
      */
     private static void clearScene() {
         DataSupport.deleteAll(Scene.class);
@@ -49,7 +53,53 @@ public class DataBaseManager {
      * 查询当前用户下的所有场景
      */
     public static List<Scene> queryAllScene() {
-        return DataSupport.findAll(Scene.class);
+        return findAll(Scene.class);
     }
+
+    /**
+     * 查询当前设备连接的场景
+     */
+    public static List<String> queryAllDeviceScene(String uid) {
+        Device device = DataSupport.where("uid = ?", uid).findFirst(Device.class);
+        if (device == null) {
+            return new ArrayList<>();
+        }
+        return device.getSceneIds();
+    }
+
+    /**
+     * 插入新的设备
+     */
+    public static void saveDeviceToScene(String sceneId, String deviceUid) {
+        Scene scene = DataSupport.where("sceneid = ?", sceneId).findFirst(Scene.class);
+        if (scene != null) {
+            ArrayList<String> devices = scene.getDevices();
+            devices.add(deviceUid);
+            scene.setDevices(devices);
+            scene.save();
+        }
+    }
+
+    /**
+     * 搜索设备
+     */
+    public static ArrayList<Device> queryAllDevice(ArrayList<String> devices) {
+        ArrayList<Device> list = new ArrayList<>();
+        int size = devices.size();
+        for (int i = 0; i < size; i++) {
+            String s = devices.get(i);
+            Device device = DataSupport.where("uid = ?", s).findFirst(Device.class);
+            list.add(device);
+        }
+        return list;
+    }
+
+    /**
+     * 删除所有设备
+     */
+    private static void clearDevice() {
+        DataSupport.deleteAll(Device.class);
+    }
+
 
 }

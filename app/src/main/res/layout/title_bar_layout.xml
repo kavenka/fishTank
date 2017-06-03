@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/title_right_txt"
-            android:layout_width="44dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:textSize="14sp"

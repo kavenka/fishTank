@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.landstek.iFishTank.IFishTankApi;
+import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.ScanDevEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.adapter.DeviceListAdapter;
@@ -24,12 +24,12 @@ import java.util.ArrayList;
 /**
  * 搜索设备列表
  */
-public class SearchNewDeviceActivity extends BaseActivity implements IFishTankApi.IFishTankApiInterface {
+public class SearchNewDeviceActivity extends BaseActivity {
 
     private ArrayList<Device> devices;
-    private IFishTankApi mIFishTankApi;
     private LoadingDialog loadingDialog;
     private DeviceListAdapter adapter;
+    private String sceneId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +38,9 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
             EventBus.getDefault().register(this);
         }
         setContentView(R.layout.search_new_device_activity);
-        initSDK();
+        sceneId = getIntent().getStringExtra("sceneId");
         initView();
-        toGetDevices();
-    }
-
-    private void toGetDevices() {
-        mIFishTankApi.ScanDev("");
-    }
-
-    /**
-     * 初始化SDK
-     */
-    private void initSDK() {
-        mIFishTankApi = new IFishTankApi(this);
-        mIFishTankApi.SetIFishTankApiInterface(this);
+        FishTankApiManager.getInstance().toScanDev();
     }
 
 
@@ -66,7 +54,7 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.search_device_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: 2017/5/26 0026 获取到的设备列表
+
         devices = new ArrayList<>();
         adapter = new DeviceListAdapter(context, devices, new OnClickDeviceItemListener());
         recyclerView.setAdapter(adapter);
@@ -92,32 +80,6 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void Event(int i, Object o) {
-        Log.i("xiao", "Event: "+o);
-    }
-
-    @Override
-    public void ScanDevRsp(IFishTankApi.MsgScanDevRsp msgScanDevRsp) {
-        Log.i("xiao", "ScanDevRsp: ");
-        EventBus.getDefault().post(new ScanDevEvent(msgScanDevRsp));
-    }
-
-    @Override
-    public void FtLoginRsp(String s, int i) {
-        Log.i("xiao", "ScanDevRsp: msgScanDevRsp.Model++");
-    }
-
-    @Override
-    public void FtSetParamRsp(String s, int i) {
-
-    }
-
-    @Override
-    public void FtGetParamRsp(String s, int i, IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
-
-    }
-
 
     private class OnClickLeftListener implements View.OnClickListener {
         @Override
@@ -132,6 +94,8 @@ public class SearchNewDeviceActivity extends BaseActivity implements IFishTankAp
             int pos = (int) v.getTag();
             Intent intent = new Intent(context, AddDeviceActivity.class);
             intent.putExtra("Uid", devices.get(pos).getUid());
+            intent.putExtra("Model", devices.get(pos).getModel());
+            intent.putExtra("sceneId", sceneId);
             startActivity(intent);
         }
     }

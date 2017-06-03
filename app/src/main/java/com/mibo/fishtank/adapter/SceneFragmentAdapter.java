@@ -1,5 +1,6 @@
 package com.mibo.fishtank.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,7 +25,12 @@ public class SceneFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return  SceneFragment.newInstance();
+        SceneFragment sceneFragment = SceneFragment.newInstance();
+        Bundle bundle = new Bundle();
+        bundle.putString("sceneId",scenes.get(position).getSceneID());
+        bundle.putStringArrayList("devices",scenes.get(position).getDevices());
+        sceneFragment.setArguments(bundle);
+        return sceneFragment;
     }
 
     @Override

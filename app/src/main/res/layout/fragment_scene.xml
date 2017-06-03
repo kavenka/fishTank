@@ -12,67 +12,76 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
-            android:id="@+id/pai_cha_layout"
+        <ListView
+            android:id="@+id/device_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="27dp"
-            android:layout_marginRight="27dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/blue_btn_background_selector"
-            android:gravity="center"
-            android:orientation="horizontal"
-            >
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:listSelector="@android:color/transparent"
+            android:divider="@null"
+            />
+        <!--<LinearLayout-->
+            <!--android:id="@+id/pai_cha_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="27dp"-->
+            <!--android:layout_marginRight="27dp"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:background="@drawable/blue_btn_background_selector"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="center"
-                android:src="@drawable/pai_cha_icon"
-                />
+            <!--<ImageView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:scaleType="center"-->
+                <!--android:src="@drawable/pai_cha_icon"-->
+                <!--/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:paddingBottom="17dp"
-                android:paddingTop="17dp"
-                android:text="智能排插"
-                android:textColor="@color/color_ffffff"
-                android:textSize="17sp"
-                />
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:paddingBottom="17dp"-->
+                <!--android:paddingTop="17dp"-->
+                <!--android:text="智能排插"-->
+                <!--android:textColor="@color/color_ffffff"-->
+                <!--android:textSize="17sp"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/add_new_device_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="27dp"
-            android:layout_marginRight="27dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/white_btn_background_selector"
-            android:gravity="center"
-            android:orientation="horizontal"
-            >
+        <!--<LinearLayout-->
+            <!--android:id="@+id/add_new_device_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="27dp"-->
+            <!--android:layout_marginRight="27dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:background="@drawable/white_btn_background_selector"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="center"
-                android:src="@drawable/add_icon"
-                />
+            <!--<ImageView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:scaleType="center"-->
+                <!--android:src="@drawable/add_icon"-->
+                <!--/>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:paddingBottom="17dp"
-                android:paddingTop="17dp"
-                android:text="添加新设备"
-                android:textColor="@color/color_000000"
-                android:textSize="17sp"
-                />
-        </LinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:paddingBottom="17dp"-->
+                <!--android:paddingTop="17dp"-->
+                <!--android:text="添加新设备"-->
+                <!--android:textColor="@color/color_000000"-->
+                <!--android:textSize="17sp"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 
 

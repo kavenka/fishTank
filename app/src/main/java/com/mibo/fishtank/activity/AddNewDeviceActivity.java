@@ -11,10 +11,13 @@ import com.mibo.fishtank.weight.TitleBar;
 
 public class AddNewDeviceActivity extends BaseActivity {
 
+    private String sceneId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_device_activity);
+        sceneId = getIntent().getStringExtra("sceneId");
         initView();
     }
 
@@ -44,6 +47,7 @@ public class AddNewDeviceActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, DeviceConnectActivity.class);
+            intent.putExtra("sceneId", sceneId);
             startActivity(intent);
         }
     }

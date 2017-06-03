@@ -24,7 +24,6 @@ import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.adapter.SceneFragmentAdapter;
 import com.mibo.fishtank.entity.DevCfgEntity;
-import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.entity.Scene;
 import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.utils.PreferencesManager;
@@ -106,12 +105,10 @@ public class MainActivity extends BaseActivity {
             DevCfgEntity devCfgEntity = new DevCfgEntity();
             devCfgEntity.parserEntity(resultJson);
             scenes.clear();
-            scenes.addAll(devCfgEntity.scenes);//解析好的场景实体集合添加到viewPager中
+//            ArrayList<Device> devices = devCfgEntity.devices;//解析好的设备实体集合
+            scenes.addAll(DataBaseManager.queryAllScene());//解析好的场景实体集合添加到viewPager中
             adapter.notifyDataSetChanged();
             titleBar.setCenterStr(scenes.get(0).getName());
-            DataBaseManager.saveScene(scenes);//存储场景数据库
-
-            ArrayList<Device> devices = devCfgEntity.devices;//解析好的设备实体集合
         } else {
             Toast.makeText(context, "获取场景和设备信息失败", Toast.LENGTH_SHORT).show();
         }

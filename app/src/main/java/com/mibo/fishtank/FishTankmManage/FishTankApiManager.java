@@ -6,6 +6,7 @@ import com.landstek.iFishTank.IFishTankApi;
 import com.mibo.fishtank.FishTankApp;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
+import com.mibo.fishtank.FishTankmManage.event.ScanDevEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,11 +87,18 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         int setParamResult = mFishTankApi.FtSetParam(uid, msgSetParamCmd);
         Log.d("monty", "FishTankApiManager -> setDeviceParam -> setParamResult:" + setParamResult);
     }
-//
+
+    //
 //    public void setTimerParams(int switchNumber,){
 //
 //    }
 
+    /**
+     * 扫描设备
+     */
+    public void toScanDev() {
+        mFishTankApi.ScanDev("");
+    }
 
     @Override
     public void Event(int i, Object o) {
@@ -116,6 +124,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
                 + " , msgScanDevRsp.HWVer=" + msgScanDevRsp.HWVer
                 + " , msgScanDevRsp.Model=" + msgScanDevRsp.Model
                 + " , msgScanDevRsp.SWVer=" + msgScanDevRsp.SWVer);
+        EventBus.getDefault().post(new ScanDevEvent(msgScanDevRsp));
     }
 
     @Override
