@@ -65,11 +65,8 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_detail_activity);
 
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
         Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
+
         if (null != device) {
             mDevice = device;
         }
@@ -77,14 +74,17 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         initView();
         loadingDialog.show();
         setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         loadingDialog.show();
-        FishTankApiManager.getInstance().loginDevice(mDevice.getUid());
+//        mDevice.setDevPwd("11");
+        FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
     }
 
     @Override
@@ -185,7 +185,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         titleBar.setRightStr("设置");
 
         loadingDialog = new LoadingDialog(context, "加载中");
-        loadingDialog.setCancelable(false);
 
         titleBar.setOnClickRightListener(new OnClickEditListener());
         titleBar.setOnClickLeftListener(new OnClickLeftListener());

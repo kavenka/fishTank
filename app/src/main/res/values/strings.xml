@@ -49,7 +49,7 @@
     <string name="input_new_pwd">input new password</string>
     <string name="confirm_new_psw">confirm new password</string>
     <string name="confirm">confirm</string>
-    <string name="user_pwd_set">set user password</string>
+    <string name="user_pwd_set">set device password</string>
     <string name="input_right_pwd">please input right password</string>
     <string name="log_out_failed">log out failed</string>
     <string name="log_out_success">log out success</string>

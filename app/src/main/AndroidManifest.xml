@@ -110,6 +110,11 @@
             >
         </activity>
         <activity
+            android:name=".activity.SetDevicePwdActivity"
+            android:theme="@style/TranslucentTheme"
+            >
+        </activity>
+        <activity
             android:name=".activity.SearchNewDeviceActivity"
             android:theme="@style/TranslucentTheme"
             >
