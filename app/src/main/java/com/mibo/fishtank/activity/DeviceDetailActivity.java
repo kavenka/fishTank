@@ -16,6 +16,7 @@ import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
@@ -30,7 +31,7 @@ import org.greenrobot.eventbus.ThreadMode;
 public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchView.OnSwitchClickListener {
 
     private LoadingDialog loadingDialog;
-    private String uid = "5CCF7F07B170";
+//    private String uid = "5CCF7F07B170";
 //    private String uid = "5CCF7F07AB24";
 
     private TextView mTvTempLevel = null;
@@ -49,9 +50,12 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private DeviceSwitchView mCurrentSwitchView;
 
-    public static Intent BuildIntent(Context context, String uid) {
+    private Device mDevice = null;
+
+
+    public static Intent BuildIntent(Context context, Device device) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
-        intent.putExtra("uid", uid);
+        intent.putExtra("device", device);
         return intent;
     }
 
@@ -64,9 +68,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             EventBus.getDefault().register(this);
         }
 
+        Device device = getIntent().getParcelableExtra("device");
+        if (null != device) {
+            mDevice = device;
+        }
+
         initView();
         loadingDialog.show();
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, uid));
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
 
     }
 
@@ -74,7 +83,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     protected void onResume() {
         super.onResume();
         loadingDialog.show();
-        FishTankApiManager.getInstance().loginDevice(uid);
+        FishTankApiManager.getInstance().loginDevice(mDevice.getUid());
     }
 
     @Override
@@ -88,7 +97,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginLstener(LoginEvent event) {
         if (event.loginSuccess) {
-            FishTankApiManager.getInstance().getDeviceParam(uid);
+            FishTankApiManager.getInstance().getDeviceParam(mDevice.getUid());
         } else {
             Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
             loadingDialog.close();
@@ -269,7 +278,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 msgSetParamCmd.Rfu2 = isOpen;
                 break;
         }
-        FishTankApiManager.getInstance().setDeviceParam(uid, msgSetParamCmd);
+        FishTankApiManager.getInstance().setDeviceParam(mDevice.getUid(), msgSetParamCmd);
     }
 
 //    private List<DeviceSwitch> generateSwitchParameter(boolean Light1, boolean Light2, boolean Heater1, boolean Heater2, boolean Pump, boolean OxygenPump, boolean Rfu1, boolean Rfu2) {
@@ -296,7 +305,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private class OnClickEditListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = DeviceParamsActivity.BuildIntent(context, uid);
+            Intent intent = DeviceParamsActivity.BuildIntent(context, mDevice.getUid());
             startActivity(intent);
         }
     }
