@@ -31,36 +31,47 @@ public class FishTankApp extends Application {
     public void onCreate() {
         super.onCreate();
         mFishTankApp = this;
-        LitePal.initialize(this);
-        FishTankApiManager.getInstance().init();
-        FishTankUserApiManager.getInstance().init();
-        // 开启logcat输出，方便debug，发布时请关闭
-        XGPushConfig.enableDebug(this, true);
-        if (isMainProcess()) {
-            XGPushManager.registerPush(this, new XGIOperateCallback() {
-                @Override
-                public void onSuccess(Object data, int flag) {
-                    Log.d("TPush", "注册成功，设备token为：" + data);
-                }
+        Log.d("monty", "FishTankApp：onCreate mFishTankApp:" + mFishTankApp.hashCode());
 
-                @Override
-                public void onFail(Object data, int errCode, String msg) {
-                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-                }
-            });
-        }
-    }
-
-    public boolean isMainProcess() {
-        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
-        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
-        String mainProcessName = getPackageName();
-        int myPid = android.os.Process.myPid();
-        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
-            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
-                return true;
+        String processName = getProcessName(this, android.os.Process.myPid());
+        Log.d("monty", "processName:" + processName);
+        if (processName != null) {
+            boolean defaultProcess = processName.equals(FishTankApp.this.getPackageName());
+            if (defaultProcess) {
+                //必要的初始化资源操作
+                FishTankApiManager.getInstance().init();
+                FishTankUserApiManager.getInstance().init();
+                LitePal.initialize(this);
             }
         }
-        return false;
+
+        // 开启logcat输出，方便debug，发布时请关闭
+        XGPushConfig.enableDebug(this, true);
+
+        XGPushManager.registerPush(this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+    }
+
+    public static String getProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+        }
+        return null;
     }
 }

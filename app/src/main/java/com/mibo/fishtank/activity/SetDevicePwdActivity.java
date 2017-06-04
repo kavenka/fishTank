@@ -86,19 +86,17 @@ public class SetDevicePwdActivity extends BaseActivity {
         confirmBtn.setOnClickListener(new OnClickConfirmListener());
     }
 
-    /**
-     * 更新新密码到设备
-     */
+
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAddSceneEvent(AddOrUpSceneEvent event) {
-        loadingDialog.close();
-        if (IFishTankError.SUCCESS == event.msg.arg2) {
-            Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
-            finish();
+    void onSetDevicePwdListener(SetDevicePwdEvent event) {
+        if (event.result == 0) {
+            FishTankApiManager.getInstance().loginDevice(uid, newPwd);
         } else {
-            Toast.makeText(context, "更新设备密码失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "密码设置失败", Toast.LENGTH_SHORT).show();
+            loadingDialog.close();
         }
-        loadingDialog.close();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -112,15 +110,20 @@ public class SetDevicePwdActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 更新新密码到设备
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetDevicePwdListener(SetDevicePwdEvent event) {
-        if (event.result == 0) {
-            FishTankApiManager.getInstance().loginDevice(uid, newPwd);
+    public void onAddSceneEvent(AddOrUpSceneEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
-            Toast.makeText(this, "密码设置失败", Toast.LENGTH_SHORT).show();
-            loadingDialog.close();
+            Toast.makeText(context, "更新设备密码失败", Toast.LENGTH_SHORT).show();
         }
+        loadingDialog.close();
     }
+
 
     private class OnClickLeftListener implements View.OnClickListener {
         @Override

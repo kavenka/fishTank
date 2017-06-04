@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity {
         Message msg = event.msg;
         if (IFishTankError.SUCCESS == msg.arg2) {
             String resultJson = msg.obj.toString();
+            Log.d("monty", "MainActivity -> onGetDevCfgEvent -> resultJson:" + resultJson);
             DevCfgEntity devCfgEntity = new DevCfgEntity();
             devCfgEntity.parserEntity(resultJson);
             scenes.clear();
