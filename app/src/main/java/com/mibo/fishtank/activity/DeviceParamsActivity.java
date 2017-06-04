@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.mibo.fishtank.FishTankmManage.DeviceParams;
 import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
-import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetPhAndTempEvent;
 import com.mibo.fishtank.FishTankmManage.timer.SwitchNumber;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.RangeSeekBar;
@@ -62,10 +62,10 @@ public class DeviceParamsActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTimerListener(SetParamsEvent event) {
+    void onSetTimerListener(SetPhAndTempEvent event) {
         if (event.result == 0) {
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "开关设置成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
         }
@@ -163,7 +163,7 @@ public class DeviceParamsActivity extends BaseActivity {
     private class OnClickEditPwdListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context, SetDevicePwdActivity.class);
+            Intent intent = SetDevicePwdActivity.BuildIntent(context,uid);
             startActivity(intent);
         }
     }

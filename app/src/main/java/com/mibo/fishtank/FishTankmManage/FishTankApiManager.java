@@ -7,11 +7,21 @@ import com.mibo.fishtank.FishTankApp;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.ScanDevEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetDevicePwdEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetPhAndTempEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetTelEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetTimerEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
+
+import static com.mibo.fishtank.FishTankmManage.FishTankApiManager.OperationType.SET_DEFAULT;
+import static com.mibo.fishtank.FishTankmManage.FishTankApiManager.OperationType.SET_DEVICEPWD;
+import static com.mibo.fishtank.FishTankmManage.FishTankApiManager.OperationType.SET_PHANDTEMPPARAMS;
+import static com.mibo.fishtank.FishTankmManage.FishTankApiManager.OperationType.SET_TELPARAM;
+import static com.mibo.fishtank.FishTankmManage.FishTankApiManager.OperationType.SET_TIMERPARAMS;
 
 /**
  * Created by Monty on 2017/5/29.
@@ -21,6 +31,8 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     private static FishTankApiManager fishTankApiManager;
     private IFishTankApi mFishTankApi;
+
+    private OperationType operationType = SET_DEFAULT;
 
     public static FishTankApiManager getInstance() {
         if (fishTankApiManager == null) {
@@ -34,16 +46,20 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         mFishTankApi.SetIFishTankApiInterface(this);
     }
 
+    public static enum OperationType {
+        SET_PHANDTEMPPARAMS, SET_TIMERPARAMS, SET_TELPARAM, SET_DEVICEPWD, SET_DEFAULT
+    }
+
     /**
      * 设备登录
      *
      * @param uid
      */
-    public void loginDevice(String uid) {
-        Log.d("monty", "FishTankApiManager -> loginDevice -> uid:" + uid);
+    public void loginDevice(String uid, String pwd) {
+        Log.d("monty", "FishTankApiManager -> loginDevice -> uid:" + uid + ",user:admin" + ",pwd:" + pwd);
         IFishTankApi.MsgLoginCmd msgLoginCmd = new IFishTankApi.MsgLoginCmd();
         msgLoginCmd.User = "admin";
-        msgLoginCmd.Pwd = "12345678";
+        msgLoginCmd.Pwd = pwd;
         int loginResult = mFishTankApi.FtLogin(uid, msgLoginCmd);
         Log.d("monty", "FishTankApiManager -> loginResult:" + loginResult);
     }
@@ -66,13 +82,13 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
      * @param deviceParams
      */
     public void setPhAndTempParams(String uid, DeviceParams deviceParams) {
-
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
         msgSetParamCmd.PhMin = deviceParams.PhMin;
         msgSetParamCmd.PhMax = deviceParams.PhMax;
         msgSetParamCmd.TempMin = deviceParams.TempMin;
         msgSetParamCmd.TempMax = deviceParams.TempMax;
 
+        operationType = SET_PHANDTEMPPARAMS;
         setDeviceParam(uid, msgSetParamCmd);
 
     }
@@ -93,6 +109,8 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
             iAlarm.fromBytes(alarm[i].toBytes());
             msgSetParamCmd.Alarms[i] = iAlarm;
         }
+
+        operationType = SET_TIMERPARAMS;
         setDeviceParam(uid, msgSetParamCmd);
 
     }
@@ -121,7 +139,22 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         }
         msgSetParamCmd.Tel = telParams;
 
-        setDeviceParam(uid,msgSetParamCmd);
+        operationType = SET_TELPARAM;
+        setDeviceParam(uid, msgSetParamCmd);
+    }
+
+    /**
+     * 设置设备密码
+     *
+     * @param uid
+     * @param pwd
+     */
+    public void setDevicePwd(String uid, String pwd) {
+        IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
+        msgSetParamCmd.Pwd = pwd;
+
+        operationType = SET_DEVICEPWD;
+        setDeviceParam(uid, msgSetParamCmd);
     }
 
     //
@@ -164,8 +197,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
 
     @Override
     public void FtLoginRsp(String uid, int result) {
-        LoginEvent loginEvent = new LoginEvent();
-        loginEvent.loginSuccess = true;
+        LoginEvent loginEvent = new LoginEvent(uid, result);
         EventBus.getDefault().post(loginEvent);
         Log.d("monty", "IFishTankApiInterface -> FtLoginRsp -> uid=" + uid + " , result=" + result);
 
@@ -174,8 +206,18 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     @Override
     public void FtSetParamRsp(String uid, int result) {
         Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> uid=" + uid + " , result=" + result);
+        if (operationType == SET_PHANDTEMPPARAMS) {
+            EventBus.getDefault().post(new SetPhAndTempEvent(uid, result));
+        } else if (operationType == SET_DEVICEPWD) {
+            EventBus.getDefault().post(new SetDevicePwdEvent(uid, result));
+        } else if (operationType == SET_TELPARAM) {
+            EventBus.getDefault().post(new SetTelEvent(uid, result));
+        } else if (operationType == SET_TIMERPARAMS) {
+            EventBus.getDefault().post(new SetTimerEvent(uid, result));
+        } else {
+            EventBus.getDefault().post(new SetParamsEvent(uid, result));
+        }
 
-        EventBus.getDefault().post(new SetParamsEvent(uid, result));
     }
 
     @Override

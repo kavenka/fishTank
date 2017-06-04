@@ -24,6 +24,13 @@ public class Device extends DataSupport {
     private int Port;
     private String User;
     private String DevPwd;
+    public String getDevPwd() {
+        return DevPwd;
+    }
+
+    public void setDevPwd(String devPwd) {
+        DevPwd = devPwd;
+    }
 
     private ArrayList<String> sceneIds = new ArrayList<>();
 

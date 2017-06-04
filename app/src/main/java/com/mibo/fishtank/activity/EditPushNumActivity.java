@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.mibo.fishtank.FishTankmManage.DeviceParams;
 import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
-import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetTelEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
@@ -48,7 +48,6 @@ public class EditPushNumActivity extends BaseActivity {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
         String uid = getIntent().getStringExtra("uid");
         if (TextUtils.isEmpty(uid)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
@@ -59,6 +58,7 @@ public class EditPushNumActivity extends BaseActivity {
 
         setTelePhoneParams();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -84,9 +84,9 @@ public class EditPushNumActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTellPhoneListener(SetParamsEvent event) {
+    void onSetTellPhoneListener(SetTelEvent event) {
         if (event.result == 0) {
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "推送手机号码设置成功", Toast.LENGTH_SHORT).show();
             deviceParams.Tel = telePhone;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
         } else {

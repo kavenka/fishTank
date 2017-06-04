@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.mibo.fishtank.FishTankmManage.DeviceParams;
 import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
-import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
+import com.mibo.fishtank.FishTankmManage.event.SetTimerEvent;
 import com.mibo.fishtank.FishTankmManage.timer.SwitchNumber;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.weight.SelectTimeDialog;
@@ -54,14 +54,14 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.set_timer_activity);
 
         getIntentData();
+        initView();
+        setLoacalData();
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
-        initView();
-        setLoacalData();
     }
+
 
     private void getIntentData() {
         String uid = getIntent().getStringExtra("uid");
@@ -251,11 +251,11 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTimerListener(SetParamsEvent event) {
+    void onSetTimerListener(SetTimerEvent event) {
         if (event.result == 0) {
             deviceParams.Alarms = alarms;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
-            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "定时器设置成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
         }

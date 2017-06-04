@@ -137,10 +137,7 @@ public class AddDeviceActivity extends BaseActivity {
     }
 
     private void toLoginDevice() {
-        IFishTankApi.MsgLoginCmd cmd = new IFishTankApi.MsgLoginCmd();
-        cmd.Pwd = "12345678";
-        cmd.User = "admin";
-        FishTankApiManager.getInstance().loginDevice(uid);
+        FishTankApiManager.getInstance().loginDevice(uid,"12345678");
     }
 
     private class OnDevicePwdChangeListener implements TextWatcher {
