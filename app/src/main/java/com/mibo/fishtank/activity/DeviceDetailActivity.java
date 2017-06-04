@@ -83,7 +83,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             EventBus.getDefault().register(this);
         }
         loadingDialog.show();
-//        mDevice.setDevPwd("11");
+//        mDevice.setDevPwd("111");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
     }
 

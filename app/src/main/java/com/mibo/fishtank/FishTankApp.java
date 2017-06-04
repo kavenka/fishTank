@@ -1,6 +1,8 @@
 package com.mibo.fishtank;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
@@ -10,6 +12,8 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 import org.litepal.LitePal;
+
+import java.util.List;
 
 /**
  * Created by Administrator
@@ -27,6 +31,21 @@ public class FishTankApp extends Application {
     public void onCreate() {
         super.onCreate();
         mFishTankApp = this;
+        Log.d("monty", "FishTankApp：onCreate mFishTankApp:" + mFishTankApp.hashCode());
+
+        String processName = getProcessName(this,
+                android.os.Process.myPid());
+        Log.d("monty", "processName"+processName);
+        if (processName != null) {
+            boolean defaultProcess = processName
+                    .equals(FishTankApp.this.getPackageName());
+            if (defaultProcess) {
+                //必要的初始化资源操作
+                FishTankApiManager.getInstance().init();
+                FishTankUserApiManager.getInstance().init();
+            }
+        }
+
         // 开启logcat输出，方便debug，发布时请关闭
         XGPushConfig.enableDebug(this, true);
 
@@ -42,7 +61,20 @@ public class FishTankApp extends Application {
             }
         });
         LitePal.initialize(this);
-        FishTankApiManager.getInstance().init();
-        FishTankUserApiManager.getInstance().init();
+
+    }
+
+    public static String getProcessName(Context cxt, int pid) {
+        ActivityManager am = (ActivityManager) cxt.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+            if (procInfo.pid == pid) {
+                return procInfo.processName;
+            }
+        }
+        return null;
     }
 }
