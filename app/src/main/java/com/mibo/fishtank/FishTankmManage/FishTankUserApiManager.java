@@ -2,15 +2,25 @@ package com.mibo.fishtank.FishTankmManage;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Base64;
 
+import com.google.gson.Gson;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.LSmartLink;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
 import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
+import com.mibo.fishtank.entity.Device;
+import com.mibo.fishtank.entity.Scene;
+import com.mibo.fishtank.utils.DataBaseManager;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator
@@ -84,11 +94,109 @@ public class FishTankUserApiManager {
         cloudApi.GetDevCfg();
     }
 
+    @NonNull
+    private CloudApi.DevCfg getDevCfg() {
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 0;
+        devCfg.Vendor = "Vendor";
+        devCfg.Model = "Model";
+        devCfg.Uid = "Uid";
+        devCfg.User = "User";
+        devCfg.Pwd = "Pwd";
+        return devCfg;
+    }
+
     /**
-     * 添加或更新与本用户关联的设备
+     * 更新场景
      */
-    public void toAddOrUpdateDev(CloudApi.DevCfg cfg) {
-        cloudApi.AddOrUpdateDevCfg(cfg);
+    public void toAddScene(String sceneName) {
+        CloudApi.DevCfg devCfg = getDevCfg();
+        Scene scene = new Scene();
+        scene.setName(sceneName);
+        long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
+        String str = String.valueOf(time);
+        scene.setSceneID(str);
+        Gson gson = new Gson();
+        ArrayList<Scene> scenes = new ArrayList<>();
+        List<Scene> dataScenes = DataBaseManager.queryAllScene();
+        scenes.addAll(dataScenes);
+        scenes.add(scene);
+        String scenesArrayStr = gson.toJson(scenes);
+        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
+        cloudApi.AddOrUpdateDevCfg(devCfg);
+    }
+
+    /**
+     * 删除场景
+     */
+    public void toDeleteScene(String sceneID) {
+        CloudApi.DevCfg devCfg = getDevCfg();
+        List<Scene> scenes = DataBaseManager.queryAllScene();
+        for (int i = 0; i < scenes.size(); i++) {
+            Scene scene = scenes.get(i);
+            if (TextUtils.equals(sceneID, scene.getSceneID())) {
+                scenes.remove(i);
+                break;
+            }
+        }
+        Gson gson = new Gson();
+        String scenesArrayStr = gson.toJson(scenes);
+        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
+        cloudApi.AddOrUpdateDevCfg(devCfg);
+    }
+
+    /**
+     * 增加设备
+     */
+    public void toAddDevice(String uid, String sceneId, String model) {
+        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
+        sceneIds.add(sceneId);
+        int size = sceneIds.size();
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            stringBuffer.append(sceneIds.get(i));
+            if (size > 1 && i != size - 1) {
+                stringBuffer.append("&");
+            }
+        }
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 1;
+        devCfg.Vendor = "1";
+        devCfg.Model = model;
+        devCfg.Uid = uid;
+        devCfg.User = "admin";
+        devCfg.Pwd = "12345678";
+        devCfg.Data = "";
+        devCfg.Custom = stringBuffer.toString().getBytes();
+        cloudApi.AddOrUpdateDevCfg(devCfg);
+    }
+
+    /**
+     * 更新设备
+     *
+     * @param uid
+     */
+    public void toUpdateDevice(String uid, String pwd) {
+        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
+        Device device = DataBaseManager.queryDevice(uid);
+        int size = sceneIds.size();
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            stringBuffer.append(sceneIds.get(i));
+            if (size > 1 && i != size - 1) {
+                stringBuffer.append("&");
+            }
+        }
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 1;
+        devCfg.Vendor = "1";
+        devCfg.Model = device.getModel();
+        devCfg.Uid = uid;
+        devCfg.User = "admin";
+        devCfg.Pwd = pwd;
+        devCfg.Data = "";
+        devCfg.Custom = stringBuffer.toString().getBytes();
+        cloudApi.AddOrUpdateDevCfg(devCfg);
     }
 
     private Handler handler = new Handler() {

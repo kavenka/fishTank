@@ -2,29 +2,21 @@ package com.mibo.fishtank.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
 import com.mibo.fishtank.R;
-import com.mibo.fishtank.entity.Scene;
-import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 public class SceneManagerActivity extends BaseActivity {
 
@@ -94,26 +86,7 @@ public class SceneManagerActivity extends BaseActivity {
                 return;
             }
             loadingDialog.show();
-            CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
-            devCfg.Type = 0;
-            devCfg.Vendor = "Vendor";
-            devCfg.Model = "Model";
-            devCfg.Uid = "Uid";
-            devCfg.User = "User";
-            devCfg.Pwd = "Pwd";
-            List<Scene> scenes = DataBaseManager.queryAllScene();
-            for (int i = 0; i < scenes.size(); i++) {
-                Scene scene = scenes.get(i);
-                if (TextUtils.equals(sceneID, scene.getSceneID())) {
-                    scenes.remove(i);
-                    break;
-                }
-            }
-            Gson gson = new Gson();
-            String scenesArrayStr = gson.toJson(scenes);
-            devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
-
-            FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
+            FishTankUserApiManager.getInstance().toDeleteScene(sceneID);
         }
     }
 

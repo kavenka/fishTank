@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
@@ -111,7 +109,7 @@ public class MainActivity extends BaseActivity {
             scenes.clear();
             List<Scene> dataBaseScene = DataBaseManager.queryAllScene();
             if (dataBaseScene.size() == 0) {//如果没有场景，默认添加一个客厅的场景
-                toAddDefutalScene();
+                FishTankUserApiManager.getInstance().toAddScene("客厅");
                 return;
             }
             scenes.addAll(dataBaseScene);//解析好的场景实体集合添加到viewPager中
@@ -123,34 +121,6 @@ public class MainActivity extends BaseActivity {
         } else {
             Toast.makeText(context, "获取场景和设备信息失败", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    /**
-     * 添加默认场景
-     */
-    private void toAddDefutalScene() {
-        loadingDialog.show();
-        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
-        devCfg.Type = 0;
-        devCfg.Vendor = "Vendor";
-        devCfg.Model = "Model";
-        devCfg.Uid = "Uid";
-        devCfg.User = "User";
-        devCfg.Pwd = "Pwd";
-        Scene scene = new Scene();
-        scene.setName("客厅");
-        long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
-        String str = String.valueOf(time);
-        scene.setSceneID(str);
-        Gson gson = new Gson();
-        ArrayList<Scene> scenes = new ArrayList<>();
-        List<Scene> dataScenes = DataBaseManager.queryAllScene();
-        scenes.addAll(dataScenes);
-        scenes.add(scene);
-        String scenesArrayStr = gson.toJson(scenes);
-        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
-
-        FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
     }
 
     /**

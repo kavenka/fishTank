@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
@@ -19,15 +18,12 @@ import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.R;
-import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 /**
  * 配置设备密码
@@ -96,28 +92,7 @@ public class AddDeviceActivity extends BaseActivity {
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
-            List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
-            sceneIds.add(sceneId);
-            int size = sceneIds.size();
-            StringBuilder stringBuffer = new StringBuilder();
-            for (int i = 0; i < size; i++) {
-                stringBuffer.append(sceneIds.get(i));
-                if (size > 1 && i != size - 1) {
-                    stringBuffer.append("&");
-                }
-            }
-
-            devCfg.Type = 1;
-            devCfg.Vendor = "1";
-            devCfg.Model = model;
-            devCfg.Uid = uid;
-            devCfg.User = "admin";
-            devCfg.Pwd = "12345678";
-            devCfg.Data = "";
-            devCfg.Custom = stringBuffer.toString().getBytes();
-
-            FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
+            FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId, model);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
         }

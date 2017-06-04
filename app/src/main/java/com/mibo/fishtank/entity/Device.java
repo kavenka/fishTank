@@ -29,7 +29,7 @@ public class Device extends DataSupport {
 
     public void parserEntity(JSONObject object) {
         try {
-            User = object.getString("User");
+            User = object.getString("DevUser");
             Uid = object.getString("DevUid");
             DevPwd = object.getString("DevPwd");
             String custom = object.getString("Custom");
