@@ -17,6 +17,7 @@ import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.entity.Device;
+import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.DeviceSwitch.DeviceSwitchView;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
@@ -53,9 +54,9 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private Device mDevice = null;
 
 
-    public static Intent BuildIntent(Context context, Device device) {
+    public static Intent BuildIntent(Context context, String deviceUid) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
-        intent.putExtra("device", device);
+        intent.putExtra("deviceUid", deviceUid);
         return intent;
     }
 
@@ -68,7 +69,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             EventBus.getDefault().register(this);
         }
 
-        Device device = getIntent().getParcelableExtra("device");
+        Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
         if (null != device) {
             mDevice = device;
         }

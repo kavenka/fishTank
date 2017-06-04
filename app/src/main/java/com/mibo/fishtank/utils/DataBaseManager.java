@@ -95,6 +95,13 @@ public class DataBaseManager {
     }
 
     /**
+     * 搜索单个设备
+     */
+    public static Device queryDevice(String deviceUid) {
+        return DataSupport.where("uid = ?", deviceUid).findFirst(Device.class);
+    }
+
+    /**
      * 删除所有设备
      */
     private static void clearDevice() {
