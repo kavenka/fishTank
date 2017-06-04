@@ -162,6 +162,7 @@
             android:theme="@style/TranslucentTheme"
             >
         </activity>
+
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
