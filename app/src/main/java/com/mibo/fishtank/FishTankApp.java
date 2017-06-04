@@ -33,16 +33,15 @@ public class FishTankApp extends Application {
         mFishTankApp = this;
         Log.d("monty", "FishTankApp：onCreate mFishTankApp:" + mFishTankApp.hashCode());
 
-        String processName = getProcessName(this,
-                android.os.Process.myPid());
-        Log.d("monty", "processName"+processName);
+        String processName = getProcessName(this, android.os.Process.myPid());
+        Log.d("monty", "processName:" + processName);
         if (processName != null) {
-            boolean defaultProcess = processName
-                    .equals(FishTankApp.this.getPackageName());
+            boolean defaultProcess = processName.equals(FishTankApp.this.getPackageName());
             if (defaultProcess) {
                 //必要的初始化资源操作
                 FishTankApiManager.getInstance().init();
                 FishTankUserApiManager.getInstance().init();
+                LitePal.initialize(this);
             }
         }
 
@@ -60,8 +59,6 @@ public class FishTankApp extends Application {
                 Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
             }
         });
-        LitePal.initialize(this);
-
     }
 
     public static String getProcessName(Context cxt, int pid) {
