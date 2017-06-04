@@ -46,7 +46,7 @@ public class DeviceSwitchView extends LinearLayout {
         });
 
         addView(rootView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
+        closeSwitch();
     }
 
     public void setSwitchIcon(@DrawableRes int res) {
@@ -82,10 +82,10 @@ public class DeviceSwitchView extends LinearLayout {
         }
     }
 
-    public void setSwitch(){
-        if(isOpen){
+    public void setSwitch() {
+        if (isOpen) {
             closeSwitch();
-        }else{
+        } else {
             openSwitch();
         }
     }
