@@ -1,5 +1,6 @@
 package com.mibo.fishtank.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +8,10 @@ import android.widget.Button;
 
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.PreferencesManager;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 
-public class LaunchActivity extends BaseActivity{
+public class LaunchActivity extends BaseActivity {
 
 
     private String name;
@@ -17,6 +20,14 @@ public class LaunchActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 开启logcat输出，方便debug，发布时请关闭
+        XGPushConfig.enableDebug(this, true);
+        // 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
+// 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
+// 具体可参考详细的开发指南
+// 传递的参数为ApplicationContext
+        Context context = getApplicationContext();
+        XGPushManager.registerPush(context);
         setContentView(R.layout.launch_activity);
         initView();
         getLoginInfo();
@@ -40,6 +51,7 @@ public class LaunchActivity extends BaseActivity{
             pwd = pm.getStringValue("pwd");
         }
     }
+
     /**
      * 登录的点击事件
      */
@@ -54,6 +66,7 @@ public class LaunchActivity extends BaseActivity{
             finish();
         }
     }
+
     /**
      * 注册的点击事件
      */
@@ -61,7 +74,7 @@ public class LaunchActivity extends BaseActivity{
 
         @Override
         public void onClick(View v) {
-            Intent  intent = new Intent(context, RegisterActivity.class);
+            Intent intent = new Intent(context, RegisterActivity.class);
             context.startActivity(intent);
         }
     }
