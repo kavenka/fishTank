@@ -118,8 +118,6 @@ public class AddDeviceActivity extends BaseActivity {
             devCfg.Custom = stringBuffer.toString().getBytes();
 
             FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
-            Intent intent = new Intent(context, DeviceInNetActivity.class);
-            startActivity(intent);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
         }
@@ -135,6 +133,8 @@ public class AddDeviceActivity extends BaseActivity {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
             Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
             FishTankUserApiManager.getInstance().toGetDevCfg();
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
             finish();
         } else {
             Toast.makeText(context, "添加失败", Toast.LENGTH_SHORT).show();

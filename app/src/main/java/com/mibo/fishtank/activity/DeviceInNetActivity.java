@@ -76,6 +76,7 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
             Intent intent = new Intent(context, SearchNewDeviceActivity.class);
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         } else {
             Toast.makeText(context, "wifi密码错误，请重新输入", Toast.LENGTH_SHORT).show();
         }
@@ -106,6 +107,7 @@ public class DeviceInNetActivity extends BaseActivity implements LSmartLink.LSma
             Intent intent = new Intent(context, SearchNewDeviceActivity.class);
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         }
     }
 

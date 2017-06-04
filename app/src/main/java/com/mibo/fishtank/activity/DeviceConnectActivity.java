@@ -47,6 +47,7 @@ public class DeviceConnectActivity extends BaseActivity {
             Intent intent = new Intent(context, SearchNewDeviceActivity.class);
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -56,6 +57,7 @@ public class DeviceConnectActivity extends BaseActivity {
             Intent intent = new Intent(context, DeviceInNetActivity.class);
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         }
     }
 }

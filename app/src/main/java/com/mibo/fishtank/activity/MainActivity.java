@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
@@ -35,6 +37,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private Context context = this;
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity {
     private SceneFragmentAdapter adapter;
     private ArrayList<Scene> scenes;
     private TitleBar titleBar;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class MainActivity extends BaseActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        viewPager = (ViewPager) findViewById(R.id.main_view_pager);
         scenes = new ArrayList<>();
         adapter = new SceneFragmentAdapter(getSupportFragmentManager(), scenes);
         viewPager.addOnPageChangeListener(new OnPagerChange());
@@ -105,13 +109,48 @@ public class MainActivity extends BaseActivity {
             DevCfgEntity devCfgEntity = new DevCfgEntity();
             devCfgEntity.parserEntity(resultJson);
             scenes.clear();
-//            ArrayList<Device> devices = devCfgEntity.devices;//解析好的设备实体集合
-            scenes.addAll(DataBaseManager.queryAllScene());//解析好的场景实体集合添加到viewPager中
+            List<Scene> dataBaseScene = DataBaseManager.queryAllScene();
+            if (dataBaseScene.size() == 0) {//如果没有场景，默认添加一个客厅的场景
+                toAddDefutalScene();
+                return;
+            }
+            scenes.addAll(dataBaseScene);//解析好的场景实体集合添加到viewPager中
             adapter.notifyDataSetChanged();
             titleBar.setCenterStr(scenes.get(0).getName());
+            if (scenes.size() == 1) {
+
+            }
         } else {
             Toast.makeText(context, "获取场景和设备信息失败", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 添加默认场景
+     */
+    private void toAddDefutalScene() {
+        loadingDialog.show();
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 0;
+        devCfg.Vendor = "Vendor";
+        devCfg.Model = "Model";
+        devCfg.Uid = "Uid";
+        devCfg.User = "User";
+        devCfg.Pwd = "Pwd";
+        Scene scene = new Scene();
+        scene.setName("客厅");
+        long time = System.currentTimeMillis() / 1000;//获取系统时间的10位的时间戳
+        String str = String.valueOf(time);
+        scene.setSceneID(str);
+        Gson gson = new Gson();
+        ArrayList<Scene> scenes = new ArrayList<>();
+        List<Scene> dataScenes = DataBaseManager.queryAllScene();
+        scenes.addAll(dataScenes);
+        scenes.add(scene);
+        String scenesArrayStr = gson.toJson(scenes);
+        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
+
+        FishTankUserApiManager.getInstance().toAddOrUpdateDev(devCfg);
     }
 
     /**

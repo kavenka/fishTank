@@ -73,21 +73,4 @@ public class SceneFragment extends BaseFragment {
             }
         }
     }
-    private class OnClickPaiChaListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = DeviceDetailActivity.BuildIntent(context, "");
-            startActivity(intent);
-        }
-    }
-
-    private class OnClickNewDeviceListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(context, AddNewDeviceActivity.class);
-            intent.putExtra("sceneId", sceneId);
-            startActivity(intent);
-        }
-    }
-
 }

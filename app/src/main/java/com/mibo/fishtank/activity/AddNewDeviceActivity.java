@@ -49,6 +49,7 @@ public class AddNewDeviceActivity extends BaseActivity {
             Intent intent = new Intent(context, DeviceConnectActivity.class);
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         }
     }
 

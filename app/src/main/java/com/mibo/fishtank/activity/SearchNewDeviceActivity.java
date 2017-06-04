@@ -97,6 +97,7 @@ public class SearchNewDeviceActivity extends BaseActivity {
             intent.putExtra("Model", devices.get(pos).getModel());
             intent.putExtra("sceneId", sceneId);
             startActivity(intent);
+            finish();
         }
     }
     @Override
