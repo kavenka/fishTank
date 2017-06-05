@@ -43,11 +43,11 @@ public class DevCfgEntity {
                         scenes.add(scene);
                     }
                     DataBaseManager.saveScene(scenes);//存储场景数据库
-                } else{//设备的解析
+                } else {//设备的解析
                     Device device = new Device();
                     device.parserEntity(sceneOrDeviceObj);
                     devices.add(device);
-                    device.save();
+                    device.saveOrUpdate("uid=?", device.getUid());
                 }
             }
 

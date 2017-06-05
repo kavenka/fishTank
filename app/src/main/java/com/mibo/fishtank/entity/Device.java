@@ -24,6 +24,7 @@ public class Device extends DataSupport {
     private int Port;
     private String User;
     private String DevPwd;
+
     public String getDevPwd() {
         return DevPwd;
     }
@@ -109,5 +110,14 @@ public class Device extends DataSupport {
 
     public void setSceneIds(ArrayList<String> sceneIds) {
         this.sceneIds = sceneIds;
+    }
+
+    public long getBaseObjId() {
+        return super.getBaseObjId();
+    }
+
+    @Override
+    public synchronized boolean save() {
+        return super.save();
     }
 }

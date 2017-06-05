@@ -59,40 +59,43 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         intent.putExtra("deviceUid", deviceUid);
         return intent;
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("monty", "onStart");
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("monty", "onCreate");
         setContentView(R.layout.device_detail_activity);
+
+        initView();
+        loadingDialog.show();
+
+        loadingDialog.show();
 
         Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
 
         if (null != device) {
             mDevice = device;
         }
-
-        initView();
-        loadingDialog.show();
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-        loadingDialog.show();
-//        mDevice.setDevPwd("111");
+//        mDevice.setDevPwd("123456");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
-    }
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

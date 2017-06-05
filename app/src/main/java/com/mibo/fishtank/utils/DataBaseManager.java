@@ -94,6 +94,12 @@ public class DataBaseManager {
         return list;
     }
 
+    public static void updateDevicePwd(String uid,String pwd){
+        Device device = queryDevice(uid);
+        device.setDevPwd(pwd);
+        device.update(device.getBaseObjId());
+    }
+
     /**
      * 搜索单个设备
      */

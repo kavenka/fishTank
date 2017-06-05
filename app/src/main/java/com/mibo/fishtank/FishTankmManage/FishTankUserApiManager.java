@@ -5,6 +5,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.landstek.iFishTank.CloudApi;
@@ -222,6 +223,7 @@ public class FishTankUserApiManager {
                         case CloudApi.REGISTER://注冊
                             break;
                         case CloudApi.ADDORUPDATEDEVCFG://添加或更新与本用户关联的设备
+                            Log.d("monty", "FishTankUserApiManager：toUpdateDevice -> msg:" + msg.toString());
                             EventBus.getDefault().postSticky(new AddOrUpSceneEvent(msg));
                             break;
                         case CloudApi.ERROR://错误

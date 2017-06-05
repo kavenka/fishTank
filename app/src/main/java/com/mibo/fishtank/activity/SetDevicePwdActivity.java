@@ -46,9 +46,7 @@ public class SetDevicePwdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_device_pwd_activity);
         initView();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+
         String uid = getIntent().getStringExtra("uid");
         if (TextUtils.isEmpty(uid)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
@@ -59,14 +57,16 @@ public class SetDevicePwdActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
@@ -116,6 +116,7 @@ public class SetDevicePwdActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddSceneEvent(AddOrUpSceneEvent event) {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
+            DataBaseManager.updateDevicePwd(uid,newPwd);
             Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
             finish();
         } else {

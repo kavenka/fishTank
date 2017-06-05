@@ -72,7 +72,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     public void getDeviceParam(String uid) {
         int getParamResult = mFishTankApi.FtGetParam(uid);
         Log.d("monty", "FishTankApiManager -> getDeviceParam -> getParamResult:" + getParamResult);
-
     }
 
     /**
@@ -217,7 +216,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         } else {
             EventBus.getDefault().post(new SetParamsEvent(uid, result));
         }
-
     }
 
     @Override

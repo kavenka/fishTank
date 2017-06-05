@@ -42,6 +42,7 @@
         <activity
             android:name=".activity.LaunchActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -52,119 +53,142 @@
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.ConfirmPasswordActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.DocActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.ForgetActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SceneSettingActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SceneManagerActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.UserCenterActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.EditUserInfoActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SetUserPwdActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.AddNewDeviceActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SetDevicePwdActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SearchNewDeviceActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.DeviceInNetActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.AddDeviceActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.DeviceConnectActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.DeviceParamsActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
 
         </activity>
         <activity
             android:name=".activity.DeviceDetailActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
 
         </activity>
         <activity
             android:name=".activity.EditPushNumActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.SetTimerActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
 
         </activity>
         <activity
             android:name=".activity.AddSceneActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
         <activity
             android:name=".activity.AddingDeviceToNetActivity"
             android:theme="@style/TranslucentTheme"
+            android:launchMode="singleTop"
             >
         </activity>
 
