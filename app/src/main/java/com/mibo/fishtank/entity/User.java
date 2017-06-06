@@ -13,6 +13,7 @@ public class User extends DataSupport {
     private String userName;
     @Column(unique = true, defaultValue = "unknown")
     private String tel;
+    private String imgUrl;
 
 
     public int getId() {
@@ -41,4 +42,11 @@ public class User extends DataSupport {
         this.userName = userName;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 }

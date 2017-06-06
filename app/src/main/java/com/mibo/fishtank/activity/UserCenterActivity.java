@@ -3,11 +3,14 @@ package com.mibo.fishtank.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.mibo.fishtank.R;
-import com.mibo.fishtank.utils.PreferencesManager;
+import com.mibo.fishtank.entity.User;
+import com.mibo.fishtank.utils.Constans;
+import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.TitleBar;
 
 public class UserCenterActivity extends BaseActivity {
@@ -32,11 +35,9 @@ public class UserCenterActivity extends BaseActivity {
 
         nickName = (TextView) findViewById(R.id.user_name_txt);
         tel = (TextView) findViewById(R.id.user_num_txt);
-        PreferencesManager pm = PreferencesManager.getInstance(context);
-        String nickNameStr = pm.getStringValue("user_nikeName");
-        String telStr = pm.getStringValue("user_tel");
-        nickName.setText(nickNameStr == null ? "" : nickNameStr);
-        tel.setText(telStr == null ? "" : telStr);
+        User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
+        nickName.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
+        tel.setText(Constans.CURRENT_TEL);
 
     }
 

@@ -32,6 +32,12 @@ public class DataBaseManager {
         user.setTel(tel);
         user.saveOrUpdate();
     }
+    /**
+     * 搜索用户信息
+     */
+    public static User queryUser(String tel) {
+        return DataSupport.where("tel = ?", tel).findFirst(User.class);
+    }
 
     /**
      * 插入新的场景
@@ -113,6 +119,5 @@ public class DataBaseManager {
     private static void clearDevice() {
         DataSupport.deleteAll(Device.class);
     }
-
 
 }

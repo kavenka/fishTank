@@ -25,8 +25,9 @@ import com.mibo.fishtank.R;
 import com.mibo.fishtank.adapter.SceneFragmentAdapter;
 import com.mibo.fishtank.entity.DevCfgEntity;
 import com.mibo.fishtank.entity.Scene;
+import com.mibo.fishtank.entity.User;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
-import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<Scene> scenes;
     private TitleBar titleBar;
     private ViewPager viewPager;
+    private TextView nickNameTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +77,9 @@ public class MainActivity extends BaseActivity {
         viewPager.addOnPageChangeListener(new OnPagerChange());
         viewPager.setAdapter(adapter);
 
-        PreferencesManager pm = PreferencesManager.getInstance(context);
-        String nikeName = pm.getStringValue("user_nikeName");
-        TextView nickNameTv = (TextView) findViewById(R.id.id_draw_menu_item_login_tv);
-        nickNameTv.setText(TextUtils.isEmpty(nikeName) ? "" : nikeName);
+        User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
+        nickNameTv = (TextView) findViewById(R.id.id_draw_menu_item_login_tv);
+        nickNameTv.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
         LinearLayout sceneSettingLinear = (LinearLayout) findViewById(R.id.main_scene_setting);
         sceneSettingLinear.setOnClickListener(new OnClickSceneSettingListener());
         LinearLayout userCenterLinear = (LinearLayout) findViewById(R.id.main_user_center);
@@ -135,6 +136,14 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    /**
+     * 当用户信息修改的监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserChangeEvent(User user) {
+        nickNameTv.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
     }
 
     private class OnClickLeftBtnListener implements View.OnClickListener {
