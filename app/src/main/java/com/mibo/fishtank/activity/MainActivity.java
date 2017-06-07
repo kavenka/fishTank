@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity {
         getSceneAndDeviceData();
     }
 
-
     private void initView() {
         titleBar = (TitleBar) findViewById(R.id.main_title);
         titleBar.setLeftImgRes(R.drawable.gengd);

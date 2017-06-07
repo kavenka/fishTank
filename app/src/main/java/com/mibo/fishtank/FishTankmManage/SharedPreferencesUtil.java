@@ -30,4 +30,9 @@ public class SharedPreferencesUtil {
         return sharedPreferences.getString(key,"");
     }
 
+    public static String getString(Context context,String key,String defaul){
+        sharedPreferences = context.getSharedPreferences(database, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key,defaul);
+    }
+
 }

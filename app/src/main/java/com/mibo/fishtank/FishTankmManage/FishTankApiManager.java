@@ -46,7 +46,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         mFishTankApi.SetIFishTankApiInterface(this);
     }
 
-    public static enum OperationType {
+    public enum OperationType {
         SET_PHANDTEMPPARAMS, SET_TIMERPARAMS, SET_TELPARAM, SET_DEVICEPWD, SET_DEFAULT
     }
 
@@ -151,7 +151,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     public void setDevicePwd(String uid, String pwd) {
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
         msgSetParamCmd.Pwd = pwd;
-
         operationType = SET_DEVICEPWD;
         setDeviceParam(uid, msgSetParamCmd);
     }

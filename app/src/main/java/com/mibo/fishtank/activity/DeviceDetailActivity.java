@@ -12,6 +12,7 @@ import com.landstek.iFishTank.IFishTankApi;
 import com.mibo.fishtank.FishTankmManage.DeviceParams;
 import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
+import com.mibo.fishtank.FishTankmManage.SharedPreferencesUtil;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetParamsEvent;
@@ -92,7 +93,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         if (null != device) {
             mDevice = device;
         }
-//        mDevice.setDevPwd("123456");
+//        mDevice.setDevPwd("1111");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
         setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
 
@@ -160,6 +161,16 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvRfu1.setSwitch(deviceParams.Rfu1);
         mDsvRfu2.setSwitch(deviceParams.Rfu2);
 
+
+
+        mDsvRfu1.setSwitchTitleEditEnable(true);
+        mDsvRfu2.setSwitchTitleEditEnable(true);
+
+        String dsvRfu1Title = SharedPreferencesUtil.getString(this, mDsvRfu1.getId() + "", "自定义1");
+        mDsvRfu1.setSwitchTitle(dsvRfu1Title);
+
+        String dsvRfu2Title = SharedPreferencesUtil.getString(this, mDsvRfu2.getId() + "", "自定义2");
+        mDsvRfu2.setSwitchTitle(dsvRfu2Title);
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);
 

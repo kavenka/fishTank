@@ -1,13 +1,19 @@
 package com.mibo.fishtank.weight.DeviceSwitch;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mibo.fishtank.FishTankmManage.SharedPreferencesUtil;
 import com.mibo.fishtank.R;
 
 /**
@@ -21,6 +27,8 @@ public class DeviceSwitchView extends LinearLayout {
 
     private boolean isOpen;
 
+    private boolean switchTitleEditEnable = false;
+
     private OnSwitchClickListener mOnSwitchClickListener;
 
     public DeviceSwitchView(Context context) {
@@ -31,7 +39,7 @@ public class DeviceSwitchView extends LinearLayout {
         this(context, attrs, 0);
     }
 
-    public DeviceSwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DeviceSwitchView(final Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LinearLayout rootView = (LinearLayout) LinearLayout.inflate(context, R.layout.device_switch_layout, null);
         mSwitchIcon = (ImageView) rootView.findViewById(R.id.switch_icon);
@@ -45,8 +53,34 @@ public class DeviceSwitchView extends LinearLayout {
             }
         });
 
+
         addView(rootView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         closeSwitch();
+    }
+
+    public void setSwitchTitleEditEnable(boolean enable){
+        if(enable){
+            this.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final EditText inputSwitchName = new EditText(getContext());
+                    inputSwitchName.setText(mSwitchTitle.getText());
+                    new AlertDialog.Builder(getContext()).setTitle("修改开关名称").setView(inputSwitchName).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String switchName = inputSwitchName.getText().toString();
+                            if(TextUtils.isEmpty(switchName)){
+                                Toast.makeText(getContext(),"请输入开关名称",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            mSwitchTitle.setText(switchName);
+                            SharedPreferencesUtil.putString(getContext(), DeviceSwitchView.this.getId() + "", inputSwitchName.getText().toString());
+                        }
+                    }).show();
+                    return false;
+                }
+            });
+        }
     }
 
     public void setSwitchIcon(@DrawableRes int res) {

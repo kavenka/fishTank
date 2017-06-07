@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/title_left_img"
@@ -37,6 +38,7 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="5dp"
             android:textColor="@color/color_b4ffffff"
             android:textSize="14sp"
             />

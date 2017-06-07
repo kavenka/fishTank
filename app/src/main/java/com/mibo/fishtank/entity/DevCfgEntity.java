@@ -50,8 +50,6 @@ public class DevCfgEntity {
                     device.saveOrUpdate("uid=?", device.getUid());
                 }
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

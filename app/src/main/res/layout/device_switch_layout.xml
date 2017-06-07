@@ -21,6 +21,8 @@
             android:id="@+id/switch_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
             android:text="照明灯1"
             android:textColor="@color/color_000000"
             android:textSize="12sp" />
