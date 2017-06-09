@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.mibo.fishtank"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mibo.fishtank">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
-    <uses-feature android:name="android.permission.CHANGE_WIFI_STATE "/>
+    <uses-feature android:name="android.permission.CHANGE_WIFI_STATE " />
 
-    <!-- 【必须】 信鸽SDK所需权限   -->
+    <!-- 【必须】 信鸽SDK所需权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -37,168 +35,118 @@
         android:icon="@drawable/fish_tank_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.LaunchActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
+            android:theme="@style/TranslucentTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.ConfirmPasswordActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.DocActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.ForgetActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SceneSettingActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SceneManagerActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.UserCenterActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.EditUserInfoActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SetUserPwdActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.AddNewDeviceActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SetDevicePwdActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SearchNewDeviceActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.DeviceInNetActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.AddDeviceActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.DeviceConnectActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.DeviceParamsActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.DeviceDetailActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.EditPushNumActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.SetTimerActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.AddSceneActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
         <activity
             android:name=".activity.AddingDeviceToNetActivity"
-            android:theme="@style/TranslucentTheme"
             android:launchMode="singleTop"
-            >
-        </activity>
+            android:theme="@style/TranslucentTheme"></activity>
 
         <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
-            android:theme="@android:style/Theme.Translucent"
-            android:exported="false" >
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
-                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action"-->
+
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
                 <action android:name="android.intent.action" />
             </intent-filter>
         </activity>
@@ -206,8 +154,8 @@
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
-            android:process=":xg_service_v3" >
-            <intent-filter android:priority="0x7fffffff" >
+            android:process=":xg_service_v3">
+            <intent-filter android:priority="0x7fffffff">
 
                 <!-- 【必须】 信鸽SDK的内部广播 -->
                 <action android:name="com.tencent.android.tpush.action.SDK" />
@@ -224,7 +172,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
             <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
-            <intent-filter android:priority="0x7fffffff" >
+            <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
@@ -240,16 +188,18 @@
             android:persistent="true"
             android:process=":xg_service_v3" />
 
-        <!-- 【必须】 增强xg_service存活率  -->
+        <!-- 【必须】 增强xg_service存活率 -->
         <service
             android:name="com.tencent.android.tpush.service.XGDaemonService"
             android:process=":xg_service_v3" />
 
         <!-- 【可选】APP实现的Receiver，用于接收消息透传和操作结果的回调，请根据需要添加 -->
         <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
-        <receiver android:name="com.mibo.fishtank.receiver.MessageReceiver"
-                  android:exported="true" >
+        <receiver
+            android:name=".receiver.MessageReceiver"
+            android:exported="true">
             <intent-filter>
+
                 <!-- 接收消息透传 -->
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
                 <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
@@ -260,33 +210,31 @@
         <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
         <service
             android:name="com.tencent.android.tpush.rpc.XGRemoteService"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
+
                 <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
                 <action android:name="com.mibo.fishtank.PUSH_ACTION" />
             </intent-filter>
         </service>
 
-        <!-- 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为：com.qq.xgdemo-->
+        <!-- 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为：com.qq.xgdemo -->
         <provider
             android:name="com.tencent.android.tpush.XGPushProvider"
             android:authorities="com.mibo.fishtank.AUTH_XGPUSH"
-            android:exported="true"
-            />
+            android:exported="true" />
 
-        <!-- 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为：com.qq.xgdemo-->
+        <!-- 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为：com.qq.xgdemo -->
         <provider
             android:name="com.tencent.android.tpush.SettingsContentProvider"
             android:authorities="com.mibo.fishtank.TPUSH_PROVIDER"
             android:exported="false" />
 
-        <!-- 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为：com.qq.xgdemo-->
+        <!-- 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为：com.qq.xgdemo -->
         <provider
             android:name="com.tencent.mid.api.MidProvider"
             android:authorities="com.mibo.fishtank.TENCENT.MID.V3"
-            android:exported="true" >
-        </provider>
-
+            android:exported="true"></provider>
 
         <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
         <meta-data
@@ -296,7 +244,11 @@
         <meta-data
             android:name="XG_V2_ACCESS_KEY"
             android:value="A197JG3X8EQK" />
+
+        <activity
+            android:name=".activity.BaseDeviceActivity"
+            android:label="@string/title_activity_base_device"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
-

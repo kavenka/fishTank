@@ -42,23 +42,24 @@ public class FishTankApp extends Application {
                 FishTankApiManager.getInstance().init();
                 FishTankUserApiManager.getInstance().init();
                 LitePal.initialize(this);
+            } else {
+                // 开启logcat输出，方便debug，发布时请关闭
+                XGPushConfig.enableDebug(this, true);
+
+                XGPushManager.registerPush(this, new XGIOperateCallback() {
+                    @Override
+                    public void onSuccess(Object data, int flag) {
+                        Log.d("TPush", "注册成功，设备token为：" + data);
+                    }
+
+                    @Override
+                    public void onFail(Object data, int errCode, String msg) {
+                        Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                    }
+                });
             }
         }
 
-        // 开启logcat输出，方便debug，发布时请关闭
-        XGPushConfig.enableDebug(this, true);
-
-        XGPushManager.registerPush(this, new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.d("TPush", "注册成功，设备token为：" + data);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-            }
-        });
     }
 
     public static String getProcessName(Context cxt, int pid) {

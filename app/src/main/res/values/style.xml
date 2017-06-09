@@ -25,4 +25,7 @@
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
     </style>
 
+    <style name="alert_edit" parent="@android:style/Theme.DeviceDefault.InputMethod">
+        <item name="android:windowBackground">@color/color_b4154761</item>
+    </style>
 </resources>

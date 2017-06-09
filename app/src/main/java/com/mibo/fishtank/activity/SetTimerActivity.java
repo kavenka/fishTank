@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.SetTimerEvent;
 import com.mibo.fishtank.FishTankmManage.timer.SwitchNumber;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.weight.SelectTimeDialog;
 import com.mibo.fishtank.weight.SelectWeekDialog;
 import com.mibo.fishtank.weight.TimerView;
@@ -31,9 +31,9 @@ import java.util.Arrays;
  * 开关定时设置
  * Created by Monty on 2017/5/30.
  */
-public class SetTimerActivity extends BaseActivity implements View.OnClickListener, TimerView.OnToggleChangeListener, TimerView.OnToggleClickListener {
+public class SetTimerActivity extends BaseDeviceActivity implements View.OnClickListener, TimerView.OnToggleChangeListener, TimerView.OnToggleClickListener {
 
-    private String uid;
+//    private String uid;
     private int switchNo;
 
     private TimerView timerView1, timerView2, timerView3, timerView4;
@@ -64,12 +64,12 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
 
 
     private void getIntentData() {
-        String uid = getIntent().getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
-            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
-        } else {
-            this.uid = uid;
-        }
+//        String DEVICE_UID = getIntent().getStringExtra("DEVICE_UID");
+//        if (TextUtils.isEmpty(DEVICE_UID)) {
+//            Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
+//        } else {
+//            this.DEVICE_UID = DEVICE_UID;
+//        }
         int switchNo = getIntent().getIntExtra("switchNo", -1);
         if (switchNo == -1) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
      */
     private void setLoacalData() {
         // 获取本地缓存数据
-        deviceParams = DeviceParamsUtil.getDeviceParams(this, uid);
+        deviceParams = DeviceParamsUtil.getDeviceParams(this, Constans.DEVICE_UID);
         if (deviceParams != null) {
             alarms = deviceParams.Alarms;
         }
@@ -246,7 +246,7 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
             Log.d("monty", "SetTimerActivity -> setTimerParams -> indexes : " + Arrays.toString(indexes));
 
             Log.d("monty", "SetTimerActivity -> setTimerParams -> alarms : " + Arrays.toString(alarms));
-            FishTankApiManager.getInstance().setTimerParams(uid, alarms);
+            FishTankApiManager.getInstance().setTimerParams(Constans.DEVICE_UID, alarms);
         }
     }
 

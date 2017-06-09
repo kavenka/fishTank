@@ -5,7 +5,7 @@ package com.mibo.fishtank.FishTankmManage;
  */
 public interface IDeviceLoginListener {
 
-    void onSeccess(String msg);
-    void onFailure(String msg);
+    void onLoginSeccess();
+    void onLoginFailure(String msg);
 
 }

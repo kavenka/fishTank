@@ -17,11 +17,11 @@ import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.SetDevicePwdEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.entity.Device;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -31,7 +31,6 @@ public class SetDevicePwdActivity extends BaseActivity {
     private EditText newPswEdit;
     private EditText confirmNewPswEdit;
 
-    private String uid;
     private String newPwd;
     private LoadingDialog loadingDialog;
 
@@ -47,30 +46,27 @@ public class SetDevicePwdActivity extends BaseActivity {
         setContentView(R.layout.set_device_pwd_activity);
         initView();
 
-        String uid = getIntent().getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
+        if (TextUtils.isEmpty(Constans.DEVICE_UID)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
             finish();
-        } else {
-            this.uid = uid;
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
+//    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+//    }
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.set_pwd_activity_title);
@@ -86,13 +82,10 @@ public class SetDevicePwdActivity extends BaseActivity {
         confirmBtn.setOnClickListener(new OnClickConfirmListener());
     }
 
-
-
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     void onSetDevicePwdListener(SetDevicePwdEvent event) {
         if (event.result == 0) {
-            FishTankApiManager.getInstance().loginDevice(uid, newPwd);
+            FishTankApiManager.getInstance().loginDevice(Constans.DEVICE_UID, newPwd);
         } else {
             Toast.makeText(this, "密码设置失败", Toast.LENGTH_SHORT).show();
             loadingDialog.close();
@@ -103,7 +96,7 @@ public class SetDevicePwdActivity extends BaseActivity {
     public void onLoginLstener(LoginEvent event) {
         if (event.loginSuccess) {
             // 用新密码登录到设备
-            FishTankUserApiManager.getInstance().toUpdateDevice(uid, newPwd);
+            FishTankUserApiManager.getInstance().toUpdateDevice(Constans.DEVICE_UID, newPwd);
         } else {
             Toast.makeText(this, "新密码登录失败", Toast.LENGTH_SHORT).show();
             loadingDialog.close();
@@ -116,7 +109,7 @@ public class SetDevicePwdActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddSceneEvent(AddOrUpSceneEvent event) {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
-            DataBaseManager.updateDevicePwd(uid,newPwd);
+            DataBaseManager.updateDevicePwd(Constans.DEVICE_UID,newPwd);
             Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
             finish();
         } else {
@@ -149,14 +142,14 @@ public class SetDevicePwdActivity extends BaseActivity {
                 return;
             }
 
-            Device device = DataBaseManager.queryDevice(uid);
+            Device device = DataBaseManager.queryDevice(Constans.DEVICE_UID);
             if (!oldPwd.equals(device.getDevPwd())) {
                 Toast.makeText(SetDevicePwdActivity.this, "原密码不正确,请重新输入!", Toast.LENGTH_SHORT).show();
                 return;
             }
             loadingDialog.show();
             newPwd = confirmPwd;
-            FishTankApiManager.getInstance().setDevicePwd(uid, confirmPwd);
+            FishTankApiManager.getInstance().setDevicePwd(Constans.DEVICE_UID, confirmPwd);
         }
     }
 }

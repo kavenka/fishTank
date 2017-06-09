@@ -56,7 +56,7 @@ public class DeviceParamsUtil {
     public static String parseDeviceParams2Json(DeviceParams deviceParams) {
         Gson g = new Gson();
         String json = g.toJson(deviceParams);
-        Log.d("monty", "DeviceParamsUtil -> parseDeviceParams2Json -> json : " + json);
+//        Log.d("monty", "DeviceParamsUtil -> parseDeviceParams2Json -> json : " + json);
         return json;
     }
 
@@ -68,7 +68,7 @@ public class DeviceParamsUtil {
     public static DeviceParams parseJson2DeviceParams(String json) {
         Gson g = new Gson();
         DeviceParams deviceParams = g.fromJson(json, DeviceParams.class);
-        Log.d("monty", "DeviceParamsUtil -> parseJson2DeviceParams -> DeviceParams : " + deviceParams.toString());
+//        Log.d("monty", "DeviceParamsUtil -> parseJson2DeviceParams -> DeviceParams : " + deviceParams.toString());
         return deviceParams;
     }
 

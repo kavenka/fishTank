@@ -7,4 +7,5 @@ package com.mibo.fishtank.utils;
 
 public class Constans {
     public static String CURRENT_TEL = "";
+    public static String DEVICE_UID = "";
 }

@@ -64,6 +64,11 @@ public class TitleBar extends RelativeLayout {
         rightTxt.setText(str);
     }
 
+    public void setRightEnable(boolean enable) {
+        rightTxt.setEnabled(enable);
+        rightTxt.setAlpha(enable ? 1f : 0.3f);
+    }
+
     public void setOnClickRightListener(View.OnClickListener onClickListener) {
         rightTxt.setOnClickListener(onClickListener);
     }

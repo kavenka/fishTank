@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,8 +65,10 @@ public class DeviceSwitchView extends LinearLayout {
                 @Override
                 public boolean onLongClick(View v) {
                     final EditText inputSwitchName = new EditText(getContext());
+                    LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    inputSwitchName.setLayoutParams(layoutParams);
                     inputSwitchName.setText(mSwitchTitle.getText());
-                    new AlertDialog.Builder(getContext()).setTitle("修改开关名称").setView(inputSwitchName).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(getContext(),R.style.alert_edit).setTitle("修改开关名称").setView(inputSwitchName).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String switchName = inputSwitchName.getText().toString();

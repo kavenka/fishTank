@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -15,19 +16,21 @@ import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.SetPhAndTempEvent;
 import com.mibo.fishtank.FishTankmManage.timer.SwitchNumber;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.weight.RangeSeekBar;
 import com.mibo.fishtank.weight.TitleBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class DeviceParamsActivity extends BaseActivity {
+public class DeviceParamsActivity extends BaseDeviceActivity {
 
     private String uid;
     private RangeSeekBar rangePh;
     private RangeSeekBar rangeTemp;
     private DeviceParams deviceParams;
+
+    private TitleBar titleBar;
 
     public static Intent BuildIntent(Context context, String uid) {
         Intent intent = new Intent(context, DeviceParamsActivity.class);
@@ -38,28 +41,37 @@ public class DeviceParamsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("monty","onCreate");
         setContentView(R.layout.set_params_activity);
         initView();
 
-        String uid = getIntent().getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
+//        String uid = getIntent().getStringExtra("uid");
+        if (TextUtils.isEmpty(Constans.DEVICE_UID)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
-        } else {
-            this.uid = uid;
         }
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
         setLoacalData();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
+    public void onLoginFailure(String msg) {
+        super.onLoginFailure(msg);
+        Log.i("monty","onLoginFailure");
+
+        if(titleBar!=null){
+            titleBar.setRightEnable(false);
         }
     }
+
+    //    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     void onSetTimerListener(SetPhAndTempEvent event) {
@@ -91,7 +103,7 @@ public class DeviceParamsActivity extends BaseActivity {
     }
 
     private void initView() {
-        TitleBar titleBar = (TitleBar) findViewById(R.id.set_params_title);
+        titleBar = (TitleBar) findViewById(R.id.set_params_title);
         titleBar.setCenterStr("设备参数设置");
         titleBar.setRightStr("保存");
         titleBar.setOnClickRightListener(new OnClickSaveListener());
@@ -121,8 +133,11 @@ public class DeviceParamsActivity extends BaseActivity {
         rangePh.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
-                deviceParams.PhMin = (float) minValue;
-                deviceParams.PhMax = (float) maxValue;
+                if (deviceParams != null) {
+                    deviceParams.PhMin = (float) minValue;
+                    deviceParams.PhMax = (float) maxValue;
+                }
+
 //                ph[0] = (float) minValue;
 //                ph[1] = (float) maxValue;
             }
@@ -132,8 +147,11 @@ public class DeviceParamsActivity extends BaseActivity {
         rangeTemp.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
-                deviceParams.TempMin = (int) minValue;
-                deviceParams.TempMax = (int) maxValue;
+                if (deviceParams != null) {
+                    deviceParams.TempMin = (int) minValue;
+                    deviceParams.TempMax = (int) maxValue;
+                }
+
             }
         });
     }
@@ -163,7 +181,7 @@ public class DeviceParamsActivity extends BaseActivity {
     private class OnClickEditPwdListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = SetDevicePwdActivity.BuildIntent(context,uid);
+            Intent intent = SetDevicePwdActivity.BuildIntent(context, uid);
             startActivity(intent);
         }
     }

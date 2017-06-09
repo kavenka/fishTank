@@ -56,7 +56,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
      * @param uid
      */
     public void loginDevice(String uid, String pwd) {
-        Log.d("monty", "FishTankApiManager -> loginDevice -> uid:" + uid + ",user:admin" + ",pwd:" + pwd);
+        Log.d("monty", "FishTankApiManager -> loginDevice -> DEVICE_UID:" + uid + ",user:admin" + ",pwd:" + pwd);
         IFishTankApi.MsgLoginCmd msgLoginCmd = new IFishTankApi.MsgLoginCmd();
         msgLoginCmd.User = "admin";
         msgLoginCmd.Pwd = pwd;
@@ -197,13 +197,13 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
     public void FtLoginRsp(String uid, int result) {
         LoginEvent loginEvent = new LoginEvent(uid, result);
         EventBus.getDefault().post(loginEvent);
-        Log.d("monty", "IFishTankApiInterface -> FtLoginRsp -> uid=" + uid + " , result=" + result);
+        Log.d("monty", "IFishTankApiInterface -> FtLoginRsp -> DEVICE_UID=" + uid + " , result=" + result);
 
     }
 
     @Override
     public void FtSetParamRsp(String uid, int result) {
-        Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> uid=" + uid + " , result=" + result);
+        Log.d("monty", "IFishTankApiInterface -> FtSetParamRsp -> DEVICE_UID=" + uid + " , result=" + result);
         if (operationType == SET_PHANDTEMPPARAMS) {
             EventBus.getDefault().post(new SetPhAndTempEvent(uid, result));
         } else if (operationType == SET_DEVICEPWD) {
@@ -225,7 +225,7 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         getParameterEvent.msgGetParamRsp = msgGetParamRsp;
         EventBus.getDefault().post(getParameterEvent);
 
-        Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> uid=" + uid + " , result=" + result);
+        Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> DEVICE_UID=" + uid + " , result=" + result);
         Log.d("monty", "IFishTankApiInterface -> FtGetParamRsp -> MsgGetParamRsp{" +
                 "Pump=" + msgGetParamRsp.Pump +
                 ", OxygenPump=" + msgGetParamRsp.OxygenPump +

@@ -13,14 +13,14 @@ import com.mibo.fishtank.FishTankmManage.DeviceParamsUtil;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.event.SetTelEvent;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public class EditPushNumActivity extends BaseActivity {
+public class EditPushNumActivity extends BaseDeviceActivity {
 
     private LoadingDialog mLoadingDialog;
 
@@ -45,28 +45,25 @@ public class EditPushNumActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_push_num_activity);
         initView();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-        String uid = getIntent().getStringExtra("uid");
-        if (TextUtils.isEmpty(uid)) {
+//        if (!EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().register(this);
+//        }
+//        String uid = getIntent().getStringExtra("uid");
+        if (TextUtils.isEmpty(Constans.DEVICE_UID)) {
             Toast.makeText(this, "设备异常", Toast.LENGTH_SHORT).show();
-        } else {
-            this.uid = uid;
-            FishTankApiManager.getInstance().getDeviceParam(uid);
         }
 
         setTelePhoneParams();
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+//    }
 
     private void initView() {
         mLoadingDialog = new LoadingDialog(this, "加载中...");

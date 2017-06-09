@@ -61,5 +61,6 @@
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">Max</string>
     <string name="hint_push_phonenumber">请输入推送手机号码</string>
+    <string name="title_activity_base_device">BaseDeviceActivity</string>
 
 </resources>
