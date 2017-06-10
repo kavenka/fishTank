@@ -70,6 +70,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
     }
 
     @Override
@@ -99,7 +100,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 //        mDevice.setDevPwd("1111");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
 
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
+
 
     }
 

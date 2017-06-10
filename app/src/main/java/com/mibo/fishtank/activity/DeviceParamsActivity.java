@@ -62,10 +62,10 @@ public class DeviceParamsActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTimerListener(SetPhAndTempEvent event) {
+    public void onSetTimerListener(SetPhAndTempEvent event) {
         if (event.result == 0) {
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
-            Toast.makeText(this, "开关设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
         }
