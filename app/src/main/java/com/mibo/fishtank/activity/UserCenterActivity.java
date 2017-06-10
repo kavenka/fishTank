@@ -36,7 +36,7 @@ public class UserCenterActivity extends BaseActivity {
         nickName = (TextView) findViewById(R.id.user_name_txt);
         tel = (TextView) findViewById(R.id.user_num_txt);
         User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
-        nickName.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
+        nickName.setText(TextUtils.isEmpty(user.getUserName()) ? "尚未设置": user.getUserName());
         tel.setText(Constans.CURRENT_TEL);
 
     }
