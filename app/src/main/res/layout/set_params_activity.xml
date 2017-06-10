@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="灯光1定时器："
+                    android:text="灯光1定时器"
                     android:textColor="@color/color_ffffff"
                     android:textSize="15sp" />
 
@@ -112,11 +112,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="灯光2定时器："
+                    android:text="灯光2定时器"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="15dp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -136,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="备用1定时器："
+                    android:text="备用1定时器"
                     android:textColor="@color/color_ffffff"
                     android:textSize="15sp" />
 
@@ -159,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="备用2定时器："
+                    android:text="备用2定时器"
                     android:textColor="@color/color_ffffff"
                     android:textSize="15sp" />
 
