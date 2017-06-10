@@ -1,7 +1,10 @@
 package com.mibo.fishtank.activity;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,6 +98,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         }
 //        mDevice.setDevPwd("1111");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
+
         setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
 
     }
@@ -152,6 +156,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mTvPhLevel.setText(sumLevel(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin));
         mTvTempLevel.setText(sumLevel(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin));
 
+        setAnimation(mTvPh,deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
+        setAnimation(mTvTemp,deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
+        setAnimation(mTvPhLevel,deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
+        setAnimation(mTvTempLevel,deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
+
         mDsvLight1.setSwitch(deviceParams.Light1);
         mDsvLight2.setSwitch(deviceParams.Light2);
         mDsvHeater1.setSwitch(deviceParams.Heater1);
@@ -177,6 +186,16 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 //        deviceSwitchAdapter.notifyDataSetChanged(deviceSwitches);
     }
 
+    private void setAnimation(TextView view,float current,float max,float min){
+        if (max == 0) {
+            max = Float.MAX_VALUE;
+        }
+
+        if (current < min || current > max) {
+            startAnimation(view);
+        }
+    }
+
     private String sumLevel(float current, float max, float min) {
 
         if (max == 0) {
@@ -191,7 +210,22 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             return "正常";
         }
     }
-
+    //创建动画一个从红色到黄色的动画一直闪
+    public void startAnimation(final TextView view){
+        Integer colorFrom = Color.RED;
+        Integer colorTo = Color.YELLOW;
+        ValueAnimator animator =  ValueAnimator.ofObject(new ArgbEvaluator(),colorFrom,colorTo);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+//        animator.setRepeatMode(ValueAnimator.RESTART);
+        animator.setRepeatMode(ValueAnimator.RESTART);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                view.setTextColor((int) valueAnimator.getAnimatedValue());
+            }
+        });
+        animator.start();
+    }
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.device_detail_title);

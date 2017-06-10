@@ -48,8 +48,8 @@ public class EditUserInfoActivity extends BaseActivity {
         nameEdit = (EditText) findViewById(R.id.user_info_name_edit);
         numEdit = (EditText) findViewById(R.id.user_info_num_edit);
         PreferencesManager pm = PreferencesManager.getInstance(context);
-        String nickNameStr = pm.getStringValue("user_nikeName");
-        String telStr = pm.getStringValue("user_tel");
+        String nickNameStr = pm.getStringValue("nikeName");
+        String telStr = pm.getStringValue("tel");
         nameEdit.setText(nickNameStr == null ? "" : nickNameStr);
         numEdit.setText(telStr == null ? "" : telStr);
         Button confirmBtn = (Button) findViewById(R.id.edit_confirm_btn);
@@ -121,9 +121,9 @@ public class EditUserInfoActivity extends BaseActivity {
         public void onClick(View v) {
             PreferencesManager pm = PreferencesManager.getInstance(context);
             String nickName = nameEdit.getText().toString();
-            pm.setStringValue("user_nikeName", nickName);
+            pm.setStringValue("nikeName", nickName);
             String tel = numEdit.getText().toString();
-            pm.setStringValue("user_tel", tel);
+            pm.setStringValue("tel", tel);
             Toast.makeText(context, R.string.reset_psw_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("nickName", nickName);

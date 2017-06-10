@@ -11,6 +11,7 @@ import com.mibo.fishtank.R;
 import com.mibo.fishtank.entity.User;
 import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
+import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.TitleBar;
 
 public class UserCenterActivity extends BaseActivity {
@@ -37,7 +38,10 @@ public class UserCenterActivity extends BaseActivity {
         tel = (TextView) findViewById(R.id.user_num_txt);
         User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
         nickName.setText(TextUtils.isEmpty(user.getUserName()) ? "尚未设置": user.getUserName());
-        tel.setText(Constans.CURRENT_TEL);
+
+        PreferencesManager pm = PreferencesManager.getInstance(context);
+        String tel = pm.getStringValue("tel");
+        this.tel.setText(TextUtils.isEmpty(tel)?"尚未设置":tel);
 
     }
 

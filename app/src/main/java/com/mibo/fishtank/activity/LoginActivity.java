@@ -109,6 +109,7 @@ public class LoginActivity extends BaseActivity {
             Constans.CURRENT_TEL = name;
             pm.setStringValue("name", name);
             pm.setStringValue("pwd", pwdEditTxt.getText().toString());
+            pm.setStringValue("tel",name);
             User user = new User();
             user.setTel(name);
             user.save();
