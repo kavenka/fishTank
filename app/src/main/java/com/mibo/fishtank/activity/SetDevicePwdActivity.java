@@ -90,7 +90,7 @@ public class SetDevicePwdActivity extends BaseActivity {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetDevicePwdListener(SetDevicePwdEvent event) {
+    public void onSetDevicePwdListener(SetDevicePwdEvent event) {
         if (event.result == 0) {
             FishTankApiManager.getInstance().loginDevice(uid, newPwd);
         } else {

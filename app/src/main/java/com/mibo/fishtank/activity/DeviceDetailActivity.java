@@ -1,5 +1,6 @@
 package com.mibo.fishtank.activity;
 
+import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -8,6 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,9 @@ import com.mibo.fishtank.weight.TitleBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Monty on 2017/5/29.
@@ -57,12 +64,15 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private Device mDevice = null;
 
+    private Map<Integer, Animator> animatorMap = new HashMap<>();
+
 
     public static Intent BuildIntent(Context context, String deviceUid) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
         intent.putExtra("deviceUid", deviceUid);
         return intent;
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -99,7 +109,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         }
 //        mDevice.setDevPwd("1111");
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
-
 
 
     }
@@ -147,6 +156,18 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
+    private void setAnimation(TextView view, float current, float max, float min, Integer defaultColor) {
+        if (isNormal(current, max, min)) {
+            Animator animator = animatorMap.get(view.getId());
+            if (animator != null) {
+                animator.cancel();
+                animatorMap.remove(view.getId());
+            }
+        } else {
+            startAnimation(view,defaultColor);
+        }
+    }
+
     public void setDeviceParams(DeviceParams deviceParams) {
         if (deviceParams == null) {
             return;
@@ -157,21 +178,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mTvPhLevel.setText(sumLevel(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin));
         mTvTempLevel.setText(sumLevel(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin));
 
-        setAnimation(mTvPh,deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
-        setAnimation(mTvTemp,deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
-        setAnimation(mTvPhLevel,deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
-        setAnimation(mTvTempLevel,deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
+        setAnimation(mTvPh, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
+        setAnimation(mTvPhLevel, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
 
-        mDsvLight1.setSwitch(deviceParams.Light1);
-        mDsvLight2.setSwitch(deviceParams.Light2);
-        mDsvHeater1.setSwitch(deviceParams.Heater1);
-        mDsvHeater2.setSwitch(deviceParams.Heater2);
-        mDsvPump.setSwitch(deviceParams.Pump);
-        mDsvOxygenPump.setSwitch(deviceParams.OxygenPump);
-        mDsvRfu1.setSwitch(deviceParams.Rfu1);
-        mDsvRfu2.setSwitch(deviceParams.Rfu2);
-
-
+        setAnimation(mTvTemp, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
+        setAnimation(mTvTempLevel, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
 
         mDsvRfu1.setSwitchTitleEditEnable(true);
         mDsvRfu2.setSwitchTitleEditEnable(true);
@@ -187,15 +198,27 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 //        deviceSwitchAdapter.notifyDataSetChanged(deviceSwitches);
     }
 
-    private void setAnimation(TextView view,float current,float max,float min){
-        if (max == 0) {
-            max = Float.MAX_VALUE;
-        }
-
+    private boolean isNormal(float current, float max, float min) {
         if (current < min || current > max) {
-            startAnimation(view);
+            return false;
         }
+        return true;
     }
+
+//    private void setAnimation(TextView view,float current,float max,float min){
+//        if (max == 0) {
+//            max = Float.MAX_VALUE;
+//        }
+//
+//        if (current < min || current > max) {
+//            startAnimation(view);
+//        }else{
+//            Animator animator = animatorMap.get(view.getId());
+//            if(animator!=null){
+//                animator.cancel();
+//            }
+//        }
+//    }
 
     private String sumLevel(float current, float max, float min) {
 
@@ -211,13 +234,13 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             return "正常";
         }
     }
+
     //创建动画一个从红色到黄色的动画一直闪
-    public void startAnimation(final TextView view){
+    public void startAnimation(final TextView view, final Integer defaultColor) {
         Integer colorFrom = Color.RED;
         Integer colorTo = Color.YELLOW;
-        ValueAnimator animator =  ValueAnimator.ofObject(new ArgbEvaluator(),colorFrom,colorTo);
+        ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
         animator.setRepeatCount(ValueAnimator.INFINITE);
-//        animator.setRepeatMode(ValueAnimator.RESTART);
         animator.setRepeatMode(ValueAnimator.RESTART);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -225,7 +248,29 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 view.setTextColor((int) valueAnimator.getAnimatedValue());
             }
         });
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                view.setTextColor(getResources().getColor(defaultColor));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
         animator.start();
+        animatorMap.put(view.getId(), animator);
     }
 
     private void initView() {

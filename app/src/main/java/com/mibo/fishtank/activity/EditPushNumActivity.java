@@ -84,7 +84,7 @@ public class EditPushNumActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTellPhoneListener(SetTelEvent event) {
+    public void onSetTellPhoneListener(SetTelEvent event) {
         if (event.result == 0) {
             Toast.makeText(this, "推送手机号码设置成功", Toast.LENGTH_SHORT).show();
             deviceParams.Tel = telePhone;
