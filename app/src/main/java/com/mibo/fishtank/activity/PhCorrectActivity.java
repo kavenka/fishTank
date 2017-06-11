@@ -38,7 +38,7 @@ public class PhCorrectActivity extends BaseActivity {
 
     private String uid;
 
-    private boolean isStep1; // 是否已经到了第二步
+    private boolean isStep2; // 是否已经到了第二步
 
     private float phStandardValue1;
     private float phStandardValue2;
@@ -142,25 +142,32 @@ public class PhCorrectActivity extends BaseActivity {
         tvTips = (TextView) findViewById(R.id.tv_tips);
         etStandard = (EditText) findViewById(R.id.et_standard_value);
         btnNext = (Button) findViewById(R.id.btn_next);
-        tvTip = (TextView) findViewById(R.id.tips) ;
+        tvTip = (TextView) findViewById(R.id.tips);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isStep1) { // 第一次点击
+                if (!isStep2) { // 第一次点击
                     if (TextUtils.isEmpty(etStandard.getText())) {
                         Toast.makeText(PhCorrectActivity.this, "请输入标准值", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    isStep1 = true;
+                    phStandardValue1 = Float.valueOf(etStandard.getText().toString());
+                    if (checkPhValue(phStandardValue1)) {
+                        return;
+                    }
+
+                    isStep2 = true;
                     tvTips.setText(R.string.ph_correct_step2);
                     btnNext.setText("完成");
-                    phStandardValue1 = Float.valueOf(etStandard.getText().toString());
                     phRealValue1 = phRealValue;
                     etStandard.getText().clear();
-                    tvTip.setText("第一组数据：标准值："+phStandardValue1+"，实测值："+phRealValue1 );
+                    tvTip.setText("第一组数据：标准值：" + phStandardValue1 + "，实测值：" + phRealValue1);
                 } else { // 第二次点击
                     phStandardValue2 = Float.valueOf(etStandard.getText().toString());
+                    if (checkPhValue(phStandardValue2)) {
+                        return;
+                    }
                     phRealValue2 = phRealValue;
                     loadingDialog.show();
                     myHandler.removeCallbacks(getPhRunable);
@@ -171,6 +178,20 @@ public class PhCorrectActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * 检查输入的标准值是否合法
+     *
+     * @param value
+     */
+    private boolean checkPhValue(float value) {
+        if (value < 0 || value > 14) {
+            Toast.makeText(PhCorrectActivity.this, "您输入的标准值不合法，合法范围0～14", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
 
     private void getIntentData() {
         String uid = getIntent().getStringExtra("uid");
