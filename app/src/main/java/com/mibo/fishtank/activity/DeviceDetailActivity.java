@@ -9,9 +9,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +61,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private Device mDevice = null;
 
-    private Map<Integer, Animator> animatorMap = new HashMap<>();
+    private Map<Integer, Animator> animatorMap;
 
 
     public static Intent BuildIntent(Context context, String deviceUid) {
@@ -80,7 +77,10 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+
         setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
+        loadingDialog.show();
+        FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
     }
 
     @Override
@@ -98,17 +98,16 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         setContentView(R.layout.device_detail_activity);
 
         initView();
-        loadingDialog.show();
 
-        loadingDialog.show();
 
         Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
 
         if (null != device) {
             mDevice = device;
         }
+
+        animatorMap = new HashMap<>();
 //        mDevice.setDevPwd("1111");
-        FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
 
 
     }
@@ -164,7 +163,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 animatorMap.remove(view.getId());
             }
         } else {
-            startAnimation(view,defaultColor);
+            startAnimation(view, defaultColor);
         }
     }
 
@@ -237,40 +236,45 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     //创建动画一个从红色到黄色的动画一直闪
     public void startAnimation(final TextView view, final Integer defaultColor) {
-        Integer colorFrom = Color.RED;
-        Integer colorTo = Color.YELLOW;
-        ValueAnimator animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setRepeatMode(ValueAnimator.RESTART);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                view.setTextColor((int) valueAnimator.getAnimatedValue());
-            }
-        });
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
+        ValueAnimator animator = (ValueAnimator) animatorMap.get(view.getId());
+        if (animator == null) {
+            Integer colorFrom = Color.RED;
+            Integer colorTo = Color.YELLOW;
+            animator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            animator.setRepeatCount(ValueAnimator.INFINITE);
+            animator.setRepeatMode(ValueAnimator.RESTART);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    view.setTextColor((int) valueAnimator.getAnimatedValue());
+                }
+            });
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animator) {
+                @Override
+                public void onAnimationEnd(Animator animator) {
 
-            }
+                }
 
-            @Override
-            public void onAnimationCancel(Animator animator) {
-                view.setTextColor(getResources().getColor(defaultColor));
-            }
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                    view.setTextColor(getResources().getColor(defaultColor));
+                }
 
-            @Override
-            public void onAnimationRepeat(Animator animator) {
+                @Override
+                public void onAnimationRepeat(Animator animator) {
 
-            }
-        });
+                }
+            });
+            animatorMap.put(view.getId(), animator);
+        } else {
+            animator = (ValueAnimator) animatorMap.get(view.getId());
+        }
         animator.start();
-        animatorMap.put(view.getId(), animator);
     }
 
     private void initView() {
