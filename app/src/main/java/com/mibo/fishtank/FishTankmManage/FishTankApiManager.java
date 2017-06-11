@@ -73,7 +73,15 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         int getParamResult = mFishTankApi.FtGetParam(uid);
         Log.d("monty", "FishTankApiManager -> getDeviceParam -> getParamResult:" + getParamResult);
     }
-
+    /**
+     * 获取PH实测值，此接口需要定时调用，一秒钟调一次
+     * @param uid
+     */
+    public void getPhParam(String uid){
+        IFishTankApi.MsgGetParamCmd msgGetParamCmd = new IFishTankApi.MsgGetParamCmd();
+        msgGetParamCmd.Ph = true;
+        mFishTankApi.FtGetParam(uid,msgGetParamCmd);
+    }
     /**
      * 设置温度和ph值
      *
@@ -88,6 +96,18 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         msgSetParamCmd.TempMax = deviceParams.TempMax;
 
         operationType = SET_PHANDTEMPPARAMS;
+        setDeviceParam(uid, msgSetParamCmd);
+
+    }
+
+    /**
+     * 校准ph值
+     * @param uid
+     * @param phCal
+     */
+    public void setPhCal(String uid, Float[] phCal) {
+        IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
+        msgSetParamCmd.PhCal = phCal;
         setDeviceParam(uid, msgSetParamCmd);
 
     }
@@ -154,6 +174,8 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         operationType = SET_DEVICEPWD;
         setDeviceParam(uid, msgSetParamCmd);
     }
+
+
 
     //
 //    public void setTimerParams(int switchNumber,){

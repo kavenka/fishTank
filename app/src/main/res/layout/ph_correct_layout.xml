@@ -13,6 +13,7 @@
         android:layout_height="wrap_content" />
 
     <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,7 +58,7 @@
                         android:id="@+id/tv_Ph"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4.7"
+                        android:text="- -"
                         android:textColor="@color/color_00ffaa"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -68,6 +69,7 @@
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minHeight="80dp"
                 android:textSize="18sp"
                 android:textColor="@color/color_b4ffffff"
                 android:text="@string/ph_correct_step1"/>
@@ -87,6 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:maxLength="2"
                     android:hint="请输入标准值"
                     android:background="@null"/>
             </LinearLayout>
@@ -98,6 +101,15 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_btn_background_selector"
                 android:text="下一步"/>
+
+
         </LinearLayout>
     </ScrollView>
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_b4ffffff" />
 </LinearLayout>
