@@ -51,7 +51,7 @@ public class EditUserInfoActivity extends BaseActivity {
         RelativeLayout headPicLayout = (RelativeLayout) findViewById(R.id.edit_user_head_linear);
         headPicImg = (ImageView) findViewById(R.id.edit_user_head_img);
 
-        GlideUtils.showUserIcon(this,headPicImg);
+        GlideUtils.showUserIcon(this, headPicImg);
 
         nameEdit = (EditText) findViewById(R.id.user_info_name_edit);
         numEdit = (EditText) findViewById(R.id.user_info_num_edit);
@@ -82,21 +82,21 @@ public class EditUserInfoActivity extends BaseActivity {
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
             String imagePath = c.getString(columnIndex);
             copyFile(imagePath);
-            showImage(imagePath);
+            GlideUtils.showUserIcon(this, headPicImg);
             c.close();
         }
     }
 
-    private void copyFile(String path){
+    private void copyFile(String path) {
         File srcFile = new File(path);
-        String mime = srcFile.getName().split(".")[1];
-        String filesDirPath = getApplicationContext().getFilesDir()+"/images/userIcon";
-        File file = new File(filesDirPath);
-        if(!file.exists()){
-            file.mkdirs();
+        String filesDirPath = getApplicationContext().getFilesDir() + File.separator + "images"+ File.separator;
+        File destFile = new File(filesDirPath + File.separator + srcFile.getName());
+        Log.d("monty", "copyfile -> destFilePath:" + destFile);
+        boolean b = FileUtils.copyFile(srcFile, destFile);
+        if (b) {
+            PreferencesManager pm = PreferencesManager.getInstance(this);
+            pm.setStringValue("userIconPath", destFile.getPath());
         }
-        Log.d("monty","copyfile -> destFilePath:"+filesDirPath);
-        FileUtils.copyFile(srcFile,file);
     }
 
     //加载图片

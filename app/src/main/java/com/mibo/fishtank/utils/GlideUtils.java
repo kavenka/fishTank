@@ -18,7 +18,11 @@ import com.mibo.fishtank.R;
 
 public class GlideUtils {
     public static void showUserIcon(Context context, ImageView view) {
-        Glide.with(context).load(context.getFilesDir() + "/images/userIcon").transform(new GlideCircleTransform(context)).error(context.getResources().getDrawable(R.drawable.head_img)).into(view);
+//        Glide.get(context).clearDiskCache();
+//        Glide.get(context).clearMemory();
+        PreferencesManager pm = PreferencesManager.getInstance(context);
+        String userIconPath = pm.getStringValue("userIconPath");
+        Glide.with(context).load(userIconPath).transform(new GlideCircleTransform(context)).error(context.getResources().getDrawable(R.drawable.head_img)).into(view);
     }
 
     /**
