@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,9 +19,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.FileUtils;
+import com.mibo.fishtank.utils.GlideUtils;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.SelectHeadPicDialog;
 import com.mibo.fishtank.weight.TitleBar;
+
+import java.io.File;
 
 public class EditUserInfoActivity extends BaseActivity {
     public static final int GET_IMAGE = 111;
@@ -45,6 +50,9 @@ public class EditUserInfoActivity extends BaseActivity {
 
         RelativeLayout headPicLayout = (RelativeLayout) findViewById(R.id.edit_user_head_linear);
         headPicImg = (ImageView) findViewById(R.id.edit_user_head_img);
+
+        GlideUtils.showUserIcon(this,headPicImg);
+
         nameEdit = (EditText) findViewById(R.id.user_info_name_edit);
         numEdit = (EditText) findViewById(R.id.user_info_num_edit);
         PreferencesManager pm = PreferencesManager.getInstance(context);
@@ -73,9 +81,22 @@ public class EditUserInfoActivity extends BaseActivity {
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
             String imagePath = c.getString(columnIndex);
+            copyFile(imagePath);
             showImage(imagePath);
             c.close();
         }
+    }
+
+    private void copyFile(String path){
+        File srcFile = new File(path);
+        String mime = srcFile.getName().split(".")[1];
+        String filesDirPath = getApplicationContext().getFilesDir()+"/images/userIcon";
+        File file = new File(filesDirPath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        Log.d("monty","copyfile -> destFilePath:"+filesDirPath);
+        FileUtils.copyFile(srcFile,file);
     }
 
     //加载图片

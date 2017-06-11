@@ -10,12 +10,12 @@
     >
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
-        android:background="@drawable/head_img"
-        />
+        android:background="@drawable/head_img" />
 
     <TextView
         android:id="@+id/id_draw_menu_item_login_tv"

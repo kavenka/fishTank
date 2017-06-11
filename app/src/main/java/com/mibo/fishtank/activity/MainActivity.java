@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.mibo.fishtank.entity.Scene;
 import com.mibo.fishtank.entity.User;
 import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
+import com.mibo.fishtank.utils.GlideUtils;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
@@ -48,6 +50,7 @@ public class MainActivity extends BaseActivity {
     private TitleBar titleBar;
     private ViewPager viewPager;
     private TextView nickNameTv;
+    private ImageView ivUserIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,9 @@ public class MainActivity extends BaseActivity {
         User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
         nickNameTv = (TextView) findViewById(R.id.id_draw_menu_item_login_tv);
         nickNameTv.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
+
+        ivUserIcon = (ImageView) findViewById(R.id.imageView);
+        GlideUtils.showUserIcon(this,ivUserIcon);
         LinearLayout sceneSettingLinear = (LinearLayout) findViewById(R.id.main_scene_setting);
         sceneSettingLinear.setOnClickListener(new OnClickSceneSettingListener());
         LinearLayout userCenterLinear = (LinearLayout) findViewById(R.id.main_user_center);
