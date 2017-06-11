@@ -73,8 +73,28 @@
                     app:absoluteMaxValue="40"
                     app:absoluteMinValue="0" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_b4ffffff" />
+            <RelativeLayout
+                android:id="@+id/correct"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:background="@color/color_32ffffff">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="PH探头校准"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="15sp" />
 
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"

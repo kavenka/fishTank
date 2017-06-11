@@ -116,6 +116,10 @@
             android:launchMode="singleTop"
             android:theme="@style/TranslucentTheme"></activity>
         <activity
+            android:name=".activity.PhCorrectActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentTheme"></activity>
+        <activity
             android:name=".activity.DeviceParamsActivity"
             android:launchMode="singleTop"
             android:theme="@style/TranslucentTheme">

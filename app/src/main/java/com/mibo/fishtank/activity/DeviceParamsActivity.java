@@ -136,6 +136,15 @@ public class DeviceParamsActivity extends BaseActivity {
                 deviceParams.TempMax = (int) maxValue;
             }
         });
+
+        View correct = findViewById(R.id.correct);
+        correct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = PhCorrectActivity.BuildIntent(DeviceParamsActivity.this, uid);
+                startActivity(intent);
+            }
+        });
     }
 
     private class OnClickLeftListener implements View.OnClickListener {
