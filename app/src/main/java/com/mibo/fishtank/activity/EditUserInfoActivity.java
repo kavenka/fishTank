@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.FileUtils;
 import com.mibo.fishtank.utils.GlideUtils;
 import com.mibo.fishtank.utils.PreferencesManager;
@@ -95,7 +96,7 @@ public class EditUserInfoActivity extends BaseActivity {
         boolean b = FileUtils.copyFile(srcFile, destFile);
         if (b) {
             PreferencesManager pm = PreferencesManager.getInstance(this);
-            pm.setStringValue("userIconPath", destFile.getPath());
+            pm.setStringValue("userIconPath"+ Constans.CURRENT_TEL, destFile.getPath());
         }
     }
 

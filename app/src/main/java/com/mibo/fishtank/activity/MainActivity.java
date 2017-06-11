@@ -63,6 +63,12 @@ public class MainActivity extends BaseActivity {
         getSceneAndDeviceData();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GlideUtils.showUserIcon(this,ivUserIcon);
+    }
+
     private void initView() {
         titleBar = (TitleBar) findViewById(R.id.main_title);
         titleBar.setLeftImgRes(R.drawable.gengd);
@@ -84,7 +90,7 @@ public class MainActivity extends BaseActivity {
         nickNameTv.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
 
         ivUserIcon = (ImageView) findViewById(R.id.imageView);
-        GlideUtils.showUserIcon(this,ivUserIcon);
+//        GlideUtils.showUserIcon(this,ivUserIcon);
         LinearLayout sceneSettingLinear = (LinearLayout) findViewById(R.id.main_scene_setting);
         sceneSettingLinear.setOnClickListener(new OnClickSceneSettingListener());
         LinearLayout userCenterLinear = (LinearLayout) findViewById(R.id.main_user_center);

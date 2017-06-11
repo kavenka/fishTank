@@ -21,7 +21,7 @@ public class GlideUtils {
 //        Glide.get(context).clearDiskCache();
 //        Glide.get(context).clearMemory();
         PreferencesManager pm = PreferencesManager.getInstance(context);
-        String userIconPath = pm.getStringValue("userIconPath");
+        String userIconPath = pm.getStringValue("userIconPath"+Constans.CURRENT_TEL);
         Glide.with(context).load(userIconPath).transform(new GlideCircleTransform(context)).error(context.getResources().getDrawable(R.drawable.head_img)).into(view);
     }
 

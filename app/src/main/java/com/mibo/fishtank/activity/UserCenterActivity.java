@@ -27,6 +27,12 @@ public class UserCenterActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GlideUtils.showUserIcon(this,imageView);
+    }
+
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.user_center_title);
         titleBar.setCenterStr(R.string.main_user_center);
@@ -37,7 +43,7 @@ public class UserCenterActivity extends BaseActivity {
         nickName = (TextView) findViewById(R.id.user_name_txt);
         tel = (TextView) findViewById(R.id.user_num_txt);
         imageView = (ImageView) findViewById(R.id.user_head_img);
-        GlideUtils.showUserIcon(this,imageView);
+//        GlideUtils.showUserIcon(this,imageView);
 //        User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
 
         PreferencesManager pm = PreferencesManager.getInstance(context);
