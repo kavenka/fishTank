@@ -63,6 +63,9 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private Map<Integer, Animator> animatorMap;
 
+    private ValueAnimator phAnimator;
+    private ValueAnimator tempAnimator;
+
 
     public static Intent BuildIntent(Context context, String deviceUid) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
@@ -85,10 +88,12 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     @Override
     protected void onStop() {
-        super.onStop();
+
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+
+        super.onStop();
     }
 
     @Override
@@ -155,17 +160,113 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         loadingDialog.close();
     }
 
-    private void setAnimation(TextView view, float current, float max, float min, Integer defaultColor) {
+    private void setPhAnimator(float current, float max, float min) {
+        if (phAnimator == null) {
+            Integer colorFrom = Color.RED;
+            Integer colorTo = Color.YELLOW;
+            phAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            phAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            phAnimator.setRepeatMode(ValueAnimator.RESTART);
+            phAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    mTvPh.setTextColor((int) valueAnimator.getAnimatedValue());
+                    mTvPhLevel.setTextColor((int) valueAnimator.getAnimatedValue());
+                }
+            });
+            phAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    mTvPh.setTextColor(getResources().getColor(R.color.color_00ffaa));
+                    mTvPhLevel.setTextColor(getResources().getColor(R.color.color_00ffaa));
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                    mTvPh.setTextColor(getResources().getColor(R.color.color_00ffaa));
+                    mTvPhLevel.setTextColor(getResources().getColor(R.color.color_00ffaa));
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+        }
+
         if (isNormal(current, max, min)) {
-            Animator animator = animatorMap.get(view.getId());
-            if (animator != null) {
-                animator.cancel();
-                animatorMap.remove(view.getId());
-            }
+            phAnimator.cancel();
+            mTvPh.setTextColor(getResources().getColor(R.color.color_00ffaa));
+            mTvPhLevel.setTextColor(getResources().getColor(R.color.color_00ffaa));
         } else {
-            startAnimation(view, defaultColor);
+            phAnimator.start();
         }
     }
+
+    private void setTempAnimator(float current, float max, float min) {
+        if (tempAnimator == null) {
+            Integer colorFrom = Color.RED;
+            Integer colorTo = Color.YELLOW;
+            tempAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            tempAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            tempAnimator.setRepeatMode(ValueAnimator.RESTART);
+            tempAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    mTvTemp.setTextColor((int) valueAnimator.getAnimatedValue());
+                    mTvTempLevel.setTextColor((int) valueAnimator.getAnimatedValue());
+                }
+            });
+            tempAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    mTvTemp.setTextColor(getResources().getColor(R.color.color_FFD400));
+                    mTvTempLevel.setTextColor(getResources().getColor(R.color.color_FFD400));
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+                    mTvTemp.setTextColor(getResources().getColor(R.color.color_FFD400));
+                    mTvTempLevel.setTextColor(getResources().getColor(R.color.color_FFD400));
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+        }
+
+        if (isNormal(current, max, min)) {
+            tempAnimator.cancel();
+            mTvTemp.setTextColor(getResources().getColor(R.color.color_FFD400));
+            mTvTempLevel.setTextColor(getResources().getColor(R.color.color_FFD400));
+        } else {
+            tempAnimator.start();
+        }
+    }
+
+//    private void setAnimation(TextView view, float current, float max, float min, Integer defaultColor) {
+//        if (isNormal(current, max, min)) {
+//            Animator animator = animatorMap.get(view.getId());
+//            if (animator != null) {
+//                animator.end();
+//                animatorMap.remove(view.getId());
+//            }
+//        } else {
+//            startAnimation(view, defaultColor);
+//        }
+//    }
 
     public void setDeviceParams(DeviceParams deviceParams) {
         if (deviceParams == null) {
@@ -177,20 +278,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mTvPhLevel.setText(sumLevel(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin));
         mTvTempLevel.setText(sumLevel(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin));
 
-        setAnimation(mTvPh, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
-        setAnimation(mTvPhLevel, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
+//        setAnimation(mTvPh, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
+//        setAnimation(mTvPhLevel, deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin, R.color.color_00ffaa);
+//
+//        setAnimation(mTvTemp, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
+//        setAnimation(mTvTempLevel, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
 
-        setAnimation(mTvTemp, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
-        setAnimation(mTvTempLevel, deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin, R.color.color_FFD400);
-
-        mDsvRfu1.setSwitchTitleEditEnable(true);
-        mDsvRfu2.setSwitchTitleEditEnable(true);
-
-        String dsvRfu1Title = SharedPreferencesUtil.getString(this, mDsvRfu1.getId() + "", "自定义1");
-        mDsvRfu1.setSwitchTitle(dsvRfu1Title);
-
-        String dsvRfu2Title = SharedPreferencesUtil.getString(this, mDsvRfu2.getId() + "", "自定义2");
-        mDsvRfu2.setSwitchTitle(dsvRfu2Title);
+        setPhAnimator(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
+        setTempAnimator(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);
 
@@ -257,7 +352,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-
+                    view.setTextColor(getResources().getColor(defaultColor));
                 }
 
                 @Override
@@ -328,7 +423,14 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvRfu1.setOnSwitchClickListener(this);
         mDsvRfu2.setOnSwitchClickListener(this);
 
+        mDsvRfu1.setSwitchTitleEditEnable(true);
+        mDsvRfu2.setSwitchTitleEditEnable(true);
 
+        String dsvRfu1Title = SharedPreferencesUtil.getString(this, mDsvRfu1.getId() + "", "自定义1");
+        mDsvRfu1.setSwitchTitle(dsvRfu1Title);
+
+        String dsvRfu2Title = SharedPreferencesUtil.getString(this, mDsvRfu2.getId() + "", "自定义2");
+        mDsvRfu2.setSwitchTitle(dsvRfu2Title);
 //        mSwitchGrid = (GridView) findViewById(R.id.gv_device_switch);
 
 

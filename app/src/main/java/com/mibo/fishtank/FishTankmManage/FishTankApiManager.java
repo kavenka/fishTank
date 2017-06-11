@@ -109,7 +109,6 @@ public class FishTankApiManager implements IFishTankApi.IFishTankApiInterface {
         IFishTankApi.MsgSetParamCmd msgSetParamCmd = new IFishTankApi.MsgSetParamCmd();
         msgSetParamCmd.PhCal = phCal;
         setDeviceParam(uid, msgSetParamCmd);
-
     }
 
     /**

@@ -153,7 +153,7 @@ public class PhCorrectActivity extends BaseActivity {
                         return;
                     }
                     phStandardValue1 = Float.valueOf(etStandard.getText().toString());
-                    if (checkPhValue(phStandardValue1)) {
+                    if (!checkPhValue(phStandardValue1)) {
                         return;
                     }
 
@@ -165,13 +165,13 @@ public class PhCorrectActivity extends BaseActivity {
                     tvTip.setText("第一组数据：标准值：" + phStandardValue1 + "，实测值：" + phRealValue1);
                 } else { // 第二次点击
                     phStandardValue2 = Float.valueOf(etStandard.getText().toString());
-                    if (checkPhValue(phStandardValue2)) {
+                    if (!checkPhValue(phStandardValue2)) {
                         return;
                     }
                     phRealValue2 = phRealValue;
                     loadingDialog.show();
                     myHandler.removeCallbacks(getPhRunable);
-                    Float[] phCal = new Float[]{phRealValue1, phStandardValue1, phRealValue2, phStandardValue2};
+                    Float[] phCal = new Float[]{phStandardValue1,phRealValue1, phStandardValue2, phRealValue2};
                     FishTankApiManager.getInstance().setPhCal(uid, phCal);
 
                 }
