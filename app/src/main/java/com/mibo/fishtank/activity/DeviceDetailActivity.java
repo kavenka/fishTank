@@ -88,9 +88,10 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
 
-    public static Intent BuildIntent(Context context, String deviceUid) {
+    public static Intent BuildIntent(Context context, String deviceUid,String title) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
         intent.putExtra("deviceUid", deviceUid);
+        intent.putExtra("title",title);
         return intent;
     }
 
@@ -423,7 +424,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
     private void initView() {
         TitleBar titleBar = (TitleBar) findViewById(R.id.device_detail_title);
-        titleBar.setCenterStr(R.string.set_params_title);
+        titleBar.setCenterStr(getIntent().getStringExtra("title"));
         titleBar.setRightStr("设置");
 
         loadingDialog = new LoadingDialog(context, "加载中");
