@@ -79,7 +79,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("monty", "getDevice runable is run");
                     FishTankApiManager.getInstance().getDeviceParam(mDevice.getUid());
                 }
             });
@@ -88,10 +87,10 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
 
-    public static Intent BuildIntent(Context context, String deviceUid,String title) {
+    public static Intent BuildIntent(Context context, String deviceUid, String title) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
         intent.putExtra("deviceUid", deviceUid);
-        intent.putExtra("title",title);
+        intent.putExtra("title", title);
         return intent;
     }
 
@@ -144,13 +143,18 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     }
 
     private TimingRunable runable = new TimingRunable();
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginLstener(LoginEvent event) {
         if (event.loginSuccess) {
             FishTankApiManager.getInstance().getDeviceParam(mDevice.getUid());
             handler.postDelayed(runable, intervalTime);
         } else {
-            Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
+            if (event.result == -2) {
+                Toast.makeText(this, "设备密码错误或者超时", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
+            }
             loadingDialog.close();
         }
     }
@@ -174,11 +178,15 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             }
         } else {
             failureCount++;
-            if(failureCount == 5){
+            if (failureCount == 5) {
                 Toast.makeText(this, "自动获取设备信息失败5次，不再自动获取", Toast.LENGTH_SHORT).show();
                 handler.removeCallbacks(runable);
-            }else{
-                Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
+            } else {
+                if (event.result == -2) {
+                    Toast.makeText(this, "设备密码错误或者超时", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         loadingDialog.close();
@@ -193,7 +201,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             }
         } else {
             if (TextUtils.isEmpty(event.msg)) {
-                Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
+                if (event.result == -2) {
+                    Toast.makeText(this, "设备密码错误或者超时", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
             }
