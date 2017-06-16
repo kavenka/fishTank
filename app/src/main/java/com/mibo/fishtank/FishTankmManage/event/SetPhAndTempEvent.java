@@ -8,4 +8,8 @@ public class SetPhAndTempEvent extends SetParamsEvent{
     public SetPhAndTempEvent(String uid, int result) {
         super(uid, result);
     }
+
+    public SetPhAndTempEvent(String uid, int result, String msg) {
+        super(uid,result,msg);
+    }
 }

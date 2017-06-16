@@ -252,7 +252,11 @@ public class SetTimerActivity extends BaseActivity implements View.OnClickListen
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
             Toast.makeText(this, "定时器设置成功", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

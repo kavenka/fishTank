@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -66,6 +68,25 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private ValueAnimator phAnimator;
     private ValueAnimator tempAnimator;
 
+    private Handler handler = new Handler();
+
+    private long intervalTime = 1000 * 10;
+
+    private class TimingRunable implements Runnable {
+
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("monty", "getDevice runable is run");
+                    FishTankApiManager.getInstance().getDeviceParam(mDevice.getUid());
+                }
+            });
+            handler.postDelayed(this, intervalTime);
+        }
+    }
+
 
     public static Intent BuildIntent(Context context, String deviceUid) {
         Intent intent = new Intent(context, DeviceDetailActivity.class);
@@ -81,19 +102,18 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             EventBus.getDefault().register(this);
         }
 
-        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
         loadingDialog.show();
+        setDeviceParams(DeviceParamsUtil.getDeviceParams(this, mDevice.getUid()));
         FishTankApiManager.getInstance().loginDevice(mDevice.getUid(), mDevice.getDevPwd());
     }
 
     @Override
     protected void onStop() {
-
+        super.onStop();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-
-        super.onStop();
+        handler.removeCallbacks(runable);
     }
 
     @Override
@@ -104,7 +124,6 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
         initView();
 
-
         Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
 
         if (null != device) {
@@ -113,19 +132,29 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
         animatorMap = new HashMap<>();
 //        mDevice.setDevPwd("1111");
+    }
 
+    @Override
+    protected void onDestroy() {
+        runable = null;
+        handler = null;
+        super.onDestroy();
 
     }
 
+    private TimingRunable runable = new TimingRunable();
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginLstener(LoginEvent event) {
         if (event.loginSuccess) {
             FishTankApiManager.getInstance().getDeviceParam(mDevice.getUid());
+            handler.postDelayed(runable, intervalTime);
         } else {
             Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
             loadingDialog.close();
         }
     }
+
+    private int failureCount = 0;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetParameterLstener(GetParameterEvent event) {
@@ -133,6 +162,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
+            failureCount = 0;
             Log.d("monty", "设备参数获取成功，更新到界面上");
             setDeviceParams(DeviceParamsUtil.parseMsgGetParamRep2DeviceParams(msgGetParamRsp));
             boolean b = DeviceParamsUtil.saveDeviceParams(this, uid, msgGetParamRsp);
@@ -142,7 +172,13 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 Log.d("monty", "参数保存失败");
             }
         } else {
-            Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
+            failureCount++;
+            if(failureCount == 5){
+                Toast.makeText(this, "自动获取设备信息失败5次，不再自动获取", Toast.LENGTH_SHORT).show();
+                handler.removeCallbacks(runable);
+            }else{
+                Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
+            }
         }
         loadingDialog.close();
     }
@@ -155,7 +191,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
                 mCurrentSwitchView.setSwitch();
             }
         } else {
-            Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
+            if (TextUtils.isEmpty(event.msg)) {
+                Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
         loadingDialog.close();
     }
@@ -286,6 +326,15 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
 
         setPhAnimator(deviceParams.Ph, deviceParams.PhMax, deviceParams.PhMin);
         setTempAnimator(deviceParams.Temp, deviceParams.TempMax, deviceParams.TempMin);
+
+        mDsvLight1.setSwitch(deviceParams.Light1);
+        mDsvLight2.setSwitch(deviceParams.Light2);
+        mDsvHeater1.setSwitch(deviceParams.Heater1);
+        mDsvHeater2.setSwitch(deviceParams.Heater2);
+        mDsvPump.setSwitch(deviceParams.Pump);
+        mDsvOxygenPump.setSwitch(deviceParams.OxygenPump);
+        mDsvRfu1.setSwitch(deviceParams.Rfu1);
+        mDsvRfu2.setSwitch(deviceParams.Rfu2);
 
 //        List<DeviceSwitch> deviceSwitches = generateSwitchParameter(msgGetParamRsp.Light1, msgGetParamRsp.Light2, msgGetParamRsp.Heater1, msgGetParamRsp.Heater2, msgGetParamRsp.Pump, msgGetParamRsp.OxygenPump, msgGetParamRsp.Rfu1, msgGetParamRsp.Rfu2);
 

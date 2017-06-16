@@ -90,7 +90,11 @@ public class EditPushNumActivity extends BaseActivity {
             deviceParams.Tel = telePhone;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
         } else {
-            Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
         mLoadingDialog.close();
     }

@@ -100,8 +100,12 @@ public class PhCorrectActivity extends BaseActivity {
             Toast.makeText(this, "校准成功", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "校准失败", Toast.LENGTH_SHORT).show();
             myHandler.postDelayed(getPhRunable, 1000);
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "校准失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
         loadingDialog.close();
     }
