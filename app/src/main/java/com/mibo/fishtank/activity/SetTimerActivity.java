@@ -100,11 +100,6 @@ public class SetTimerActivity extends BaseDeviceActivity implements View.OnClick
         this.timerView3 = (TimerView) findViewById(R.id.timerView3);
         this.timerView4 = (TimerView) findViewById(R.id.timerView4);
 
-        this.timerView1.setIndexText(1);
-        this.timerView2.setIndexText(2);
-        this.timerView3.setIndexText(3);
-        this.timerView4.setIndexText(4);
-
         this.timerView1.setOnClickListener(this);
         this.timerView2.setOnClickListener(this);
         this.timerView3.setOnClickListener(this);
@@ -251,13 +246,17 @@ public class SetTimerActivity extends BaseDeviceActivity implements View.OnClick
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTimerListener(SetTimerEvent event) {
+    public void onSetTimerListener(SetTimerEvent event) {
         if (event.result == 0) {
             deviceParams.Alarms = alarms;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
             Toast.makeText(this, "定时器设置成功", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

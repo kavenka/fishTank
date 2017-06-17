@@ -122,4 +122,19 @@ public class Device extends DataSupport {
     public synchronized boolean save() {
         return super.save();
     }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "Model='" + Model + '\'' +
+                ", SWVer='" + SWVer + '\'' +
+                ", HWVer='" + HWVer + '\'' +
+                ", Uid='" + Uid + '\'' +
+                ", Ip='" + Ip + '\'' +
+                ", Port=" + Port +
+                ", User='" + User + '\'' +
+                ", DevPwd='" + DevPwd + '\'' +
+                ", sceneIds=" + sceneIds +
+                '}';
+    }
 }

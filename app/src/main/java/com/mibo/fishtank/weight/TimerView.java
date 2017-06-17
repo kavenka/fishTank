@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -21,7 +22,7 @@ import static com.mibo.fishtank.R.array.week;
 
 public class TimerView extends RelativeLayout {
 
-    private TextView tvIndex;
+    private ImageView imageView;
     private TextView tvTime;
     private TextView tvWeek;
     private TextView tvSwitch;
@@ -40,7 +41,7 @@ public class TimerView extends RelativeLayout {
     public TimerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(context).inflate(R.layout.timer_layout, this, true);
-        this.tvIndex = (TextView) findViewById(R.id.tv_index);
+        this.imageView = (ImageView) findViewById(R.id.tv_index);
         this.tvTime = (TextView) findViewById(R.id.tv_time);
         this.tvSwitch = (TextView) findViewById(R.id.tv_switch);
         this.tvWeek = (TextView) findViewById(R.id.tv_week);
@@ -119,10 +120,6 @@ public class TimerView extends RelativeLayout {
             }
         }
         return weeksBool;
-    }
-
-    public void setIndexText(int index) {
-        this.tvIndex.setText(index + "");
     }
 
     public void setSwitch(boolean onOff) {

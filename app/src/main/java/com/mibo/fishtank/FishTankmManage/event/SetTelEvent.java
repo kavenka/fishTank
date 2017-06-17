@@ -8,4 +8,7 @@ public class SetTelEvent extends SetParamsEvent{
     public SetTelEvent(String uid, int result) {
         super(uid, result);
     }
+    public SetTelEvent(String uid, int result, String msg) {
+        super(uid,result,msg);
+    }
 }

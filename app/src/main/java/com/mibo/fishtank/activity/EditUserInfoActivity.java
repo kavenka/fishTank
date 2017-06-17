@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,9 +19,14 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.Constans;
+import com.mibo.fishtank.utils.FileUtils;
+import com.mibo.fishtank.utils.GlideUtils;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.SelectHeadPicDialog;
 import com.mibo.fishtank.weight.TitleBar;
+
+import java.io.File;
 
 public class EditUserInfoActivity extends BaseActivity {
     public static final int GET_IMAGE = 111;
@@ -45,11 +51,14 @@ public class EditUserInfoActivity extends BaseActivity {
 
         RelativeLayout headPicLayout = (RelativeLayout) findViewById(R.id.edit_user_head_linear);
         headPicImg = (ImageView) findViewById(R.id.edit_user_head_img);
+
+        GlideUtils.showUserIcon(this, headPicImg);
+
         nameEdit = (EditText) findViewById(R.id.user_info_name_edit);
         numEdit = (EditText) findViewById(R.id.user_info_num_edit);
         PreferencesManager pm = PreferencesManager.getInstance(context);
-        String nickNameStr = pm.getStringValue("user_nikeName");
-        String telStr = pm.getStringValue("user_tel");
+        String nickNameStr = pm.getStringValue("nikeName");
+        String telStr = pm.getStringValue("tel");
         nameEdit.setText(nickNameStr == null ? "" : nickNameStr);
         numEdit.setText(telStr == null ? "" : telStr);
         Button confirmBtn = (Button) findViewById(R.id.edit_confirm_btn);
@@ -73,8 +82,21 @@ public class EditUserInfoActivity extends BaseActivity {
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
             String imagePath = c.getString(columnIndex);
-            showImage(imagePath);
+            copyFile(imagePath);
+            GlideUtils.showUserIcon(this, headPicImg);
             c.close();
+        }
+    }
+
+    private void copyFile(String path) {
+        File srcFile = new File(path);
+        String filesDirPath = getApplicationContext().getFilesDir() + File.separator + "images"+ File.separator;
+        File destFile = new File(filesDirPath + File.separator + srcFile.getName());
+        Log.d("monty", "copyfile -> destFilePath:" + destFile);
+        boolean b = FileUtils.copyFile(srcFile, destFile);
+        if (b) {
+            PreferencesManager pm = PreferencesManager.getInstance(this);
+            pm.setStringValue("userIconPath"+ Constans.CURRENT_TEL, destFile.getPath());
         }
     }
 
@@ -121,9 +143,9 @@ public class EditUserInfoActivity extends BaseActivity {
         public void onClick(View v) {
             PreferencesManager pm = PreferencesManager.getInstance(context);
             String nickName = nameEdit.getText().toString();
-            pm.setStringValue("user_nikeName", nickName);
+            pm.setStringValue("nikeName", nickName);
             String tel = numEdit.getText().toString();
-            pm.setStringValue("user_tel", tel);
+            pm.setStringValue("tel", tel);
             Toast.makeText(context, R.string.reset_psw_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.putExtra("nickName", nickName);

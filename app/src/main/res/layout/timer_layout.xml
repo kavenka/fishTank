@@ -9,15 +9,15 @@
     android:focusableInTouchMode="true"
     tools:context="com.mibo.fishtank.activity.SetTimerActivity">
 
-    <TextView
+
+    <ImageView
         android:id="@+id/tv_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:text="1."
-        android:textColor="@color/color_ffffff" />
+        android:src="@drawable/naozhong"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

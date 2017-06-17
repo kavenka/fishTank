@@ -8,4 +8,7 @@ public class SetDevicePwdEvent extends SetParamsEvent{
     public SetDevicePwdEvent(String uid, int result) {
         super(uid, result);
     }
+    public SetDevicePwdEvent(String uid, int result, String msg) {
+        super(uid,result,msg);
+    }
 }

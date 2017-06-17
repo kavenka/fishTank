@@ -37,6 +37,9 @@ public class PreferencesManager {
     public String getStringValue(String key) {
         return mPref.getString(key, "");
     }
+    public String getStringValue(String key,String defaultValue) {
+        return mPref.getString(key, defaultValue);
+    }
 
     public boolean getBooleanValue(String key) {
         return mPref.getBoolean(key, false);

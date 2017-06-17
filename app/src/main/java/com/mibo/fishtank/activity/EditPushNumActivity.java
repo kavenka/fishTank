@@ -81,13 +81,17 @@ public class EditPushNumActivity extends BaseDeviceActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTellPhoneListener(SetTelEvent event) {
+    public void onSetTellPhoneListener(SetTelEvent event) {
         if (event.result == 0) {
             Toast.makeText(this, "推送手机号码设置成功", Toast.LENGTH_SHORT).show();
             deviceParams.Tel = telePhone;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
         } else {
-            Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
         mLoadingDialog.close();
     }

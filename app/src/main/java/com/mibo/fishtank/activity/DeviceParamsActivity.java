@@ -74,12 +74,16 @@ public class DeviceParamsActivity extends BaseDeviceActivity {
 //    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetTimerListener(SetPhAndTempEvent event) {
+    public void onSetTimerListener(SetPhAndTempEvent event) {
         if (event.result == 0) {
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
-            Toast.makeText(this, "开关设置成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "设置成功", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -152,6 +156,15 @@ public class DeviceParamsActivity extends BaseDeviceActivity {
                     deviceParams.TempMax = (int) maxValue;
                 }
 
+            }
+        });
+
+        View correct = findViewById(R.id.correct);
+        correct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = PhCorrectActivity.BuildIntent(DeviceParamsActivity.this, uid);
+                startActivity(intent);
             }
         });
     }

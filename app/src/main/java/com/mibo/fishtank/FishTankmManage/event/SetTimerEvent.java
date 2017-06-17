@@ -8,4 +8,7 @@ public class SetTimerEvent extends SetParamsEvent{
     public SetTimerEvent(String uid, int result) {
         super(uid, result);
     }
+    public SetTimerEvent(String uid, int result, String msg) {
+        super(uid,result,msg);
+    }
 }

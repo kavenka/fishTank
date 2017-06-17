@@ -10,4 +10,10 @@ public class GetParameterEvent {
     public String uid;
     public int result;
     public IFishTankApi.MsgGetParamRsp msgGetParamRsp;
+
+    public GetParameterEvent(String uid, int result, IFishTankApi.MsgGetParamRsp msgGetParamRsp) {
+        this.uid = uid;
+        this.result = result;
+        this.msgGetParamRsp = msgGetParamRsp;
+    }
 }

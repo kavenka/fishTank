@@ -83,11 +83,15 @@ public class SetDevicePwdActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    void onSetDevicePwdListener(SetDevicePwdEvent event) {
+    public void onSetDevicePwdListener(SetDevicePwdEvent event) {
         if (event.result == 0) {
             FishTankApiManager.getInstance().loginDevice(Constans.DEVICE_UID, newPwd);
         } else {
-            Toast.makeText(this, "密码设置失败", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(event.msg)){
+                Toast.makeText(this, "密码设置失败", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
+            }
             loadingDialog.close();
         }
     }

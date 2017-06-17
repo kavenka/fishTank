@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="16dp"
             android:layout_marginRight="5dp"
-            android:textColor="@color/color_b4ffffff"
+            android:textColor="@color/color_ffffff"
             android:textSize="14sp"
             />
     </RelativeLayout>

@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mibo.fishtank.R;
-import com.mibo.fishtank.entity.User;
-import com.mibo.fishtank.utils.Constans;
-import com.mibo.fishtank.utils.DataBaseManager;
+import com.mibo.fishtank.utils.GlideUtils;
+import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.TitleBar;
 
 public class UserCenterActivity extends BaseActivity {
@@ -18,12 +18,19 @@ public class UserCenterActivity extends BaseActivity {
     public static final int TO_EDIT_INFO_CODE = 123;
     private TextView nickName;
     private TextView tel;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_center_activity);
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GlideUtils.showUserIcon(this,imageView);
     }
 
     private void initView() {
@@ -35,9 +42,15 @@ public class UserCenterActivity extends BaseActivity {
 
         nickName = (TextView) findViewById(R.id.user_name_txt);
         tel = (TextView) findViewById(R.id.user_num_txt);
-        User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
-        nickName.setText(TextUtils.isEmpty(user.getUserName()) ? Constans.CURRENT_TEL : user.getUserName());
-        tel.setText(Constans.CURRENT_TEL);
+        imageView = (ImageView) findViewById(R.id.user_head_img);
+//        GlideUtils.showUserIcon(this,imageView);
+//        User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
+
+        PreferencesManager pm = PreferencesManager.getInstance(context);
+        String nickNameStr = pm.getStringValue("nikeName");
+        String telStr = pm.getStringValue("tel");
+        this.nickName.setText(TextUtils.isEmpty(nickNameStr) ? "尚未设置": nickNameStr);
+        this.tel.setText(TextUtils.isEmpty(telStr)?"尚未设置":telStr);
 
     }
 

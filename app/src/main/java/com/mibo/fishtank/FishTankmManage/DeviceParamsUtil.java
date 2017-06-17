@@ -128,12 +128,21 @@ public class DeviceParamsUtil {
         deviceParams.Heater2 = msgGetParamRsp.Heater2;
         deviceParams.Rfu1 = msgGetParamRsp.Rfu1;
         deviceParams.Rfu2 = msgGetParamRsp.Rfu2;
-
         deviceParams.Ph = msgGetParamRsp.Ph;
-        deviceParams.PhMax = msgGetParamRsp.PhMax;
+        //当最大ph值不符合正常范围时，默认设置为14
+        if(msgGetParamRsp.PhMax==0||msgGetParamRsp.PhMax<=msgGetParamRsp.PhMin){
+            deviceParams.PhMax = 14;
+        }else{
+            deviceParams.PhMax = msgGetParamRsp.PhMax;
+        }
         deviceParams.PhMin = msgGetParamRsp.PhMin;
         deviceParams.Temp = msgGetParamRsp.Temp;
-        deviceParams.TempMax = msgGetParamRsp.TempMax;
+        //当最大Temp值不符合正常范围时，默认设置为40
+        if(msgGetParamRsp.TempMax==0||msgGetParamRsp.TempMax<=msgGetParamRsp.TempMin){
+            deviceParams.TempMax = 40;
+        }else{
+            deviceParams.TempMax = msgGetParamRsp.TempMax;
+        }
         deviceParams.TempMin = msgGetParamRsp.TempMin;
         deviceParams.PhCal = msgGetParamRsp.PhCal;
         deviceParams.ViewMode = msgGetParamRsp.ViewMode;
