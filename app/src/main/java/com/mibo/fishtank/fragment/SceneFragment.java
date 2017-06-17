@@ -2,6 +2,7 @@ package com.mibo.fishtank.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,10 @@ public class SceneFragment extends BaseFragment {
         ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);
         deviceListView.setOnItemClickListener(new OnClickSceneItemListener());
         deviceList = DataBaseManager.queryAllDevice(this.devices);
-        deviceList.add(new Device());
+        Log.d("monty","deviceList:"+deviceList.toString());
+        if (deviceList != null && deviceList.size() == 0) {
+            deviceList.add(new Device());
+        }
         adapter = new DeviceAdapter(context, deviceList);
         deviceListView.setAdapter(adapter);
 
@@ -68,7 +72,7 @@ public class SceneFragment extends BaseFragment {
                 intent.putExtra("sceneId", sceneId);
                 startActivity(intent);
             } else {
-                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid());
+                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid(), "");
                 startActivity(intent);
             }
         }

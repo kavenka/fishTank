@@ -133,7 +133,7 @@ public class LoginActivity extends BaseActivity {
 
 
     /**
-     * 登陆的点击事件
+     * 登录的点击事件
      */
     private class OnClickLoginListener implements View.OnClickListener {
 

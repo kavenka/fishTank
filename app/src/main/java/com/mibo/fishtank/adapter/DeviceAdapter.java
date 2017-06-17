@@ -1,6 +1,8 @@
 package com.mibo.fishtank.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class DeviceAdapter extends BaseAdapter {
     public DeviceAdapter(Context context, List<Device> devices) {
         this.context = context;
         this.devices = devices;
+        Log.d("monty","设备列表："+devices.toString());
     }
 
     @Override
@@ -69,18 +72,21 @@ public class DeviceAdapter extends BaseAdapter {
             switch (type) {
                 case 0:
                     deviceViewHolder = (DeviceViewHolder) convertView.getTag();
+                    deviceViewHolder.deviceName.setText(devices.get(position).getUid());
                     break;
             }
 
         }
+
+
         return convertView;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == devices.size() - 1) {
+        if(TextUtils.isEmpty(devices.get(position).getUid())){
             return 1;
-        } else {
+        }else{
             return 0;
         }
     }

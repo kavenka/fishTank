@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
-import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.tencent.android.tpush.XGPushConfig;
@@ -35,7 +33,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     /**
-     * 获取登陆信息
+     * 获取登录信息
      */
     private void getLoginInfo() {
         PreferencesManager pm = PreferencesManager.getInstance(context);

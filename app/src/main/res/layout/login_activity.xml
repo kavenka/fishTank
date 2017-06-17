@@ -111,7 +111,7 @@
             android:textColor="@color/color_4ce1ff"
             />
     </LinearLayout>
-    <!--登陆按钮-->
+    <!--登录按钮-->
     <Button
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
