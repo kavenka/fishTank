@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity {
             pm.setStringValue("tel",name);
             User user = new User();
             user.setTel(name);
-            user.save();
+            user.saveOrUpdate();
             Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);

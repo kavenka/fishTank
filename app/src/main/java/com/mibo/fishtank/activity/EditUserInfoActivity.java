@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,12 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.entity.User;
 import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.FileUtils;
 import com.mibo.fishtank.utils.GlideUtils;
 import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.SelectHeadPicDialog;
 import com.mibo.fishtank.weight.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -90,13 +94,13 @@ public class EditUserInfoActivity extends BaseActivity {
 
     private void copyFile(String path) {
         File srcFile = new File(path);
-        String filesDirPath = getApplicationContext().getFilesDir() + File.separator + "images"+ File.separator;
+        String filesDirPath = getApplicationContext().getFilesDir() + File.separator + "images" + File.separator;
         File destFile = new File(filesDirPath + File.separator + srcFile.getName());
         Log.d("monty", "copyfile -> destFilePath:" + destFile);
         boolean b = FileUtils.copyFile(srcFile, destFile);
         if (b) {
             PreferencesManager pm = PreferencesManager.getInstance(this);
-            pm.setStringValue("userIconPath"+ Constans.CURRENT_TEL, destFile.getPath());
+            pm.setStringValue("userIconPath" + Constans.CURRENT_TEL, destFile.getPath());
         }
     }
 
@@ -150,6 +154,9 @@ public class EditUserInfoActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.putExtra("nickName", nickName);
             intent.putExtra("tel", tel);
+            User user = new User();
+            user.setUserName(TextUtils.isEmpty(nickName)?Constans.CURRENT_TEL:nickName);
+            EventBus.getDefault().postSticky(user);
             setResult(10086, intent);
             finish();
         }

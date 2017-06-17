@@ -32,6 +32,7 @@ public class DataBaseManager {
         user.setTel(tel);
         user.saveOrUpdate();
     }
+
     /**
      * 搜索用户信息
      */
@@ -100,7 +101,7 @@ public class DataBaseManager {
         return list;
     }
 
-    public static void updateDevicePwd(String uid,String pwd){
+    public static void updateDevicePwd(String uid, String pwd) {
         Device device = queryDevice(uid);
         device.setDevPwd(pwd);
         device.update(device.getBaseObjId());
@@ -118,6 +119,14 @@ public class DataBaseManager {
      */
     private static void clearDevice() {
         DataSupport.deleteAll(Device.class);
+    }
+
+    /**
+     * 获取当个场景下的所有设备
+     */
+    public static ArrayList<String> queryAllDeviceByOneScene(String sceneID) {
+        Scene scene = DataSupport.where("sceneid = ?", sceneID).findFirst(Scene.class);
+        return scene.getDevices();
     }
 
 }

@@ -30,6 +30,7 @@ import com.mibo.fishtank.entity.User;
 import com.mibo.fishtank.utils.Constans;
 import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.utils.GlideUtils;
+import com.mibo.fishtank.utils.PreferencesManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
@@ -66,7 +67,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GlideUtils.showUserIcon(this,ivUserIcon);
+        GlideUtils.showUserIcon(this, ivUserIcon);
     }
 
     private void initView() {
@@ -142,6 +143,9 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserLoginEvent(UserLoginOutEvent event) {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
+            PreferencesManager pm = PreferencesManager.getInstance(context);
+            pm.setStringValue("pwd", "");
+            pm.setBooleanValue("isLoginSuccess", false);
             Toast.makeText(context, R.string.log_out_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, LaunchActivity.class);
             startActivity(intent);

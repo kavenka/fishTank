@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:text="小明"
         android:textColor="@color/color_000000"
         android:textSize="15sp"
         />
