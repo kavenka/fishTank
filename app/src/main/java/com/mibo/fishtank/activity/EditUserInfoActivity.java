@@ -95,6 +95,10 @@ public class EditUserInfoActivity extends BaseActivity {
     private void copyFile(String path) {
         File srcFile = new File(path);
         String filesDirPath = getApplicationContext().getFilesDir() + File.separator + "images"+ File.separator;
+        File imageDir = new File(filesDirPath);
+        if(!imageDir.exists()){
+            imageDir.mkdirs();
+        }
         File destFile = new File(filesDirPath + File.separator + srcFile.getName());
         Log.d("monty", "copyfile -> destFilePath:" + destFile);
         boolean b = FileUtils.copyFile(srcFile, destFile);
