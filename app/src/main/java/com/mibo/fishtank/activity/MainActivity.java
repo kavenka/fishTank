@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GlideUtils.showUserIcon(this,ivUserIcon);
+        GlideUtils.showUserIcon(this, ivUserIcon);
     }
 
     private void initView() {
@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity {
         adapter = new SceneFragmentAdapter(getSupportFragmentManager(), scenes);
         viewPager.addOnPageChangeListener(new OnPagerChange());
         viewPager.setAdapter(adapter);
+
 
         User user = DataBaseManager.queryUser(Constans.CURRENT_TEL);
         nickNameTv = (TextView) findViewById(R.id.id_draw_menu_item_login_tv);
@@ -129,6 +130,19 @@ public class MainActivity extends BaseActivity {
             scenes.addAll(dataBaseScene);//解析好的场景实体集合添加到viewPager中
             adapter.notifyDataSetChanged();
             titleBar.setCenterStr(scenes.get(0).getName());
+            final int currentItem = viewPager.getCurrentItem();
+            if (scenes.get(currentItem).getDevices().size() == 0) {
+                titleBar.setRightNull();
+            } else {
+                titleBar.setOnClickRightImgListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, AddNewDeviceActivity.class);
+                        intent.putExtra("sceneId", scenes.get(currentItem).getSceneID());
+                        startActivity(intent);
+                    }
+                });
+            }
             if (scenes.size() == 1) {
 
             }
@@ -207,8 +221,20 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
-        public void onPageSelected(int position) {
+        public void onPageSelected(final int position) {
             titleBar.setCenterStr(scenes.get(position).getName());
+            if (scenes.get(position).getDevices().size() == 0) {
+                titleBar.setRightNull();
+            } else {
+                titleBar.setOnClickRightImgListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, AddNewDeviceActivity.class);
+                        intent.putExtra("sceneId", scenes.get(position).getSceneID());
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
         @Override

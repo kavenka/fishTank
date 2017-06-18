@@ -22,6 +22,7 @@ public class TitleBar extends RelativeLayout {
     private ImageView leftImg;
     private TextView centerStr;
     private TextView rightTxt;
+    private ImageView rightImg;
 
     public TitleBar(Context context) {
         this(context, null);
@@ -41,6 +42,7 @@ public class TitleBar extends RelativeLayout {
         leftImg = (ImageView) titleBar.findViewById(R.id.title_left_img);
         centerStr = (TextView) titleBar.findViewById(R.id.title_center_txt);
         rightTxt = (TextView) titleBar.findViewById(R.id.title_right_txt);
+        rightImg = (ImageView) titleBar.findViewById(R.id.title_right_img);
         addView(titleBar);
     }
 
@@ -65,6 +67,16 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void setOnClickRightListener(View.OnClickListener onClickListener) {
+        rightImg.setVisibility(GONE);
         rightTxt.setOnClickListener(onClickListener);
+    }
+    public void setOnClickRightImgListener(View.OnClickListener onClickListener) {
+        rightTxt.setVisibility(GONE);
+        rightImg.setVisibility(VISIBLE);
+        rightImg.setOnClickListener(onClickListener);
+    }
+    public void setRightNull() {
+        rightTxt.setVisibility(GONE);
+        rightImg.setVisibility(GONE);
     }
 }

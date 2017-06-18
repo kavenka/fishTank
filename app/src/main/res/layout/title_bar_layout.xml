@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="@color/color_32ffffff"
-    >
+    android:background="@color/color_32ffffff">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,8 +17,7 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:scaleType="center"
-            android:src="@drawable/back"
-            />
+            android:src="@drawable/back" />
 
         <TextView
             android:id="@+id/title_center_txt"
@@ -29,19 +26,27 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dp"
             android:textColor="@color/color_ffffff"
-            android:textSize="17sp"
-            />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/title_right_txt"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/color_ffffff"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/title_right_img"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/add_divece"
+             />
     </RelativeLayout>
 
 

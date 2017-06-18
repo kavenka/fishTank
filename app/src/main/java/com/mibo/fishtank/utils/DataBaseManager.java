@@ -127,4 +127,11 @@ public class DataBaseManager {
         Scene scene = DataSupport.where("sceneid = ?", sceneID).findFirst(Scene.class);
         return scene.getDevices();
     }
+
+    /**
+     * 获取当个场景下的所有设备
+     */
+    public static Scene querySceneBySceneId(String sceneID) {
+        return DataSupport.where("sceneid = ?", sceneID).findFirst(Scene.class);
+    }
 }

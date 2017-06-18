@@ -14,6 +14,7 @@ import com.mibo.fishtank.activity.AddNewDeviceActivity;
 import com.mibo.fishtank.activity.DeviceDetailActivity;
 import com.mibo.fishtank.adapter.DeviceAdapter;
 import com.mibo.fishtank.entity.Device;
+import com.mibo.fishtank.entity.Scene;
 import com.mibo.fishtank.utils.DataBaseManager;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class SceneFragment extends BaseFragment {
     private ArrayList<String> devices;
     private DeviceAdapter adapter;
     private ArrayList<Device> deviceList;
+    private int size;
 
     public SceneFragment() {
 
@@ -53,10 +55,11 @@ public class SceneFragment extends BaseFragment {
         ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);
         deviceListView.setOnItemClickListener(new OnClickSceneItemListener());
         deviceList = DataBaseManager.queryAllDevice(this.devices);
+        size = deviceList.size();
         Log.d("monty", "deviceList:" + deviceList.toString());
-        deviceList.add(new Device());
-//        if (deviceList != null && deviceList.size() == 0) {
-//        }
+        if (deviceList != null && deviceList.size() == 0) {
+            deviceList.add(new Device());
+        }
         adapter = new DeviceAdapter(context, deviceList);
         deviceListView.setAdapter(adapter);
 
@@ -67,12 +70,13 @@ public class SceneFragment extends BaseFragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == deviceList.size() - 1) {
+            if (size == 0) {
                 Intent intent = new Intent(context, AddNewDeviceActivity.class);
                 intent.putExtra("sceneId", sceneId);
                 startActivity(intent);
             } else {
-                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid(), "");
+                Scene scene = DataBaseManager.querySceneBySceneId(sceneId);
+                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid(), scene.getName());
                 startActivity(intent);
             }
         }
