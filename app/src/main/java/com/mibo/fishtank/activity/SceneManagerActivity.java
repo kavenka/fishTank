@@ -11,12 +11,15 @@ import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
 import com.mibo.fishtank.R;
+import com.mibo.fishtank.utils.DataBaseManager;
 import com.mibo.fishtank.weight.LoadingDialog;
 import com.mibo.fishtank.weight.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 
 public class SceneManagerActivity extends BaseActivity {
 
@@ -51,7 +54,17 @@ public class SceneManagerActivity extends BaseActivity {
 
         TextView sceneNameTxt = (TextView) findViewById(R.id.scene_name);
         sceneNameTxt.setText(sceneName);
-
+        TextView linkDeviceTxt = (TextView) findViewById(R.id.scene_link_device);
+        ArrayList<String> devices = DataBaseManager.queryAllDeviceByOneScene(sceneID);
+        StringBuilder stringBuilder = new StringBuilder();
+        int size = devices.size();
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(devices.get(i));
+            if (i != size - 1) {
+                stringBuilder.append("\n");
+            }
+        }
+        linkDeviceTxt.setText(stringBuilder);
         LinearLayout deleteLinear = (LinearLayout) findViewById(R.id.delete_scene);
         deleteLinear.setOnClickListener(new OnClickDeleteSceneListener());
     }

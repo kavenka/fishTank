@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginEvent;
@@ -32,7 +31,6 @@ import org.greenrobot.eventbus.ThreadMode;
 public class LoginActivity extends BaseActivity {
     private boolean isExit = false;
     private CheckBox isReadDoc;
-    private CloudApi mCloudApi;
     private EditText nameEditTxt;
     private EditText pwdEditTxt;
     private Button loginBtn;
@@ -47,17 +45,8 @@ public class LoginActivity extends BaseActivity {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        initSDK();
         getIntentData();
         initView();
-    }
-
-    /**
-     * 初始化SDK
-     */
-    private void initSDK() {
-        mCloudApi = new CloudApi();
-        mCloudApi.SetHandler(mHandler);
     }
 
 
@@ -112,7 +101,7 @@ public class LoginActivity extends BaseActivity {
             pm.setStringValue("tel",name);
             User user = new User();
             user.setTel(name);
-            user.save();
+            user.saveOrUpdate();
             Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);

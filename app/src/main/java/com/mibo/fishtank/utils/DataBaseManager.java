@@ -120,4 +120,11 @@ public class DataBaseManager {
         DataSupport.deleteAll(Device.class);
     }
 
+    /**
+     * 获取当个场景下的所有设备
+     */
+    public static ArrayList<String> queryAllDeviceByOneScene(String sceneID) {
+        Scene scene = DataSupport.where("sceneid = ?", sceneID).findFirst(Scene.class);
+        return scene.getDevices();
+    }
 }

@@ -53,10 +53,10 @@ public class SceneFragment extends BaseFragment {
         ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);
         deviceListView.setOnItemClickListener(new OnClickSceneItemListener());
         deviceList = DataBaseManager.queryAllDevice(this.devices);
-        Log.d("monty","deviceList:"+deviceList.toString());
-        if (deviceList != null && deviceList.size() == 0) {
-            deviceList.add(new Device());
-        }
+        Log.d("monty", "deviceList:" + deviceList.toString());
+        deviceList.add(new Device());
+//        if (deviceList != null && deviceList.size() == 0) {
+//        }
         adapter = new DeviceAdapter(context, deviceList);
         deviceListView.setAdapter(adapter);
 

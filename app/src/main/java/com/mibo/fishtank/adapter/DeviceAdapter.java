@@ -58,7 +58,9 @@ public class DeviceAdapter extends BaseAdapter {
                     convertView = layoutInflater.inflate(R.layout.devices_main_item_layout, null);
                     deviceViewHolder = new DeviceViewHolder();
                     deviceViewHolder.deviceName = (TextView) convertView.findViewById(R.id.device_name);
+                    deviceViewHolder.deviceUid = (TextView) convertView.findViewById(R.id.device_uid);
                     deviceViewHolder.deviceImg = (ImageView) convertView.findViewById(R.id.device_img);
+                    deviceViewHolder.deviceUid.setText(devices.get(position).getUid());
                     convertView.setTag(deviceViewHolder);
                     break;
                 case 1:
@@ -73,6 +75,7 @@ public class DeviceAdapter extends BaseAdapter {
                 case 0:
                     deviceViewHolder = (DeviceViewHolder) convertView.getTag();
                     deviceViewHolder.deviceName.setText(devices.get(position).getUid());
+                    deviceViewHolder.deviceUid.setText(devices.get(position).getUid());
                     break;
             }
 
@@ -99,6 +102,7 @@ public class DeviceAdapter extends BaseAdapter {
     private class DeviceViewHolder {
         LinearLayout deviceBtn;
         TextView deviceName;
+        TextView deviceUid;
         ImageView deviceImg;
     }
 
