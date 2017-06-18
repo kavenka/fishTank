@@ -80,6 +80,7 @@ public class FileUtils {
                 in.close();
             }
         } catch (IOException e) {
+            e.printStackTrace();
             result = false;
         }
         return result;
@@ -111,6 +112,7 @@ public class FileUtils {
             }
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }
