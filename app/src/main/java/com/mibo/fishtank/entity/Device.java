@@ -26,6 +26,7 @@ public class Device extends DataSupport {
     private int Port;
     private String User;
     private String DevPwd;
+    private String Time;
 
     public String getDevPwd() {
         return DevPwd;
@@ -41,10 +42,10 @@ public class Device extends DataSupport {
         try {
             User = object.getString("DevUser");
             Uid = object.getString("DevUid");
-            Model = object.getString("Model");
+            Model = object.getString("DevModel");
             DevPwd = object.getString("DevPwd");
-            SWVer = object.getString("SWVer");
-            HWVer = object.getString("HWVer");
+            Time = object.getString("Time");
+
             String custom = object.getString("Custom");
             String sceneArrayStr = new String(Base64.decode(custom, Base64.DEFAULT));
             String[] strings = sceneArrayStr.split("&");
@@ -115,6 +116,14 @@ public class Device extends DataSupport {
 
     public void setSceneIds(ArrayList<String> sceneIds) {
         this.sceneIds = sceneIds;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
     }
 
     public long getBaseObjId() {

@@ -43,9 +43,9 @@ public class DeviceInfoActivity extends BaseActivity {
 
         typeTxt.setText("智能排插");
         uidTxt.setText(device.getUid());
-        changShanTxt.setText(device.getHWVer());
+        changShanTxt.setText("1");
         xingHaoTxt.setText(device.getModel());
-        timeTxt.setText("");
+        timeTxt.setText(device.getTime());
 
         pwdEdit.setText(device.getDevPwd());
     }
