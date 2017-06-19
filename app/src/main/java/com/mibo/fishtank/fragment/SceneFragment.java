@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.activity.AddNewDeviceActivity;
 import com.mibo.fishtank.activity.DeviceDetailActivity;
+import com.mibo.fishtank.activity.DeviceInfoActivity;
 import com.mibo.fishtank.adapter.DeviceAdapter;
 import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.entity.Scene;
@@ -52,10 +53,21 @@ public class SceneFragment extends BaseFragment {
 //        addDevice.setOnClickListener(new OnClickNewDeviceListener());
 //        LinearLayout paiChaLayout = (LinearLayout) view.findViewById(R.id.pai_cha_layout);
 //        paiChaLayout.setOnClickListener(new OnClickPaiChaListener());
-        ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);
-        deviceListView.setOnItemClickListener(new OnClickSceneItemListener());
         deviceList = DataBaseManager.queryAllDevice(this.devices);
         size = deviceList.size();
+        ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);
+        deviceListView.setOnItemClickListener(new OnClickSceneItemListener());
+        deviceListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (size != 0) {
+                    Intent intent = new Intent(context, DeviceInfoActivity.class);
+                    intent.putExtra("uid", devices.get(position));
+                    startActivity(intent);
+                }
+                return true;
+            }
+        });
         Log.d("monty", "deviceList:" + deviceList.toString());
         if (deviceList != null && deviceList.size() == 0) {
             deviceList.add(new Device());

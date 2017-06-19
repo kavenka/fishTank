@@ -41,7 +41,10 @@ public class Device extends DataSupport {
         try {
             User = object.getString("DevUser");
             Uid = object.getString("DevUid");
+            Model = object.getString("Model");
             DevPwd = object.getString("DevPwd");
+            SWVer = object.getString("SWVer");
+            HWVer = object.getString("HWVer");
             String custom = object.getString("Custom");
             String sceneArrayStr = new String(Base64.decode(custom, Base64.DEFAULT));
             String[] strings = sceneArrayStr.split("&");

@@ -46,6 +46,7 @@
             android:scaleType="center"
             android:layout_alignParentRight="true"
             android:src="@drawable/add_divece"
+            android:visibility="gone"
              />
     </RelativeLayout>
 
