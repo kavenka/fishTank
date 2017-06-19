@@ -11,8 +11,27 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    //签名配置
+    signingConfigs {
         release {
+            keyAlias "fishtank"
+            keyPassword 'a123456'
+            storeFile file('fishtank.jks')
+            storePassword 'a123456'
+        }
+
+    }
+    // 移除lint检查的error
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
