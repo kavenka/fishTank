@@ -57,11 +57,24 @@
     <string name="device_list">Device List</string>
     <string name="add_scene">add scene</string>
     <string name="custom_days">自定义天数</string>
-
+    <string name="device_in_net">配置设备入网</string>
+    <string name="add_device">添加设备</string>
+    <string name="device_connect">设备连接</string>
+    <string name="set_params_title">客厅-自定义排插1</string>
+    <string name="edit_push_num">修改推送手机号码</string>
+    <string name="timer_setting">灯光1定时器设置</string>
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">Max</string>
     <string name="hint_push_phonenumber">请输入推送手机号码</string>
     <string name="ph_correct_step1">请将探头放进第一组标准液中，并在下方输入该标准液的标准PH值，等上面的实测值读数稳定后，点击下一步</string>
     <string name="ph_correct_step2">请将探头放进第二组标准液中，并在下方输入该标准液的标准PH值，等上面的实测值读数稳定后，点击完成即可完成探头校准</string>
-
+    <string-array name="week">
+        <item>星期天</item>
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+    </string-array>
 </resources>
