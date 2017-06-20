@@ -207,4 +207,18 @@
             android:textSize="15sp"
             />
     </RelativeLayout>
+    <Button
+        android:id="@+id/delete_device_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/white_btn_background_selector"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:text="删除设备"
+        android:textColor="@color/color_000000"
+        android:textSize="20sp"
+        />
 </LinearLayout>

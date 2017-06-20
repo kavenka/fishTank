@@ -200,6 +200,36 @@ public class FishTankUserApiManager {
         cloudApi.AddOrUpdateDevCfg(devCfg);
     }
 
+    /**
+     * 删除设备
+     *
+     * @param uid
+     */
+    public void toDelectDevice(String uid, String sceneId, String pwd) {
+        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
+        Device device = DataBaseManager.queryDevice(uid);
+        int size = sceneIds.size();
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            if (!TextUtils.equals(sceneIds.get(i), sceneId)) {
+                stringBuffer.append(sceneIds.get(i));
+                if (size > 1 && i != size - 1) {
+                    stringBuffer.append("&");
+                }
+            }
+        }
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 1;
+        devCfg.Vendor = "1";
+        devCfg.Model = device.getModel();
+        devCfg.Uid = uid;
+        devCfg.User = "admin";
+        devCfg.Pwd = pwd;
+        devCfg.Data = "";
+        devCfg.Custom = stringBuffer.toString().getBytes();
+        cloudApi.AddOrUpdateDevCfg(devCfg);
+    }
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

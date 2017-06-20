@@ -63,6 +63,7 @@ public class SceneFragment extends BaseFragment {
                 if (size != 0) {
                     Intent intent = new Intent(context, DeviceInfoActivity.class);
                     intent.putExtra("uid", devices.get(position));
+                    intent.putExtra("sceneId", sceneId);
                     startActivity(intent);
                 }
                 return true;
