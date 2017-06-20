@@ -3,6 +3,7 @@ package com.mibo.fishtank.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ public class DeviceInfoActivity extends BaseActivity {
 
     private String uid;
     private EditText pwdEdit;
+    private Button btnDeleteDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,9 @@ public class DeviceInfoActivity extends BaseActivity {
         timeTxt.setText(device.getTime());
 
         pwdEdit.setText(device.getDevPwd());
+
+        btnDeleteDevice = (Button) findViewById(R.id.btn_deleteDevice);
+        btnDeleteDevice.setOnClickListener(new OnDeleteBtnClickListener());
     }
 
     private class OnClickLeftListener implements View.OnClickListener {
@@ -62,6 +67,13 @@ public class DeviceInfoActivity extends BaseActivity {
         public void onClick(View v) {
             FishTankUserApiManager.getInstance().toUpdateDevice(uid, pwdEdit.getText().toString());
             finish();
+        }
+    }
+
+    private class OnDeleteBtnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            // TODO: 2017/6/20 删除设备
         }
     }
 }
