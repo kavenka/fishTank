@@ -24,30 +24,7 @@
             android:orientation="vertical"
             android:paddingBottom="10dp">
 
-            <TextView
-                android:id="@+id/ph_fanwei"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="PH值范围："
-                android:textColor="@color/color_ffffff"
-                android:textSize="15sp" />
 
-            <LinearLayout
-                android:id="@+id/range_ph_container"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/color_32ffffff"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.mibo.fishtank.weight.RangeSeekBar
-                    android:id="@+id/range_ph"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:absoluteMaxValue="40"
-                    app:absoluteMinValue="0" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/wendu_fanwei"
@@ -68,6 +45,30 @@
 
                 <com.mibo.fishtank.weight.RangeSeekBar
                     android:id="@+id/range_temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:absoluteMaxValue="40"
+                    app:absoluteMinValue="0" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/ph_fanwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="PH值范围："
+                android:textColor="@color/color_ffffff"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/range_ph_container"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/color_32ffffff"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.mibo.fishtank.weight.RangeSeekBar
+                    android:id="@+id/range_ph"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:absoluteMaxValue="40"
