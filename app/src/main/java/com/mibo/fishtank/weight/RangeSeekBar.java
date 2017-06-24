@@ -37,6 +37,7 @@ import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.PixelUtil;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Widget that lets users select a minimum and maximum value on a given numerical range.
@@ -78,6 +79,9 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     private Thumb pressedThumb = null;
     private boolean notifyWhileDragging = false;
     private OnRangeSeekBarChangeListener<T> listener;
+
+    //保留1位小数
+    private DecimalFormat df = new DecimalFormat("0.0");
     /**
      * Default color of a {@link RangeSeekBar}, #FF33B5E5. This is also known as "Ice Cream Sandwich" blue.
      */
@@ -609,6 +613,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
      */
     private void setNormalizedMinValue(double value) {
         normalizedMinValue = Math.max(0d, Math.min(1d, Math.min(value, normalizedMaxValue)));
+//        normalizedMinValue = Double.parseDouble(df.format(normalizedMinValue));
         invalidate();
     }
 
@@ -619,6 +624,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
      */
     private void setNormalizedMaxValue(double value) {
         normalizedMaxValue = Math.max(0d, Math.min(1d, Math.max(value, normalizedMinValue)));
+//        normalizedMaxValue = Double.parseDouble(df.format(normalizedMinValue));
         invalidate();
     }
 
@@ -631,6 +637,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     @SuppressWarnings("unchecked")
     private T normalizedToValue(double normalized) {
         double v = absoluteMinValuePrim + normalized * (absoluteMaxValuePrim - absoluteMinValuePrim);
+        v = Double.parseDouble(df.format(v));
         // TODO parameterize this rounding to allow variable decimal points
         return (T) numberType.toNumber(Math.round(v * 100) / 100d);
     }

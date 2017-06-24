@@ -132,12 +132,12 @@ public class DeviceParamsActivity extends BaseActivity {
             }
         });
         rangeTemp = (RangeSeekBar) findViewById(R.id.range_temp);
-        rangeTemp.setRangeValues(0, 40);
+        rangeTemp.setRangeValues(0f, 40f);
         rangeTemp.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
-                deviceParams.TempMin = (int) minValue;
-                deviceParams.TempMax = (int) maxValue;
+                deviceParams.TempMin = (float) minValue;
+                deviceParams.TempMax = (float) maxValue;
             }
         });
 
