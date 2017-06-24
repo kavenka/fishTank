@@ -88,9 +88,10 @@
                     android:paddingBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="2"
+                    android:inputType="numberDecimal"
                     android:hint="请输入标准值"
+                    android:gravity="center"
+                    android:focusable="true"
                     android:background="@null"/>
             </LinearLayout>
             <Button

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -101,9 +103,9 @@ public class PhCorrectActivity extends BaseActivity {
             finish();
         } else {
             myHandler.postDelayed(getPhRunable, 1000);
-            if(TextUtils.isEmpty(event.msg)){
+            if (TextUtils.isEmpty(event.msg)) {
                 Toast.makeText(this, "校准失败", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
             }
         }
@@ -145,6 +147,56 @@ public class PhCorrectActivity extends BaseActivity {
         tvPHValue = (TextView) findViewById(R.id.tv_Ph);
         tvTips = (TextView) findViewById(R.id.tv_tips);
         etStandard = (EditText) findViewById(R.id.et_standard_value);
+        etStandard.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.d("montyp", "beforeTextChanged,s:" + s.toString());
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("montyp", "onTextChanged,s:" + s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d("montyp", "afterTextChanged,s:" + s.toString());
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") >1) {
+
+                        etStandard.setText(s.toString().subSequence(0,
+                                s.toString().indexOf(".") +2));
+
+                        etStandard.setSelection(s.toString().trim().length()-1
+                        );
+                    }
+                }
+                //这部分是处理如果用户输入以.开头，在前面加上0
+                if (s.toString().trim().substring(0).equals(".")) {
+
+                    etStandard.setText("0"+s);
+                    etStandard.setSelection(2);
+                }
+                //这里处理用户 多次输入.的处理 比如输入 1..6的形式，是不可以的
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        etStandard.setText(s.subSequence(0, 1));
+                        etStandard.setSelection(1);
+                        return;
+                    }
+                }
+
+                if(!TextUtils.isEmpty(etStandard.getText().toString())){
+                    double value = Double.parseDouble(etStandard.getText().toString());
+                    if(value>14.0){
+                        etStandard.setText(14.0+"");
+                        etStandard.setSelection(etStandard.length());
+                    }
+                }
+            }
+        });
         btnNext = (Button) findViewById(R.id.btn_next);
         tvTip = (TextView) findViewById(R.id.tips);
 
@@ -175,7 +227,7 @@ public class PhCorrectActivity extends BaseActivity {
                     phRealValue2 = phRealValue;
                     loadingDialog.show();
                     myHandler.removeCallbacks(getPhRunable);
-                    Float[] phCal = new Float[]{phStandardValue1,phRealValue1, phStandardValue2, phRealValue2};
+                    Float[] phCal = new Float[]{phStandardValue1, phRealValue1, phStandardValue2, phRealValue2};
                     FishTankApiManager.getInstance().setPhCal(uid, phCal);
 
                 }

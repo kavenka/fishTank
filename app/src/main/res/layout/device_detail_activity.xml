@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:text="ph值(mol/L)"
+                        android:text="PH值(mol/L)"
                         android:textColor="@color/color_00ffaa"
                         android:textSize="12sp" />
 
