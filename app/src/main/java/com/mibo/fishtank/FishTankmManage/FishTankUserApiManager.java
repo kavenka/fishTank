@@ -79,10 +79,10 @@ public class FishTankUserApiManager {
     }
 
     /**
-     * 获取验证码
+     * 注册获取验证码
      */
-    public void toSendSmsForVerifyCode(String tel) {
-        cloudApi.SmsGetVerifyCode(tel);
+    public void toSendSmsForVerifyCode(String tel,int mode) {
+        cloudApi.SmsGetVerifyCode(tel,mode);
     }
 
     /**

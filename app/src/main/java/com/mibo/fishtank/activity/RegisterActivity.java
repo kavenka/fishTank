@@ -72,7 +72,7 @@ public class RegisterActivity extends BaseActivity {
                 String tel = phoneEditTxt.getText().toString();
                 if (!TextUtils.isEmpty(tel)) {
                     timeCount.start();
-                    FishTankUserApiManager.getInstance().toSendSmsForVerifyCode(tel);
+                    FishTankUserApiManager.getInstance().toSendSmsForVerifyCode(tel, 1);
                 } else {
                     Toast.makeText(context, R.string.input_right_phone_num, Toast.LENGTH_SHORT).show();
                 }
@@ -102,6 +102,7 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(context, "获取验证码失败", Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * 点击发送验证码按钮事件
      */

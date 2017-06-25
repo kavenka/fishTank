@@ -75,7 +75,6 @@ public class SearchNewDeviceActivity extends BaseActivity {
         device.setPort(msgScanDevRsp.Port);
         device.setSWVer(msgScanDevRsp.SWVer);
         device.setUid(msgScanDevRsp.Uid);
-        devices.clear();
         devices.add(device);
         adapter.notifyDataSetChanged();
     }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +20,6 @@ import com.mibo.fishtank.weight.TitleBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ForgetActivity extends BaseActivity {
     private Context context = this;
@@ -30,7 +27,6 @@ public class ForgetActivity extends BaseActivity {
     private TimeCount timeCount;
     private EditText phoneEditTxt;
     private EditText verifyCodeEdit;
-    private String verifyCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +65,12 @@ public class ForgetActivity extends BaseActivity {
             if (NetWorkUtils.isNetworkConnected(context)) {
                 String telNum = phoneEditTxt.getText().toString();
                 String codeNum = verifyCodeEdit.getText().toString();
-                if (TextUtils.isEmpty(telNum) || TextUtils.isEmpty(codeNum) || TextUtils.isEmpty(verifyCode) || (!verifyCode.equals(codeNum))) {
+                if (TextUtils.isEmpty(telNum) || TextUtils.isEmpty(codeNum)) {
                     Toast.makeText(context, R.string.input_right_code, Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(context, ConfirmPasswordActivity.class);
                     intent.putExtra("userName", telNum);
-                    intent.putExtra("verifyCode", verifyCode);
+                    intent.putExtra("verifyCode", codeNum);
                     intent.putExtra("tel", telNum);
                     intent.putExtra("isRegister", false);
                     startActivity(intent);
@@ -93,14 +89,7 @@ public class ForgetActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onVerifyCoideEvent(SendVerifyCodeEvent event) {
         if (IFishTankError.SUCCESS == event.msg.arg2) {
-            String data = event.msg.obj.toString();
-            Log.i("TAG", "Rsp=" + data);
-            try {
-                JSONObject jsonObject = new JSONObject(data);
-                verifyCode = jsonObject.getString("VerifyCode");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
         } else {
             Toast.makeText(context, "获取验证码失败", Toast.LENGTH_SHORT).show();
         }
@@ -113,7 +102,7 @@ public class ForgetActivity extends BaseActivity {
                 String tel = phoneEditTxt.getText().toString();
                 if (!TextUtils.isEmpty(tel)) {
                     timeCount.start();
-                    FishTankUserApiManager.getInstance().toSendSmsForVerifyCode(tel);
+                    FishTankUserApiManager.getInstance().toSendSmsForVerifyCode(tel,0);
                 } else {
                     Toast.makeText(context, R.string.input_right_phone_num, Toast.LENGTH_SHORT).show();
                 }
