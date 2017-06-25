@@ -89,7 +89,7 @@ public class SceneFragment extends BaseFragment {
                 startActivity(intent);
             } else {
                 Scene scene = DataBaseManager.querySceneBySceneId(sceneId);
-                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid(), scene.getName()+"_智能排插");
+                Intent intent = DeviceDetailActivity.BuildIntent(context, deviceList.get(position).getUid(), scene.getName()+"-智能排插");
                 startActivity(intent);
             }
         }

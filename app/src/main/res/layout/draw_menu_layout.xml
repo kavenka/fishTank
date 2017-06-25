@@ -4,7 +4,7 @@
     android:layout_width="280dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="@color/color_b4ffffff"
+    android:background="@color/color_e6ffffff"
     android:clickable="true"
     android:orientation="vertical"
     >

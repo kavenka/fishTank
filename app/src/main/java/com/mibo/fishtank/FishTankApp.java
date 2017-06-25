@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.utils.Constans;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
@@ -52,6 +53,7 @@ public class FishTankApp extends Application {
             @Override
             public void onSuccess(Object data, int flag) {
                 Log.d("TPush", "注册成功，设备token为：" + data);
+                Constans.XG_TOKEN = data + "";
             }
 
             @Override

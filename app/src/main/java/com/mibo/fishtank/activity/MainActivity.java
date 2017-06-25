@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.FishTankmManage.event.ChangeMainEvent;
 import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 import com.mibo.fishtank.R;
@@ -107,6 +108,14 @@ public class MainActivity extends BaseActivity {
     private void getSceneAndDeviceData() {
         loadingDialog.show();
         FishTankUserApiManager.getInstance().toGetDevCfg();//获取设备信息和场景信息
+    }
+
+    /**
+     * 当添加或者删除设备时的回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onChangeMainEvent(ChangeMainEvent event) {
+        finish();
     }
 
     /**

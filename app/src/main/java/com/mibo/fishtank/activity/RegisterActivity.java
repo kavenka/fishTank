@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.IFishTankError;
+import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
+import com.mibo.fishtank.FishTankmManage.event.CheckUserEvent;
+import com.mibo.fishtank.FishTankmManage.event.SendVerifyCodeEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.utils.NetWorkUtils;
 import com.mibo.fishtank.weight.TitleBar;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +29,6 @@ public class RegisterActivity extends BaseActivity {
     private Context context = this;
     private EditText phoneEditTxt;
     private EditText codeEditTxt;
-    private CloudApi mCloudApi;
     private String verifyCode;
     private Button sendCodeBtn;
 
@@ -36,15 +38,12 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         setContentView(R.layout.register_activity);
-        initSDK();
         initView();
 
-    }
-
-    private void initSDK() {
-        mCloudApi = new CloudApi();
-        mCloudApi.SetHandler(mHandler);
     }
 
     private void initView() {
@@ -62,6 +61,47 @@ public class RegisterActivity extends BaseActivity {
         nextStepBtn.setOnClickListener(new OnClickNextStepBtnListener());
     }
 
+
+    /**
+     * 检测用户是否已经注册回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCheckUserEvent(CheckUserEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            if (NetWorkUtils.isNetworkConnected(context)) {
+                String tel = phoneEditTxt.getText().toString();
+                if (!TextUtils.isEmpty(tel)) {
+                    timeCount.start();
+                    FishTankUserApiManager.getInstance().toSendSmsForVerifyCode(tel);
+                } else {
+                    Toast.makeText(context, R.string.input_right_phone_num, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "当前网络不可用", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(context, "用户名已注册", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 验证码回调
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onVerifyCoideEvent(SendVerifyCodeEvent event) {
+        if (IFishTankError.SUCCESS == event.msg.arg2) {
+            String data = event.msg.obj.toString();
+            Log.i("TAG", "Rsp=" + data);
+            try {
+                JSONObject jsonObject = new JSONObject(data);
+                verifyCode = jsonObject.getString("VerifyCode");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "获取验证码失败", Toast.LENGTH_SHORT).show();
+        }
+    }
     /**
      * 点击发送验证码按钮事件
      */
@@ -72,8 +112,7 @@ public class RegisterActivity extends BaseActivity {
             if (NetWorkUtils.isNetworkConnected(context)) {
                 String tel = phoneEditTxt.getText().toString();
                 if (!TextUtils.isEmpty(tel)) {
-                    timeCount.start();
-                    mCloudApi.SmsGetVerifyCode(tel);
+                    FishTankUserApiManager.getInstance().toCheckUser(tel);
                 } else {
                     Toast.makeText(context, R.string.input_right_phone_num, Toast.LENGTH_SHORT).show();
                 }
@@ -128,30 +167,11 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case CloudApi.MSG_WHAT_CLOUDAPI:
-                    switch (msg.arg1) {
-                        case CloudApi.SMSGETVERIFYCODE: {
-                            if (IFishTankError.SUCCESS == msg.arg2) {
-                                String data = msg.obj.toString();
-                                Log.i("TAG", "Rsp=" + data);
-                                try {
-                                    JSONObject jsonObject = new JSONObject(data);
-                                    verifyCode = jsonObject.getString("VerifyCode");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        break;
-                        case CloudApi.ERROR:
-                            Toast.makeText(context, R.string.send_code_failed, Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    break;
-            }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
-    };
+    }
 }

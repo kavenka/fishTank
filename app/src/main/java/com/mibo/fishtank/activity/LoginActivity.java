@@ -105,6 +105,9 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(context, R.string.login_success, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
+            if (!TextUtils.isEmpty(Constans.XG_TOKEN)) {
+                FishTankUserApiManager.getInstance().toRegPushInfo(Constans.XG_TOKEN);
+            }
             loadingDialog.close();
             finish();
         } else {

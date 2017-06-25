@@ -11,7 +11,11 @@ import com.google.gson.Gson;
 import com.landstek.iFishTank.CloudApi;
 import com.landstek.iFishTank.LSmartLink;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
+import com.mibo.fishtank.FishTankmManage.event.CheckUserEvent;
 import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
+import com.mibo.fishtank.FishTankmManage.event.RegisterEvent;
+import com.mibo.fishtank.FishTankmManage.event.SendVerifyCodeEvent;
+import com.mibo.fishtank.FishTankmManage.event.UpdateUserPwdEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginEvent;
 import com.mibo.fishtank.FishTankmManage.event.UserLoginOutEvent;
 import com.mibo.fishtank.entity.Device;
@@ -47,10 +51,24 @@ public class FishTankUserApiManager {
     }
 
     /**
+     * 检测用户是否已注册
+     */
+    public void toCheckUser(String user) {
+        cloudApi.CheckUser(user);
+    }
+
+    /**
      * 登录
      */
     public void toSignIn(String user, String pwd) {
         cloudApi.SignIn(user, pwd);
+    }
+
+    /**
+     * 设置推送信息
+     */
+    public void toRegPushInfo(String pushId) {
+        cloudApi.RegPushInfo("XG", pushId);
     }
 
     /**
@@ -235,8 +253,15 @@ public class FishTankUserApiManager {
             switch (msg.what) {
                 case CloudApi.MSG_WHAT_CLOUDAPI:
                     switch (msg.arg1) {
+                        case CloudApi.CHECKUSER://检测是否注册
+                            EventBus.getDefault().postSticky(new CheckUserEvent(msg));
+                            break;
                         case CloudApi.SIGNIN://登录
                             EventBus.getDefault().postSticky(new UserLoginEvent(msg));
+                            break;
+                        case CloudApi.REGPUSHINFO://设置推送信息
+//                            EventBus.getDefault().postSticky(new (msg));
+                            Log.d("xiao", "regpushinfo：msg:" + msg.toString());
                             break;
                         case CloudApi.SIGNOUT://登出
                             EventBus.getDefault().postSticky(new UserLoginOutEvent(msg));
@@ -245,12 +270,15 @@ public class FishTankUserApiManager {
                             EventBus.getDefault().post(new DevCfgEvent(msg));
                             break;
                         case CloudApi.SMSGETVERIFYCODE://发送验证码
+                            EventBus.getDefault().postSticky(new SendVerifyCodeEvent(msg));
                             break;
                         case CloudApi.MODIFY://修改密码
                             break;
                         case CloudApi.RESETPWD://重置密码
+                            EventBus.getDefault().postSticky(new UpdateUserPwdEvent(msg));
                             break;
                         case CloudApi.REGISTER://注冊
+                            EventBus.getDefault().postSticky(new RegisterEvent(msg));
                             break;
                         case CloudApi.ADDORUPDATEDEVCFG://添加或更新与本用户关联的设备
                             Log.d("monty", "FishTankUserApiManager：toUpdateDevice -> msg:" + msg.toString());

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
+import com.mibo.fishtank.FishTankmManage.event.ChangeMainEvent;
 import com.mibo.fishtank.R;
 import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.utils.DataBaseManager;
@@ -45,7 +46,7 @@ public class DeviceInfoActivity extends BaseActivity {
     private void initView() {
         Device device = DataBaseManager.queryDevice(uid);
         TitleBar titleBar = (TitleBar) findViewById(R.id.device_info_title);
-        titleBar.setCenterStr(R.string.device_in_net);
+        titleBar.setCenterStr("设备信息");
         titleBar.setOnClickLeftListener(new OnClickLeftListener());
         titleBar.setRightStr("保存");
         titleBar.setOnClickRightListener(new OnClickRightListener());
@@ -79,6 +80,7 @@ public class DeviceInfoActivity extends BaseActivity {
     public void onAddSceneEvent(AddOrUpSceneEvent event) {
         loadingDialog.close();
         if (IFishTankError.SUCCESS == event.msg.arg2) {
+            EventBus.getDefault().postSticky(new ChangeMainEvent());
             Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);

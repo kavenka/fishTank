@@ -15,6 +15,7 @@ import com.landstek.iFishTank.IFishTankError;
 import com.mibo.fishtank.FishTankmManage.FishTankApiManager;
 import com.mibo.fishtank.FishTankmManage.FishTankUserApiManager;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
+import com.mibo.fishtank.FishTankmManage.event.ChangeMainEvent;
 import com.mibo.fishtank.FishTankmManage.event.GetParameterEvent;
 import com.mibo.fishtank.FishTankmManage.event.LoginEvent;
 import com.mibo.fishtank.R;
@@ -106,6 +107,7 @@ public class AddDeviceActivity extends BaseActivity {
     public void onAddSceneEvent(AddOrUpSceneEvent event) {
         loadingDialog.close();
         if (IFishTankError.SUCCESS == event.msg.arg2) {
+            EventBus.getDefault().postSticky(new ChangeMainEvent());
             Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
             FishTankUserApiManager.getInstance().toGetDevCfg();
             Intent intent = new Intent(context, MainActivity.class);

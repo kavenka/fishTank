@@ -58,8 +58,19 @@ public class LaunchActivity extends BaseActivity {
         if (isLoginSuccess) {
             name = pm.getStringValue("name");
             pwd = pm.getStringValue("pwd");
+            if (NetWorkUtils.isNetworkConnected(context)) {
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(context, R.string.please_enter_the_correct_username_and_password, Toast.LENGTH_SHORT).show();
+                } else {
+                    loadingDialog.show();
+                    FishTankUserApiManager.getInstance().toSignIn(name, pwd);
+                }
+            } else {
+                Toast.makeText(context, "当前网络不可用", Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
     /**
      * 用户登录回调
      */
@@ -79,12 +90,16 @@ public class LaunchActivity extends BaseActivity {
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             loadingDialog.close();
+            if (!TextUtils.isEmpty(Constans.XG_TOKEN)) {
+                FishTankUserApiManager.getInstance().toRegPushInfo(Constans.XG_TOKEN);
+            }
             finish();
         } else {
             loadingDialog.close();
             Toast.makeText(context, R.string.login_failure, Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * 登录的点击事件
      */
@@ -92,24 +107,11 @@ public class LaunchActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            if (isLoginSuccess) {
-                if (NetWorkUtils.isNetworkConnected(context)) {
-                    if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pwd)) {
-                        Toast.makeText(context, R.string.please_enter_the_correct_username_and_password, Toast.LENGTH_SHORT).show();
-                    } else {
-                        loadingDialog.show();
-                        FishTankUserApiManager.getInstance().toSignIn(name, pwd);
-                    }
-                } else {
-                    Toast.makeText(context, "当前网络不可用", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Intent intent = new Intent(context, LoginActivity.class);
-                intent.putExtra("tel", name);
-                intent.putExtra("pwd", pwd);
-                context.startActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra("tel", name);
+            intent.putExtra("pwd", pwd);
+            context.startActivity(intent);
+            finish();
         }
     }
 

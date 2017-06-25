@@ -33,7 +33,7 @@
                 android:topLeftRadius="5dp"
                 android:topRightRadius="5dp"
                 />
-            <solid android:color="@color/color_96000000"/>
+            <solid android:color="@color/color_96544a4a"/>
         </shape>
     </item>
 </selector>
