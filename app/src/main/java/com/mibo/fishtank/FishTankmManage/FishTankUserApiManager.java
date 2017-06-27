@@ -13,6 +13,7 @@ import com.landstek.iFishTank.LSmartLink;
 import com.mibo.fishtank.FishTankmManage.event.AddOrUpSceneEvent;
 import com.mibo.fishtank.FishTankmManage.event.CheckUserEvent;
 import com.mibo.fishtank.FishTankmManage.event.DevCfgEvent;
+import com.mibo.fishtank.FishTankmManage.event.ModifyEvent;
 import com.mibo.fishtank.FishTankmManage.event.RegisterEvent;
 import com.mibo.fishtank.FishTankmManage.event.SendVerifyCodeEvent;
 import com.mibo.fishtank.FishTankmManage.event.UpdateUserPwdEvent;
@@ -273,6 +274,7 @@ public class FishTankUserApiManager {
                             EventBus.getDefault().postSticky(new SendVerifyCodeEvent(msg));
                             break;
                         case CloudApi.MODIFY://修改密码
+                            EventBus.getDefault().postSticky(new ModifyEvent(msg));
                             break;
                         case CloudApi.RESETPWD://重置密码
                             EventBus.getDefault().postSticky(new UpdateUserPwdEvent(msg));

@@ -43,7 +43,12 @@ public class DevCfgEntity {
                         scenes.add(scene);
                     }
                     DataBaseManager.saveScene(scenes);//存储场景数据库
-                } else {//设备的解析
+                }
+            }
+            for (int i = 0; i < length; i++) {
+                JSONObject sceneOrDeviceObj = sceneAndDeviceArray.getJSONObject(i);
+                String devType = sceneOrDeviceObj.getString("DevType");
+                if (TextUtils.equals(devType, "1")) {//设备的解析
                     Device device = new Device();
                     device.parserEntity(sceneOrDeviceObj);
                     devices.add(device);

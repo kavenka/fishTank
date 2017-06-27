@@ -1,5 +1,7 @@
 package com.mibo.fishtank.utils;
 
+import android.text.TextUtils;
+
 import com.mibo.fishtank.entity.Device;
 import com.mibo.fishtank.entity.Scene;
 import com.mibo.fishtank.entity.User;
@@ -32,6 +34,7 @@ public class DataBaseManager {
         user.setTel(tel);
         user.saveOrUpdate();
     }
+
     /**
      * 搜索用户信息
      */
@@ -77,12 +80,14 @@ public class DataBaseManager {
      * 插入新的设备
      */
     public static void saveDeviceToScene(String sceneId, String deviceUid) {
-        Scene scene = DataSupport.where("sceneid = ?", sceneId).findFirst(Scene.class);
-        if (scene != null) {
-            ArrayList<String> devices = scene.getDevices();
-            devices.add(deviceUid);
-            scene.setDevices(devices);
-            scene.save();
+        if (!TextUtils.isEmpty(sceneId)) {
+            Scene scene = DataSupport.where("sceneid = ?", sceneId).findFirst(Scene.class);
+            if (scene != null) {
+                ArrayList<String> devices = scene.getDevices();
+                devices.add(deviceUid);
+                scene.setDevices(devices);
+                scene.saveOrUpdate();
+            }
         }
     }
 
@@ -100,7 +105,7 @@ public class DataBaseManager {
         return list;
     }
 
-    public static void updateDevicePwd(String uid,String pwd){
+    public static void updateDevicePwd(String uid, String pwd) {
         Device device = queryDevice(uid);
         device.setDevPwd(pwd);
         device.update(device.getBaseObjId());

@@ -1,12 +1,12 @@
 package com.mibo.fishtank.entity;
 
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.mibo.fishtank.utils.DataBaseManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ public class Device extends DataSupport {
     private String Model;
     private String SWVer;
     private String HWVer;
-    @Column(unique = true, defaultValue = "unknown")
     private String Uid;
     private String Ip;
     private int Port;
@@ -54,7 +53,9 @@ public class Device extends DataSupport {
             }
             for (int i = 0; i < sceneIds.size(); i++) {
                 String s = sceneIds.get(i);
-                DataBaseManager.saveDeviceToScene(s, Uid);
+                if (!TextUtils.isEmpty(s)) {
+                    DataBaseManager.saveDeviceToScene(s, Uid);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

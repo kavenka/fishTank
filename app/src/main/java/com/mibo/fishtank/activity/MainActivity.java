@@ -211,6 +211,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, SetUserPwdActivity.class);
+            intent.putExtra("isUser", true);
             startActivity(intent);
         }
     }
