@@ -8,6 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'org.quanqi:pgyer:0.1.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,4 +24,19 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: 'org.quanqi.pgyer'
+
+pgyer {
+    _api_key = "478896cd6615971db2eeabf27f0f17f2"
+    uKey = "b896eca04800ddd0c5153c0d592e899c"
+}
+
+apks {
+    release {
+        sourceFile = file("./app/build/outputs/apk/app-release.apk")
+//        message = "example upload deploygate sample apk"
+//        visibility = "public"
+    }
 }
