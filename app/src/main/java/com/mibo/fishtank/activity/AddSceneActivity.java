@@ -51,7 +51,7 @@ public class AddSceneActivity extends BaseActivity {
     }
 
     /**
-     * 添加设备回调
+     * 添加场景回调
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAddSceneEvent(AddOrUpSceneEvent event) {

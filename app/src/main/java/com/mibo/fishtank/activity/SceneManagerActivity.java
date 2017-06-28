@@ -70,10 +70,10 @@ public class SceneManagerActivity extends BaseActivity {
     }
 
     /**
-     * 添加场景回调
+     * 删除场景回调
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onAddSceneEvent(AddOrUpSceneEvent event) {
+    public void onDelectSceneEvent(AddOrUpSceneEvent event) {
         loadingDialog.close();
         if (IFishTankError.SUCCESS == event.msg.arg2) {
             Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
