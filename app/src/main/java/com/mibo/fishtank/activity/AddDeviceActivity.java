@@ -93,7 +93,7 @@ public class AddDeviceActivity extends BaseActivity {
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId, model);
+            FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
         }

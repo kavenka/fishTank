@@ -1,5 +1,6 @@
 package com.mibo.fishtank.entity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.litepal.annotation.Column;
@@ -16,13 +17,18 @@ public class Scene extends DataSupport {
     @Column(unique = true)
     private String sceneID;//场景
     private String name;//场景名字
-    private ArrayList<String> devices=new ArrayList<>();//设备的Uid集合
+    private ArrayList<String> devices = new ArrayList<>();//设备的Uid集合
 
 
     public void parserEntity(JSONObject object) {
         try {
             sceneID = object.getString("sceneID");
             name = object.getString("name");
+            JSONArray deviceArray = object.getJSONArray("devices");
+            int length = deviceArray.length();
+            for (int i = 0; i < length; i++) {
+                devices.add(deviceArray.getString(i));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

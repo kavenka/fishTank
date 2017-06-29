@@ -108,7 +108,7 @@ public class DeviceInfoActivity extends BaseActivity {
     private class OnClickDelectListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            FishTankUserApiManager.getInstance().toDelectDevice(uid, sceneId, pwdEdit.getText().toString());
+            FishTankUserApiManager.getInstance().toDelectDevice(uid, sceneId);
         }
     }
 

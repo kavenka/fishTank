@@ -82,8 +82,8 @@ public class FishTankUserApiManager {
     /**
      * 注册获取验证码
      */
-    public void toSendSmsForVerifyCode(String tel,int mode) {
-        cloudApi.SmsGetVerifyCode(tel,mode);
+    public void toSendSmsForVerifyCode(String tel, int mode) {
+        cloudApi.SmsGetVerifyCode(tel, mode);
     }
 
     /**
@@ -168,26 +168,37 @@ public class FishTankUserApiManager {
     /**
      * 增加设备
      */
-    public void toAddDevice(String uid, String sceneId, String model) {
-        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
-        sceneIds.add(sceneId);
-        int size = sceneIds.size();
-        StringBuilder stringBuffer = new StringBuilder();
+    public void toAddDevice(String uid, String sceneId) {
+        CloudApi.DevCfg devCfg = getDevCfg();
+        Gson gson = new Gson();
+        List<Scene> dataScenes = DataBaseManager.queryAllScene();
+        ArrayList<Scene> scenes = new ArrayList<>();
+        int size = dataScenes.size();
         for (int i = 0; i < size; i++) {
-            stringBuffer.append(sceneIds.get(i));
-            if (size > 1 && i != size - 1) {
-                stringBuffer.append("&");
+            Scene scene = dataScenes.get(i);
+            ArrayList<String> devices = scene.getDevices();
+            ArrayList<String> deviceUids = new ArrayList<>();
+            String sceneID = scene.getSceneID();
+            if (TextUtils.equals(sceneID, sceneId)) {
+                int deviceSize = devices.size();
+                if (deviceSize > 0) {
+                    for (int j = 0; j < deviceSize; j++) {
+                        String deviceUid = devices.get(j);
+                        if (!TextUtils.equals(deviceUid, uid)) {
+                            deviceUids.add(deviceUid);
+                        } else {
+                            deviceUids.add(uid);
+                        }
+                    }
+                } else {
+                    deviceUids.add(uid);
+                }
+                scene.setDevices(deviceUids);
             }
+            scenes.add(scene);
         }
-        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
-        devCfg.Type = 1;
-        devCfg.Vendor = "1";
-        devCfg.Model = model;
-        devCfg.Uid = uid;
-        devCfg.User = "admin";
-        devCfg.Pwd = "12345678";
-        devCfg.Data = "";
-        devCfg.Custom = stringBuffer.toString().getBytes();
+        String scenesArrayStr = gson.toJson(scenes);
+        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
         cloudApi.AddOrUpdateDevCfg(devCfg);
     }
 
@@ -224,28 +235,30 @@ public class FishTankUserApiManager {
      *
      * @param uid
      */
-    public void toDelectDevice(String uid, String sceneId, String pwd) {
-        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
-        Device device = DataBaseManager.queryDevice(uid);
-        int size = sceneIds.size();
-        StringBuilder stringBuffer = new StringBuilder();
+    public void toDelectDevice(String uid, String sceneId) {
+        CloudApi.DevCfg devCfg = getDevCfg();
+        Gson gson = new Gson();
+        List<Scene> dataScenes = DataBaseManager.queryAllScene();
+        ArrayList<Scene> scenes = new ArrayList<>();
+        int size = dataScenes.size();
         for (int i = 0; i < size; i++) {
-            if (!TextUtils.equals(sceneIds.get(i), sceneId)) {
-                stringBuffer.append(sceneIds.get(i));
-                if (size > 1 && i != size - 1) {
-                    stringBuffer.append("&");
+            Scene scene = dataScenes.get(i);
+            ArrayList<String> devices = scene.getDevices();
+            ArrayList<String> deviceUids = new ArrayList<>();
+            String sceneID = scene.getSceneID();
+            if (TextUtils.equals(sceneID, sceneId)) {
+                for (int j = 0; j < devices.size(); j++) {
+                    String deviceUid = devices.get(j);
+                    if (!TextUtils.equals(deviceUid, uid)) {
+                        deviceUids.add(deviceUid);
+                    }
                 }
+                scene.setDevices(deviceUids);
             }
+            scenes.add(scene);
         }
-        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
-        devCfg.Type = 1;
-        devCfg.Vendor = "1";
-        devCfg.Model = device.getModel();
-        devCfg.Uid = uid;
-        devCfg.User = "admin";
-        devCfg.Pwd = pwd;
-        devCfg.Data = "";
-        devCfg.Custom = stringBuffer.toString().getBytes();
+        String scenesArrayStr = gson.toJson(scenes);
+        devCfg.Data = Base64.encodeToString(scenesArrayStr.getBytes(), Base64.DEFAULT);
         cloudApi.AddOrUpdateDevCfg(devCfg);
     }
 

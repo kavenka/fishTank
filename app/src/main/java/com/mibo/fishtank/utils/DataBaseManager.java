@@ -69,11 +69,21 @@ public class DataBaseManager {
      * 查询当前设备连接的场景
      */
     public static List<String> queryAllDeviceScene(String uid) {
-        Device device = DataSupport.where("uid = ?", uid).findFirst(Device.class);
-        if (device == null) {
-            return new ArrayList<>();
+        ArrayList<String> scenceIds = new ArrayList<>();
+        List<Scene> sceneList = DataSupport.findAll(Scene.class);
+        int size = sceneList.size();
+        for (int i = 0; i < size; i++) {
+            Scene scene = sceneList.get(i);
+            ArrayList<String> devices = scene.getDevices();
+            int deviceSize = devices.size();
+            for (int j = 0; j < deviceSize; j++) {
+                String deviceUid = devices.get(j);
+                if (TextUtils.equals(deviceUid, uid)) {
+                    scenceIds.add(scene.getSceneID());
+                }
+            }
         }
-        return device.getSceneIds();
+        return scenceIds;
     }
 
     /**

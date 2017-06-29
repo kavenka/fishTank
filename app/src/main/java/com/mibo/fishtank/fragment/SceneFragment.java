@@ -49,10 +49,7 @@ public class SceneFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scene, container, false);
-//        LinearLayout addDevice = (LinearLayout) view.findViewById(R.id.add_new_device_layout);
-//        addDevice.setOnClickListener(new OnClickNewDeviceListener());
-//        LinearLayout paiChaLayout = (LinearLayout) view.findViewById(R.id.pai_cha_layout);
-//        paiChaLayout.setOnClickListener(new OnClickPaiChaListener());
+
         deviceList = DataBaseManager.queryAllDevice(this.devices);
         size = deviceList.size();
         ListView deviceListView = (ListView) view.findViewById(R.id.device_list_view);

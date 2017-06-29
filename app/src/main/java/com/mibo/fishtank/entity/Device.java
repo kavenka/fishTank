@@ -1,9 +1,6 @@
 package com.mibo.fishtank.entity;
 
-import android.text.TextUtils;
 import android.util.Base64;
-
-import com.mibo.fishtank.utils.DataBaseManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,12 +48,12 @@ public class Device extends DataSupport {
             for (int i = 0; i < strings.length; i++) {
                 sceneIds.add(strings[i]);
             }
-            for (int i = 0; i < sceneIds.size(); i++) {
-                String s = sceneIds.get(i);
-                if (!TextUtils.isEmpty(s)) {
-                    DataBaseManager.saveDeviceToScene(s, Uid);
-                }
-            }
+//            for (int i = 0; i < sceneIds.size(); i++) {
+//                String s = sceneIds.get(i);
+//                if (!TextUtils.isEmpty(s)) {
+//                    DataBaseManager.saveDeviceToScene(s, Uid);
+//                }
+//            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
