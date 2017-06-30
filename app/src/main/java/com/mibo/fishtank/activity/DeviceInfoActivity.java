@@ -81,12 +81,12 @@ public class DeviceInfoActivity extends BaseActivity {
         loadingDialog.close();
         if (IFishTankError.SUCCESS == event.msg.arg2) {
             EventBus.getDefault().postSticky(new ChangeMainEvent());
-            Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "操作成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainActivity.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "操作失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -101,7 +101,6 @@ public class DeviceInfoActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             FishTankUserApiManager.getInstance().toUpdateDevice(uid, pwdEdit.getText().toString());
-            finish();
         }
     }
 
