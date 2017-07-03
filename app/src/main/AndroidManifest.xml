@@ -245,14 +245,22 @@
             android:authorities="com.mibo.fishtank.TENCENT.MID.V3"
             android:exported="true" />
 
+        <!--&lt;!&ndash; 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="XG_V2_ACCESS_ID"-->
+            <!--android:value="2100260103" />-->
+        <!--&lt;!&ndash; 【必须】 请修改为APP的AccessKey，“A”开头的12位字符串，中间没空格 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="XG_V2_ACCESS_KEY"-->
+            <!--android:value="A197JG3X8EQK" />-->
         <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
         <meta-data
             android:name="XG_V2_ACCESS_ID"
-            android:value="2100260103" />
+            android:value="2100202600" />
         <!-- 【必须】 请修改为APP的AccessKey，“A”开头的12位字符串，中间没空格 -->
         <meta-data
             android:name="XG_V2_ACCESS_KEY"
-            android:value="A197JG3X8EQK" />
+            android:value="AJ1DS2L977TI" />
     </application>
 
 </manifest>

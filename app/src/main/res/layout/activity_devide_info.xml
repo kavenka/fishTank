@@ -201,6 +201,7 @@
             android:layout_toRightOf="@+id/device_pwd_txt"
             android:background="@null"
             android:gravity="end|center"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/color_ffffff"
             android:textColorHint="@color/color_ffffff"
