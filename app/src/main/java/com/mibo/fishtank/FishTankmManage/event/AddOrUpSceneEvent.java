@@ -8,9 +8,15 @@ import android.os.Message;
  */
 
 public class AddOrUpSceneEvent {
+    public int flag = 0;
     public Message msg;
 
     public AddOrUpSceneEvent(Message msg) {
         this.msg = msg;
+    }
+
+    public AddOrUpSceneEvent(Message msg, int flag) {
+        this.msg = msg;
+        this.flag = flag;
     }
 }

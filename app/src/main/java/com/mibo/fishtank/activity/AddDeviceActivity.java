@@ -37,6 +37,7 @@ public class AddDeviceActivity extends BaseActivity {
     private String model;
     private LoadingDialog loadingDialog;
     private String sceneId;
+    private boolean isChangeSceneSuccess = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class AddDeviceActivity extends BaseActivity {
         String uid = event.uid;
         int result = event.result;
         if (result == 0) {
-            FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId);
+            FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId, model);
         } else {
             Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
         }
@@ -107,12 +108,18 @@ public class AddDeviceActivity extends BaseActivity {
     public void onAddSceneEvent(AddOrUpSceneEvent event) {
         loadingDialog.close();
         if (IFishTankError.SUCCESS == event.msg.arg2) {
-            EventBus.getDefault().postSticky(new ChangeMainEvent());
-            Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
-            FishTankUserApiManager.getInstance().toGetDevCfg();
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (isChangeSceneSuccess) {
+                EventBus.getDefault().postSticky(new ChangeMainEvent());
+                Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
+                FishTankUserApiManager.getInstance().toGetDevCfg();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return;
+            } else {
+                FishTankUserApiManager.getInstance().toAddDevice(uid, sceneId);
+            }
+            isChangeSceneSuccess = true;
         } else {
             Toast.makeText(context, "添加失败", Toast.LENGTH_SHORT).show();
         }
@@ -139,7 +146,7 @@ public class AddDeviceActivity extends BaseActivity {
     }
 
     private void toLoginDevice() {
-        FishTankApiManager.getInstance().loginDevice(uid,"12345678");
+        FishTankApiManager.getInstance().loginDevice(uid, "12345678");
     }
 
     private class OnDevicePwdChangeListener implements TextWatcher {

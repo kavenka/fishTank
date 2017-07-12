@@ -168,6 +168,32 @@ public class FishTankUserApiManager {
     /**
      * 增加设备
      */
+    public void toAddDevice(String uid, String sceneId, String model) {
+        List<String> sceneIds = DataBaseManager.queryAllDeviceScene(uid);
+        sceneIds.add(sceneId);
+        int size = sceneIds.size();
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            stringBuffer.append(sceneIds.get(i));
+            if (size > 1 && i != size - 1) {
+                stringBuffer.append("&");
+            }
+        }
+        CloudApi.DevCfg devCfg = new CloudApi.DevCfg();
+        devCfg.Type = 1;
+        devCfg.Vendor = "1";
+        devCfg.Model = model;
+        devCfg.Uid = uid;
+        devCfg.User = "admin";
+        devCfg.Pwd = "12345678";
+        devCfg.Data = "";
+        devCfg.Custom = stringBuffer.toString().getBytes();
+        cloudApi.AddOrUpdateDevCfg(devCfg);
+    }
+
+    /**
+     * 增加设备
+     */
     public void toAddDevice(String uid, String sceneId) {
         CloudApi.DevCfg devCfg = getDevCfg();
         Gson gson = new Gson();
@@ -176,24 +202,27 @@ public class FishTankUserApiManager {
         int size = dataScenes.size();
         for (int i = 0; i < size; i++) {
             Scene scene = dataScenes.get(i);
-            ArrayList<String> devices = scene.getDevices();
-            ArrayList<String> deviceUids = new ArrayList<>();
             String sceneID = scene.getSceneID();
             if (TextUtils.equals(sceneID, sceneId)) {
-                int deviceSize = devices.size();
-                if (deviceSize > 0) {
-                    for (int j = 0; j < deviceSize; j++) {
-                        String deviceUid = devices.get(j);
-                        if (!TextUtils.equals(deviceUid, uid)) {
-                            deviceUids.add(deviceUid);
-                        } else {
-                            deviceUids.add(uid);
-                        }
-                    }
-                } else {
-                    deviceUids.add(uid);
-                }
-                scene.setDevices(deviceUids);
+                ArrayList<String> devices = scene.getDevices();
+//                ArrayList<String> deviceUids = new ArrayList<>();
+//                int deviceSize = devices.size();
+//                if (deviceSize > 0) {
+//                    for (int j = 0; j < deviceSize; j++) {
+//                        String deviceUid = devices.get(j);
+//                        if (!TextUtils.equals(deviceUid, uid)) {
+//                            deviceUids.add(deviceUid);
+//                        } else {
+//                            deviceUids.add(uid);
+//                        }
+//                    }
+//                } else {
+//                    deviceUids.add(uid);
+//                }
+//                if (!devices.contains(uid)) {
+                devices.add(uid);
+//                }
+                scene.setDevices(devices);
             }
             scenes.add(scene);
         }

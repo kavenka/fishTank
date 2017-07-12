@@ -110,7 +110,9 @@ public class DataBaseManager {
         for (int i = 0; i < size; i++) {
             String s = devices.get(i);
             Device device = DataSupport.where("uid = ?", s).findFirst(Device.class);
-            list.add(device);
+            if (device != null) {
+                list.add(device);
+            }
         }
         return list;
     }
