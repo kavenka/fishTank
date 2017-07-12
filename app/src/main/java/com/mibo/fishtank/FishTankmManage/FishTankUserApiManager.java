@@ -219,9 +219,9 @@ public class FishTankUserApiManager {
 //                } else {
 //                    deviceUids.add(uid);
 //                }
-//                if (!devices.contains(uid)) {
-                devices.add(uid);
-//                }
+                if (!devices.contains(uid)) {
+                    devices.add(uid);
+                }
                 scene.setDevices(devices);
             }
             scenes.add(scene);
