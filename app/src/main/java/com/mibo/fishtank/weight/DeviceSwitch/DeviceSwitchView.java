@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.mibo.fishtank.R;
  */
 
 public class DeviceSwitchView extends LinearLayout {
+    private final Context context;
     private TextView mSwitchTitle;
     private TextView mSwitchParameter;
     private ImageView mSwitchIcon;
@@ -41,6 +43,7 @@ public class DeviceSwitchView extends LinearLayout {
 
     public DeviceSwitchView(final Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         LinearLayout rootView = (LinearLayout) LinearLayout.inflate(context, R.layout.device_switch_layout, null);
         mSwitchIcon = (ImageView) rootView.findViewById(R.id.switch_icon);
         mSwitchTitle = (TextView) rootView.findViewById(R.id.switch_title);
@@ -58,25 +61,31 @@ public class DeviceSwitchView extends LinearLayout {
         closeSwitch();
     }
 
-    public void setSwitchTitleEditEnable(boolean enable){
-        if(enable){
+    public void setSwitchTitleEditEnable(boolean enable) {
+        if (enable) {
             this.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    final EditText inputSwitchName = new EditText(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("修改开关名称");
+                    View view = LayoutInflater.from(context).inflate(R.layout.dialog_layout, null);
+                    final EditText inputSwitchName = (EditText) view.findViewById(R.id.kaiguang_name);
                     inputSwitchName.setText(mSwitchTitle.getText());
-                    new AlertDialog.Builder(getContext()).setTitle("修改开关名称").setView(inputSwitchName).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    builder.setView(view);//设置login_layout为对话提示框
+                    //设置正面按钮，并做事件处理
+                    builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             String switchName = inputSwitchName.getText().toString();
-                            if(TextUtils.isEmpty(switchName)){
-                                Toast.makeText(getContext(),"请输入开关名称",Toast.LENGTH_SHORT).show();
+                            if (TextUtils.isEmpty(switchName)) {
+                                Toast.makeText(getContext(), "请输入开关名称", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             mSwitchTitle.setText(switchName);
                             SharedPreferencesUtil.putString(getContext(), DeviceSwitchView.this.getId() + "", inputSwitchName.getText().toString());
                         }
-                    }).show();
+                    });
+                    builder.show();//显示Dialog对话框
                     return false;
                 }
             });

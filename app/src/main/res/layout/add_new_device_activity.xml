@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:text="智能排插"
+                android:text="鱼缸管理器"
                 android:textColor="@color/color_ffffff"
                 android:textSize="15sp"
                 />

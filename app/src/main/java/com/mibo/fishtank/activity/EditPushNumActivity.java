@@ -90,9 +90,9 @@ public class EditPushNumActivity extends BaseActivity {
             deviceParams.Tel = telePhone;
             DeviceParamsUtil.saveDeviceParams(this, event.uid, deviceParams);
         } else {
-            if(TextUtils.isEmpty(event.msg)){
+            if (TextUtils.isEmpty(event.msg)) {
                 Toast.makeText(this, "推送手机号码设置失败", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(this, event.msg, Toast.LENGTH_SHORT).show();
             }
         }
@@ -102,7 +102,10 @@ public class EditPushNumActivity extends BaseActivity {
     public void setTelePhoneParams() {
         // 获取本地缓存数据
         deviceParams = DeviceParamsUtil.getDeviceParams(this, uid);
-        String[] tels = deviceParams.Tel;
+        if (deviceParams != null) {
+            String[] tels = deviceParams.Tel;
+            setText(tels);
+        }
 
 //        if (deviceParams.Tel != null) {
 //            for (int i = 0; i < deviceParams.Tel.length; i++) {
@@ -114,7 +117,6 @@ public class EditPushNumActivity extends BaseActivity {
 //
 //        }
 
-        setText(tels);
 
     }
 

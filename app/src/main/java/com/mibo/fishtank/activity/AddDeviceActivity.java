@@ -112,7 +112,8 @@ public class AddDeviceActivity extends BaseActivity {
                 EventBus.getDefault().postSticky(new ChangeMainEvent());
                 Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
                 FishTankUserApiManager.getInstance().toGetDevCfg();
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, NeedPushToPhoneActivity.class);
+                intent.putExtra("uid", uid);
                 startActivity(intent);
                 finish();
                 return;
@@ -146,7 +147,7 @@ public class AddDeviceActivity extends BaseActivity {
     }
 
     private void toLoginDevice() {
-        FishTankApiManager.getInstance().loginDevice(uid, "12345678");
+        FishTankApiManager.getInstance().loginDevice(uid, deviceEdit.getText().toString());
     }
 
     private class OnDevicePwdChangeListener implements TextWatcher {

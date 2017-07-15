@@ -54,7 +54,7 @@ public class DataBaseManager {
     /**
      * 删除所有场景
      */
-    private static void clearScene() {
+    public static void clearScene() {
         DataSupport.deleteAll(Scene.class);
     }
 
@@ -133,9 +133,10 @@ public class DataBaseManager {
     /**
      * 删除所有设备
      */
-    private static void clearDevice() {
+    public static void clearDevice() {
         DataSupport.deleteAll(Device.class);
     }
+
 
     /**
      * 获取当个场景下的所有设备

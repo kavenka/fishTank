@@ -219,6 +219,8 @@ public class MainActivity extends BaseActivity {
     private class OnClickLoginOutListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            DataBaseManager.clearDevice();
+            DataBaseManager.clearScene();
             FishTankUserApiManager.getInstance().toSignOut();
         }
     }

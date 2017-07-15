@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:paddingBottom="17dp"
             android:paddingTop="17dp"
-            android:text="智能排插"
+            android:text="鱼缸管理器"
             android:textColor="@color/color_ffffff"
             android:textSize="17sp" />
 

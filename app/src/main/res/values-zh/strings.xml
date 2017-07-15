@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FishTank</string>
+    <string name="app_name">乐鱼</string>
     <string name="login_name">手机号码</string>
     <string name="login_password">密码</string>
     <string name="login_read_and_agree">我已阅读并同意</string>
