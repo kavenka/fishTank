@@ -71,6 +71,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
     private Handler handler = new Handler();
 
     private long intervalTime = 1000 * 10;
+    private String deviceUid;
 
     private class TimingRunable implements Runnable {
 
@@ -122,9 +123,10 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         Log.d("monty", "onCreate");
         setContentView(R.layout.device_detail_activity);
 
+        deviceUid = getIntent().getStringExtra("deviceUid");
         initView();
 
-        Device device = DataBaseManager.queryDevice(getIntent().getStringExtra("deviceUid"));
+        Device device = DataBaseManager.queryDevice(deviceUid);
 
         if (null != device) {
             mDevice = device;
@@ -184,7 +186,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             } else {
                 if (event.result == -2) {
                     Toast.makeText(this, "设备密码错误或者超时", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(this, "获取失败", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -203,7 +205,7 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
             if (TextUtils.isEmpty(event.msg)) {
                 if (event.result == -2) {
                     Toast.makeText(this, "设备密码错误或者超时", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     Toast.makeText(this, "操作失败", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -457,6 +459,8 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvOxygenPump = (DeviceSwitchView) findViewById(R.id.dsv_OxygenPump);
         mDsvRfu1 = (DeviceSwitchView) findViewById(R.id.dsv_Rfu1);
         mDsvRfu2 = (DeviceSwitchView) findViewById(R.id.dsv_Rfu2);
+        mDsvRfu1.setDeviceUid(deviceUid);
+        mDsvRfu2.setDeviceUid(deviceUid);
 
         mDsvLight1.setSwitchTitle("照明灯1");
         mDsvLight2.setSwitchTitle("照明灯2");
@@ -488,10 +492,11 @@ public class DeviceDetailActivity extends BaseActivity implements DeviceSwitchVi
         mDsvRfu1.setSwitchTitleEditEnable(true);
         mDsvRfu2.setSwitchTitleEditEnable(true);
 
-        String dsvRfu1Title = SharedPreferencesUtil.getString(this, mDsvRfu1.getId() + "", "自定义1");
+        Log.i("xiao", mDsvRfu1.getId() + deviceUid + "");
+        String dsvRfu1Title = SharedPreferencesUtil.getString(this, mDsvRfu1.getId() + deviceUid + "", "自定义1");
         mDsvRfu1.setSwitchTitle(dsvRfu1Title);
 
-        String dsvRfu2Title = SharedPreferencesUtil.getString(this, mDsvRfu2.getId() + "", "自定义2");
+        String dsvRfu2Title = SharedPreferencesUtil.getString(this, mDsvRfu2.getId() + deviceUid + "", "自定义2");
         mDsvRfu2.setSwitchTitle(dsvRfu2Title);
 //        mSwitchGrid = (GridView) findViewById(R.id.gv_device_switch);
 

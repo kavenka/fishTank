@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class DeviceSwitchView extends LinearLayout {
     private boolean switchTitleEditEnable = false;
 
     private OnSwitchClickListener mOnSwitchClickListener;
+    private String deviceUid;
 
     public DeviceSwitchView(Context context) {
         this(context, null);
@@ -61,6 +63,10 @@ public class DeviceSwitchView extends LinearLayout {
         closeSwitch();
     }
 
+    public void setDeviceUid(String deviceUid) {
+        this.deviceUid = deviceUid;
+    }
+
     public void setSwitchTitleEditEnable(boolean enable) {
         if (enable) {
             this.setOnLongClickListener(new OnLongClickListener() {
@@ -82,7 +88,8 @@ public class DeviceSwitchView extends LinearLayout {
                                 return;
                             }
                             mSwitchTitle.setText(switchName);
-                            SharedPreferencesUtil.putString(getContext(), DeviceSwitchView.this.getId() + "", inputSwitchName.getText().toString());
+                            Log.i("xiao", DeviceSwitchView.this.getId() + deviceUid + "");
+                            SharedPreferencesUtil.putString(getContext(), DeviceSwitchView.this.getId() + deviceUid + "", inputSwitchName.getText().toString());
                         }
                     });
                     builder.show();//显示Dialog对话框
